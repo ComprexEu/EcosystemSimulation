@@ -17,16 +17,19 @@ public class Map {
         initializeTerrain();
     }
     private void initializeTerrain(){
-        PerlinNoiseGenerator generator=  PerlinNoiseGenerator.newBuilder().setSeed(1231).setInterpolation(Interpolation.COSINE).setFadeFunction(FadeFunction.QUINTIC_POLY).build();
+        Random rand = new Random();
+        PerlinNoiseGenerator generator=  PerlinNoiseGenerator.newBuilder().setSeed(rand.nextInt()).setInterpolation(Interpolation.COSINE).setFadeFunction(FadeFunction.QUINTIC_POLY).build();
         terrain = new Terrain[ySize][xSize];
-        Random random = new Random();
+        double yOff = 0;
         for (int i = 0; i < ySize; i++) {
+            double xOff = 0;
             for (int j = 0; j < xSize; j++) {
-                double randomValue = random.nextDouble(-5,15);
-                double x = generator.evaluateNoise(i,(double)j/randomValue);
-                if(x>=-0.15) terrain[i][j] = Terrain.GRASS;
+                double x = generator.evaluateNoise(xOff,yOff);
+                if(x>=0) terrain[i][j] = Terrain.GRASS;
                 else terrain[i][j] = Terrain.WATER;
+                xOff+=0.15;
             }
+            yOff+=0.15;
         }
     }
 
