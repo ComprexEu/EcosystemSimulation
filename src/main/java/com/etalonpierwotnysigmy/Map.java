@@ -27,9 +27,9 @@ public class Map {
                 double x = generator.evaluateNoise(xOff,yOff);
                 if(x>=0) terrain[i][j] = Terrain.GRASS;
                 else terrain[i][j] = Terrain.WATER;
-                xOff+=0.15;
+                xOff+=0.25;
             }
-            yOff+=0.15;
+            yOff+=0.25;
         }
     }
 

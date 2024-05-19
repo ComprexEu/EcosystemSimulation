@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14554581-1685-4b78-902a-5f9d521dc2d6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/EcosystemSimulation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Map.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Terrain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Animal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Entity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Herbivore.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Plant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Predator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/EcosystemSimulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/EcosystemSimulation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Map.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,25 +37,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2gVkrTZBfJi6LJ88bCW5oku0uTt" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.EcosystemSimulation [:Main.main()].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "onboarding.tips.debug.path": "C:/Users/compr/IdeaProjects/EcosystemSimulation/src/main/java/org/example/Main.java"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.EcosystemSimulation [:Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/compr/IdeaProjects/EcosystemSimulation/src/main/java/org/example/Main.java&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
