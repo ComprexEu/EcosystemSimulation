@@ -36,14 +36,5 @@ public class Map {
     public Terrain[][] getTerrain() {
         return terrain;
     }
-    public void printMap() {
-        for (int i = 0; i < ySize; i++) {
-            for (int j = 0; j < xSize; j++) {
-                if(terrain[i][j]==Terrain.GRASS)System.out.print("\u001B[32m");
-                else if(terrain[i][j]==Terrain.WATER)System.out.print("\u001B[34m");
-                System.out.print(terrain[i][j] + " \u001B[0m");
-            }
-            System.out.println();
-        }
-    }
+
 }
