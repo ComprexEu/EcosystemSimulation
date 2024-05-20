@@ -8,7 +8,7 @@ public abstract class Animal extends Entity{
     private int thirst;
 
     private Position findNextPosition(Entity[][] entityMap) {
-        return null; // logika do znalezienia nowej pozycji
+        return null; // logika do znalezienia nowej pozycji (później abstrakcyjna i osobno dla różnych zwierząt - inna logika dla roślinożercy i drapieżnika)
     }
 
     public void move(Entity[][] entityMap, Position nextPosition) {
@@ -19,7 +19,7 @@ public abstract class Animal extends Entity{
 
 
     public void update() {
-        // logika odpowiadająca za poruszanie (później abstrakcyjna i zrobiona osobno dla poszczególnych typów zwierząt)
+        // przemieszczenie animala na następną pozycję
     }
 
     public int getHealth() {
