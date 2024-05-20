@@ -19,7 +19,7 @@ public class EcosystemSimulation {
         for (int i = 0; i < ySize; i++) {
             for (int j = 0; j < xSize; j++) {
                 if (terrainMap[i][j] == Terrain.GRASS) {
-                    if (Math.random() < 0.2) entityMap[i][j] = new Sheep(); // for testing only
+                    if (Math.random() < 0.2) entityMap[i][j] = new Sheep(new Position(i, j)); // for testing only
                 }
             }
         }
