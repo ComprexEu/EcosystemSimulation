@@ -19,7 +19,8 @@ public class EcosystemSimulation {
         for (int i = 0; i < ySize; i++) {
             for (int j = 0; j < xSize; j++) {
                 if (terrainMap[i][j] == Terrain.GRASS) {
-                    if (Math.random() < 0.2) entityMap[i][j] = new Sheep(new Position(i, j)); // for testing only
+                    if (Math.random() < 0.1) entityMap[i][j] = new Sheep(new Position(i, j)); // for testing only
+                    else if (Math.random() < 0.1) entityMap[i][j] = new Turnip(new Position(i, j));
                 }
             }
         }
@@ -37,6 +38,10 @@ public class EcosystemSimulation {
                     if (entityMap[i][j] instanceof Sheep) {
                         System.out.print("\u001B[0m");
                         System.out.print("SHEEP ");
+                    }
+                    else if (entityMap[i][j] instanceof Turnip) {
+                        System.out.print("\u001B[35m");
+                        System.out.print("TURNIP ");
                     }
                 }
             }
