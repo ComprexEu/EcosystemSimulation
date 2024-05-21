@@ -19,14 +19,14 @@ public class Map {
     private void initializeTerrain(){
         Random rand = new Random();
         PerlinNoiseGenerator generator=  PerlinNoiseGenerator.newBuilder().setSeed(rand.nextInt()).setInterpolation(Interpolation.COSINE).setFadeFunction(FadeFunction.QUINTIC_POLY).build();
-        terrain = new Terrain[xSize][ySize];
+        terrain = new Terrain[ySize][xSize];
         double yOff = 0;
-        for (int i = 0; i < ySize; i++) {
+        for (int y = 0; y < ySize; y++) {
             double xOff = 0;
-            for (int j = 0; j < xSize; j++) {
-                double x = generator.evaluateNoise(xOff,yOff);
-                if(x>=-0.2) terrain[j][i] = Terrain.GRASS;
-                else terrain[j][i] = Terrain.WATER;
+            for (int x = 0; x < xSize; x++) {
+                double v = generator.evaluateNoise(xOff,yOff);
+                if(v >= -0.2) terrain[y][x] = Terrain.GRASS;
+                else terrain[y][x] = Terrain.WATER;
                 xOff+=0.2;
             }
             yOff+=0.2;

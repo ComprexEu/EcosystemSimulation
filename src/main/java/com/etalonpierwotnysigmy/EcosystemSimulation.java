@@ -7,7 +7,7 @@ public class EcosystemSimulation {
     public EcosystemSimulation(int xSize, int ySize) throws InterruptedException {
         this.xSize = xSize;
         this.ySize = ySize;
-        entityMap = new Entity[xSize][ySize];
+        entityMap = new Entity[ySize][xSize];
         Map terrain = new Map(xSize, ySize);
         Terrain[][] terrainMap = terrain.getTerrain();
         spawnEntities(terrainMap);
