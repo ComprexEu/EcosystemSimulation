@@ -25,11 +25,11 @@ public class Map {
             double xOff = 0;
             for (int j = 0; j < xSize; j++) {
                 double x = generator.evaluateNoise(xOff,yOff);
-                if(x>=0) terrain[i][j] = Terrain.GRASS;
+                if(x>=-0.2) terrain[i][j] = Terrain.GRASS;
                 else terrain[i][j] = Terrain.WATER;
-                xOff+=0.25;
+                xOff+=0.2;
             }
-            yOff+=0.25;
+            yOff+=0.2;
         }
     }
 
