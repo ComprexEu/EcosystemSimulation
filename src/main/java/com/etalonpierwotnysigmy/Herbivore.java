@@ -16,7 +16,6 @@ public abstract class Herbivore extends Animal {
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
                 if (isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {
-                    if (y == position.getY() && x == position.getX()) continue;
                     if (terrainMap[y][x] == Terrain.GRASS) {
                         potentialNewPosition.setX(x);
                         potentialNewPosition.setY(y);
