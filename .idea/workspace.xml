@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14554581-1685-4b78-902a-5f9d521dc2d6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Animal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/EcosystemSimulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/EcosystemSimulation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Herbivore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Herbivore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Plant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Plant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Sheep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Sheep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Turnip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Turnip.java" afterDir="false" />
-    </list>
+    <list default="true" id="14554581-1685-4b78-902a-5f9d521dc2d6" name="Changes" comment="coś się zmieniło" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,11 +68,89 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1715790332313</updated>
-      <workItem from="1716286661619" duration="4767000" />
+      <workItem from="1716286661619" duration="5130000" />
     </task>
+    <task id="LOCAL-00001" summary="Added plant functionality">
+      <option name="closed" value="true" />
+      <created>1716292317149</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716292317149</updated>
+    </task>
+    <task id="LOCAL-00002" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1716292359294</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716292359294</updated>
+    </task>
+    <task id="LOCAL-00003" summary="changed variable names">
+      <option name="closed" value="true" />
+      <created>1716292445796</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1716292445796</updated>
+    </task>
+    <task id="LOCAL-00004" summary="changed constructor">
+      <option name="closed" value="true" />
+      <created>1716292478204</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716292478204</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added plant objects for testing">
+      <option name="closed" value="true" />
+      <created>1716292514058</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1716292514058</updated>
+    </task>
+    <task id="LOCAL-00006" summary="slight change in map generation">
+      <option name="closed" value="true" />
+      <created>1716292552472</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1716292552472</updated>
+    </task>
+    <task id="LOCAL-00007" summary="coś się zmieniło">
+      <option name="closed" value="true" />
+      <created>1716292570873</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1716292570873</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added plant functionality" />
+    <MESSAGE value="minor changes" />
+    <MESSAGE value="changed variable names" />
+    <MESSAGE value="changed constructor" />
+    <MESSAGE value="added plant objects for testing" />
+    <MESSAGE value="slight change in map generation" />
+    <MESSAGE value="coś się zmieniło" />
+    <option name="LAST_COMMIT_MESSAGE" value="coś się zmieniło" />
   </component>
 </project>
