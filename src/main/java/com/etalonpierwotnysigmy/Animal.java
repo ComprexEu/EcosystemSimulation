@@ -4,7 +4,7 @@ public abstract class Animal extends Entity{
     private int health;
     private int sightRange;
     private int speed;
-    private int hunger;
+    private int saturation;
     private int thirst;
 
     private Position findNextPosition(Entity[][] entityMap) {
@@ -33,11 +33,36 @@ public abstract class Animal extends Entity{
     public int getSpeed() {
         return speed;
     }
-    public int getHunger() {
-        return hunger;
+
+    public int getSatiety() {
+        return saturation;
     }
 
     public int getThirst() {
         return thirst;
+    }
+
+    public void addSaturation(int saturation) {
+        this.saturation += saturation;
+    }
+
+    public void setThirst(int thirst) {
+        this.thirst = thirst;
+    }
+
+    public void setSightRange(int sightRange) {
+        this.sightRange = sightRange;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setSaturation(int saturation) {
+        this.saturation = saturation;
     }
 }
