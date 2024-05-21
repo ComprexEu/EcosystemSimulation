@@ -1,47 +1,71 @@
 package com.etalonpierwotnysigmy;
 
-
 public class EcosystemSimulation {
     int xSize;
     int ySize;
     Entity[][] entityMap;
-    public EcosystemSimulation(int xSize, int ySize) {
+    public EcosystemSimulation(int xSize, int ySize) throws InterruptedException {
         this.xSize = xSize;
         this.ySize = ySize;
-        entityMap = new Entity[ySize][xSize];
+        entityMap = new Entity[xSize][ySize];
         Map terrain = new Map(xSize, ySize);
         Terrain[][] terrainMap = terrain.getTerrain();
         spawnEntities(terrainMap);
-        printMap(terrainMap);
+        Thread.sleep(2000);
+        while (true) {
+            printMap(terrainMap);
+            updateEntities(terrainMap);
+            Thread.sleep(2000);
+        }
     }
 
     private void spawnEntities(Terrain[][] terrainMap) {
-        for (int i = 0; i < ySize; i++) {
-            for (int j = 0; j < xSize; j++) {
-                if (terrainMap[i][j] == Terrain.GRASS) {
-                    if (Math.random() < 0.1) entityMap[i][j] = new Sheep(new Position(i, j)); // for testing only
-                    else if (Math.random() < 0.1) entityMap[i][j] = new Turnip(new Position(i, j));
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++) {
+                if (terrainMap[y][x] == Terrain.GRASS) {
+                    if (Math.random() < 0.1) entityMap[y][x] = new Sheep(new Position(x, y)); // for testing only
+                    else if (Math.random() < 0.1) entityMap[y][x] = new Turnip(new Position(x, y));
                 }
             }
         }
     }
 
+
+    private void updateEntities(Terrain[][] terrainMap) {
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++) {
+                if (entityMap[y][x] != null) {
+                    entityMap[y][x].setUpdated(false);
+                }
+            }
+        }
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++) {
+                if (entityMap[y][x] instanceof Animal && !entityMap[y][x].isUpdated()) {
+                    entityMap[y][x].setUpdated(true);
+                    ((Animal) entityMap[y][x]).update(entityMap, terrainMap);
+                }
+            }
+        }
+        System.out.println();
+    }
+
     public void printMap(Terrain[][] terrainMap) {
-        for (int i = 0; i < ySize; i++) {
-            for (int j = 0; j < xSize; j++) {
-                if (entityMap[i][j] == null) {
-                    if (terrainMap[i][j] == Terrain.GRASS) System.out.print("\u001B[32m");
-                    else if (terrainMap[i][j] == Terrain.WATER) System.out.print("\u001B[34m");
-                    System.out.print(terrainMap[i][j] + " \u001B[0m");
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++) {
+                if (entityMap[y][x] == null) {
+                    if (terrainMap[y][x] == Terrain.GRASS) System.out.print("\u001B[32m");
+                    else if (terrainMap[y][x] == Terrain.WATER) System.out.print("\u001B[34m");
+                    System.out.print(terrainMap[y][x] + " \u001B[0m");
                 }
                 else {
-                    if (entityMap[i][j] instanceof Sheep) {
+                    if (entityMap[y][x] instanceof Sheep) {
                         System.out.print("\u001B[0m");
                         System.out.print("SHEEP ");
                     }
-                    else if (entityMap[i][j] instanceof Turnip) {
+                    else if (entityMap[y][x] instanceof Turnip) {
                         System.out.print("\u001B[35m");
-                        System.out.print("TURNIP ");
+                        System.out.print("TURNP ");
                     }
                 }
             }

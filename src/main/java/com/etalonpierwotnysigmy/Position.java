@@ -16,11 +16,23 @@ public class Position {
         return y;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public static Position addPositions(Position position1, Position position2) {
         return new Position(position1.x + position2.x, position1.y + position2.y);
     }
 
     public static Position subtractPositions(Position position1, Position position2) {
         return new Position(position1.x - position2.x, position1.y - position2.y);
+    }
+
+    public static double positionVectorLength(Position position) {
+        return Math.sqrt(position.x * position.x + position.y * position.y);
     }
 }
