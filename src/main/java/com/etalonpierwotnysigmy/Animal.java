@@ -9,7 +9,14 @@ public abstract class Animal extends Entity{
     protected int maxSaturation;
     protected int thirst;
     protected int maxThirst;
+    protected Gender gender;
+    protected boolean breedable;
 
+    Animal(){
+        if (Math.random() < 0.5) gender = Gender.MALE;
+        else gender = Gender.FEMALE;
+        breedable = false;
+    }
     abstract Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap);
 
     abstract void updateStats(Entity[][] entityMap, Terrain[][] terrainMap);
@@ -61,9 +68,6 @@ public abstract class Animal extends Entity{
         }
         return closestPosition;
     }
-
-
-
     public void move(Entity[][] entityMap, Position nextPosition) { // logika odpowiadająca za zmianę pozycji
         entityMap[nextPosition.getY()][nextPosition.getX()] = entityMap[position.getY()][position.getX()];
         entityMap[position.getY()][position.getX()] = null;

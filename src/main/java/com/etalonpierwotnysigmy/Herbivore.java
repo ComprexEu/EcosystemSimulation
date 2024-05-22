@@ -2,6 +2,7 @@ package com.etalonpierwotnysigmy;
 
 public abstract class Herbivore extends Animal {
     public Herbivore(){
+        super();
         sightRange = 10;
         thirst = 31;
         saturation = 30;
@@ -11,11 +12,15 @@ public abstract class Herbivore extends Animal {
 
     public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
         Position targetPosition = new Position(position.getX(), position.getY());;
-        if (thirst < saturation) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
+        if (thirst < saturation && thirst < 30) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
             targetPosition = findWater(terrainMap);
         }
-        else if (thirst > saturation) {
+        else if (thirst > saturation && saturation < 30) {
             targetPosition = findEntity(entityMap, Plant.class);
+        }
+        if(breedable){
+            if(this instanceof Sheep)
+                targetPosition = findEntity(entityMap, Sheep.class);
         }
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji roślinożercy
         Position positionDifference;
@@ -48,8 +53,8 @@ public abstract class Herbivore extends Animal {
             }
         }
         else {
-            saturation -= 5;
-            thirst -= 5;
+            saturation --;
+            thirst --;
         }
         Position closestPosition;
         if (thirst < saturation) {
@@ -70,13 +75,6 @@ public abstract class Herbivore extends Animal {
                 }
             }
         }
-    }
-
-    void eatPlant(Plant plant){
-        if(plant.isGrown()){
-            saturation += plant.getFoodValue();
-            plant.changeGrowthStatus();
-            plant.resetGrowthState();
-        }
+        breedable = thirst > 40 && saturation > 40;
     }
 }
