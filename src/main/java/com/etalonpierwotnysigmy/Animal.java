@@ -70,7 +70,6 @@ public abstract class Animal extends Entity{
         position = new Position(nextPosition.getX(), nextPosition.getY());
     }
 
-
     public void updatePosition(Entity[][] entityMap, Terrain[][] terrainMap) { // poruszenie animala na następne miejsce
         Position nextPosition = findNextPosition(entityMap, terrainMap);
         if (entityMap[nextPosition.getY()][nextPosition.getX()] == null) move(entityMap, nextPosition);
@@ -94,10 +93,6 @@ public abstract class Animal extends Entity{
 
     public int getThirst() {
         return thirst;
-    }
-
-    public void addSaturation(int saturation) {
-        this.saturation += saturation;
     }
 
     public void setThirst(int thirst) {

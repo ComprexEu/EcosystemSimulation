@@ -9,13 +9,12 @@ public abstract class Herbivore extends Animal {
         maxThirst = 50;
     }
 
-
     public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
         Position targetPosition = new Position(position.getX(), position.getY());;
         if (thirst < saturation) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
             targetPosition = findWater(terrainMap);
         }
-        if (thirst > saturation) {
+        else if (thirst > saturation) {
             targetPosition = findEntity(entityMap, Plant.class);
         }
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji roślinożercy
@@ -42,6 +41,16 @@ public abstract class Herbivore extends Animal {
     }
 
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
+        if (saturation == 0 || thirst == 0) {
+            health -= 5;
+            if (health <= 0){
+                return;
+            }
+        }
+        else {
+            saturation -= 5;
+            thirst -= 5;
+        }
         Position closestPosition;
         if (thirst < saturation) {
             closestPosition = findWater(terrainMap);
@@ -64,8 +73,8 @@ public abstract class Herbivore extends Animal {
     }
 
     void eatPlant(Plant plant){
-        if (plant.isGrown()){
-            super.addSaturation(plant.getFoodValue());
+        if(plant.isGrown()){
+            saturation += plant.getFoodValue();
             plant.changeGrowthStatus();
             plant.resetGrowthState();
         }
