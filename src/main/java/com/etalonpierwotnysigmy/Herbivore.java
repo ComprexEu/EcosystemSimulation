@@ -2,13 +2,22 @@ package com.etalonpierwotnysigmy;
 
 public abstract class Herbivore extends Animal {
     Herbivore(){
-        super.setSightRange(10);
-        super.setThirst(50);
-        super.setSaturation(50);
+        sightRange = 10;
+        thirst = 31;
+        saturation = 30;
+        maxSaturation = 50;
+        maxThirst = 50;
     }
 
+
     public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
-        Position targetPosition = findWater(terrainMap); // później nie tylko water tylko w zależności od potrzeb (hierarchia)
+        Position targetPosition = new Position(position.getX(), position.getY());;
+        if (thirst < saturation) {
+            targetPosition = findWater(terrainMap);
+        }
+        if (thirst > saturation) {
+            targetPosition = findPlant(entityMap);
+        }
         Position potentialNewPosition = new Position(position.getX(), position.getY());
         Position positionDifference;
         Position newPosition = new Position(position.getX(), position.getY());
@@ -16,7 +25,7 @@ public abstract class Herbivore extends Animal {
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
                 if (isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {
-                    if (terrainMap[y][x] == Terrain.GRASS) {
+                    if (terrainMap[y][x] == Terrain.GRASS && entityMap[y][x] == null) {
                         potentialNewPosition.setX(x);
                         potentialNewPosition.setY(y);
                         positionDifference = Position.subtractPositions(targetPosition, potentialNewPosition);

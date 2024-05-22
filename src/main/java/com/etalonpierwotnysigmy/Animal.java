@@ -1,11 +1,14 @@
 package com.etalonpierwotnysigmy;
 
 public abstract class Animal extends Entity{
-    private int health;
-    private int sightRange;
-    private int speed;
-    private int saturation;
-    private int thirst;
+    protected int health;
+    protected int maxHealth;
+    protected int sightRange;
+    protected int speed;
+    protected int saturation;
+    protected int maxSaturation;
+    protected int thirst;
+    protected int maxThirst;
 
     abstract Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap);
 
@@ -28,6 +31,30 @@ public abstract class Animal extends Entity{
                         if (distance < closestPositionDistance) {
                             closestPositionDistance = distance;
                             closestPosition = new Position(tempWaterPosition.getX(), tempWaterPosition.getY());
+                        }
+                    }
+                }
+            }
+        }
+        return closestPosition;
+    }
+
+    protected Position findPlant(Entity[][] entityMap) {
+        Position closestPosition = new Position(position.getX(), position.getY());
+        Position positionDifference;
+        Position tempPlantPosition = new Position(position.getX(), position.getY());
+        double closestPositionDistance = Double.MAX_VALUE;
+        for (int y = position.getY() - getSightRange(); y < position.getY() + getSightRange(); y++) {
+            for (int x = position.getX() - getSightRange(); x < position.getX() + getSightRange(); x++) {
+                if (isInBounds(x, y, entityMap[0].length, entityMap.length)) {
+                    if (entityMap[y][x] instanceof Plant) {
+                        tempPlantPosition.setX(x);
+                        tempPlantPosition.setY(y);
+                        positionDifference = Position.subtractPositions(position, tempPlantPosition);
+                        double distance = Position.positionVectorLength(positionDifference);
+                        if (distance < closestPositionDistance) {
+                            closestPositionDistance = distance;
+                            closestPosition = new Position(tempPlantPosition.getX(), tempPlantPosition.getY());
                         }
                     }
                 }

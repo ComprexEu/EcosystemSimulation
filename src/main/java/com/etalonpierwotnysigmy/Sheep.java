@@ -3,8 +3,9 @@ package com.etalonpierwotnysigmy;
 public class Sheep extends Herbivore{
     public Sheep(Position position) {
         super();
-        super.setHealth(50);
-        super.setSpeed(1);
+        health = 30;
+        maxHealth = 50;
+        speed = 1;
         this.position = position;
     }
 
