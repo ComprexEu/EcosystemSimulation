@@ -30,7 +30,6 @@ public class EcosystemSimulation {
         }
     }
 
-
     private void updateEntities(Terrain[][] terrainMap) {
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
@@ -44,13 +43,20 @@ public class EcosystemSimulation {
                 if (entityMap[y][x] instanceof Animal && !entityMap[y][x].isUpdated()) {
                     entityMap[y][x].setUpdated(true);
                     ((Animal) entityMap[y][x]).update(entityMap, terrainMap);
+                    if(entityMap[y][x] != null && ((Animal) entityMap[y][x]).health <= 0) {
+                        entityMap[y][x] = null; //usuwanie obiektu, którego 'health' spadnie poniżej 0
+                    }
                 }
             }
         }
         System.out.println();
     }
-
+    public static void clearScreen() {      //działa chyba tylko w terminalu windowsowym, potem się to wywali jak będzie gui
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
     public void printMap(Terrain[][] terrainMap) {
+        clearScreen();
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] == null) {
