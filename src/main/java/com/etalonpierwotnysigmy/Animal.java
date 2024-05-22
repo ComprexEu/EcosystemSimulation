@@ -15,7 +15,7 @@ public abstract class Animal extends Entity{
     public boolean isInBounds(int x, int y, int maxSizeX, int maxSizeY) {
         return x >= 0 && y >= 0 && x < maxSizeX && y < maxSizeY;
     }
-    protected Position findWater(Terrain[][] terrainMap) {
+    protected Position findWater(Terrain[][] terrainMap) { // znalezienie najbliższej wody
         Position closestPosition = new Position(position.getX(), position.getY());
         Position positionDifference;
         Position tempWaterPosition = new Position(position.getX(), position.getY());
@@ -39,7 +39,7 @@ public abstract class Animal extends Entity{
         return closestPosition;
     }
 
-    protected Position findPlant(Entity[][] entityMap) {
+    protected Position findPlant(Entity[][] entityMap) { // znalezienie najbliższego planta
         Position closestPosition = new Position(position.getX(), position.getY());
         Position positionDifference;
         Position tempPlantPosition = new Position(position.getX(), position.getY());
@@ -65,14 +65,14 @@ public abstract class Animal extends Entity{
 
 
 
-    public void move(Entity[][] entityMap, Position nextPosition) {
+    public void move(Entity[][] entityMap, Position nextPosition) { // logika odpowiadająca za zmianę pozycji
         entityMap[nextPosition.getY()][nextPosition.getX()] = entityMap[position.getY()][position.getX()];
         entityMap[position.getY()][position.getX()] = null;
         position = new Position(nextPosition.getX(), nextPosition.getY());
     }
 
 
-    public void update(Entity[][] entityMap, Terrain[][] terrainMap) {
+    public void update(Entity[][] entityMap, Terrain[][] terrainMap) { // poruszenie animala na następne miejsce
         Position nextPosition = findNextPosition(entityMap, terrainMap);
         if (entityMap[nextPosition.getY()][nextPosition.getX()] == null) move(entityMap, nextPosition);
     }

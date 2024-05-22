@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14554581-1685-4b78-902a-5f9d521dc2d6" name="Changes" comment="coś się zmieniło">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Animal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Herbivore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Herbivore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Plant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Plant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Predator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Predator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Sheep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Sheep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Turnip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Turnip.java" afterDir="false" />
-    </list>
+    <list default="true" id="14554581-1685-4b78-902a-5f9d521dc2d6" name="Changes" comment="coś się zmieniło" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
