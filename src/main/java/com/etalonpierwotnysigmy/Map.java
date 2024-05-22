@@ -33,6 +33,10 @@ public class Map {
         }
     }
 
+    public static boolean isInBounds(int x, int y, int maxSizeX, int maxSizeY) {
+        return x >= 0 && y >= 0 && x < maxSizeX && y < maxSizeY;
+    }
+
     public int getxSize() {
         return xSize;
     }

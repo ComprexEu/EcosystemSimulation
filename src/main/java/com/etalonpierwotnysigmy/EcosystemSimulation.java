@@ -43,7 +43,14 @@ public class EcosystemSimulation {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] instanceof Animal && !entityMap[y][x].isUpdated()) {
                     entityMap[y][x].setUpdated(true);
-                    ((Animal) entityMap[y][x]).update(entityMap, terrainMap);
+                    ((Animal) entityMap[y][x]).updatePosition(entityMap, terrainMap);
+                }
+            }
+        }
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++) {
+                if (entityMap[y][x] instanceof Animal) {
+                    ((Animal) entityMap[y][x]).updateStats(entityMap, terrainMap);
                 }
             }
         }

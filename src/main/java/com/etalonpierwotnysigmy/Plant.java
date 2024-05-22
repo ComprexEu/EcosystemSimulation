@@ -5,11 +5,11 @@ public abstract class Plant extends Entity{
     protected int foodValue;
     protected int timeToRegrow;
     protected int growthState;
-    Plant(){
+    public Plant(){
         isGrown = true;
     }
 
-    void changeGrowthStatus(){
+    public void changeGrowthStatus(){
         if (growthState == 0)
             isGrown = !isGrown;
         else

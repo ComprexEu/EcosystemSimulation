@@ -12,9 +12,8 @@ public abstract class Animal extends Entity{
 
     abstract Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap);
 
-    public boolean isInBounds(int x, int y, int maxSizeX, int maxSizeY) {
-        return x >= 0 && y >= 0 && x < maxSizeX && y < maxSizeY;
-    }
+    abstract void updateStats(Entity[][] entityMap, Terrain[][] terrainMap);
+
     protected Position findWater(Terrain[][] terrainMap) { // znalezienie najbliższej wody
         Position closestPosition = new Position(position.getX(), position.getY());
         Position positionDifference;
@@ -22,7 +21,7 @@ public abstract class Animal extends Entity{
         double closestPositionDistance = Double.MAX_VALUE;
         for (int y = position.getY() - getSightRange(); y < position.getY() + getSightRange(); y++) {
             for (int x = position.getX() - getSightRange(); x < position.getX() + getSightRange(); x++) {
-                if (isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {
+                if (Map.isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {
                     if (terrainMap[y][x] == Terrain.WATER) {
                         tempWaterPosition.setX(x);
                         tempWaterPosition.setY(y);
@@ -46,7 +45,7 @@ public abstract class Animal extends Entity{
         double closestPositionDistance = Double.MAX_VALUE;
         for (int y = position.getY() - getSightRange(); y < position.getY() + getSightRange(); y++) {
             for (int x = position.getX() - getSightRange(); x < position.getX() + getSightRange(); x++) {
-                if (isInBounds(x, y, entityMap[0].length, entityMap.length)) {
+                if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
                     if (entityType.isInstance(entityMap[y][x])) {
                         tempPlantPosition.setX(x);
                         tempPlantPosition.setY(y);
@@ -72,7 +71,7 @@ public abstract class Animal extends Entity{
     }
 
 
-    public void update(Entity[][] entityMap, Terrain[][] terrainMap) { // poruszenie animala na następne miejsce
+    public void updatePosition(Entity[][] entityMap, Terrain[][] terrainMap) { // poruszenie animala na następne miejsce
         Position nextPosition = findNextPosition(entityMap, terrainMap);
         if (entityMap[nextPosition.getY()][nextPosition.getX()] == null) move(entityMap, nextPosition);
     }
