@@ -16,7 +16,7 @@ public abstract class Herbivore extends Animal {
             targetPosition = findWater(terrainMap);
         }
         if (thirst > saturation) {
-            targetPosition = findPlant(entityMap);
+            targetPosition = findEntity(entityMap, Plant.class);
         }
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji roślinożercy
         Position positionDifference;

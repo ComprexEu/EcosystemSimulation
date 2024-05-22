@@ -39,7 +39,7 @@ public abstract class Animal extends Entity{
         return closestPosition;
     }
 
-    protected Position findPlant(Entity[][] entityMap) { // znalezienie najbliższego planta
+    protected Position findEntity(Entity[][] entityMap, Class<?> entityType) { // znalezienie najbliższego entity danej klasy
         Position closestPosition = new Position(position.getX(), position.getY());
         Position positionDifference;
         Position tempPlantPosition = new Position(position.getX(), position.getY());
@@ -47,7 +47,7 @@ public abstract class Animal extends Entity{
         for (int y = position.getY() - getSightRange(); y < position.getY() + getSightRange(); y++) {
             for (int x = position.getX() - getSightRange(); x < position.getX() + getSightRange(); x++) {
                 if (isInBounds(x, y, entityMap[0].length, entityMap.length)) {
-                    if (entityMap[y][x] instanceof Plant) {
+                    if (entityType.isInstance(entityMap[y][x])) {
                         tempPlantPosition.setX(x);
                         tempPlantPosition.setY(y);
                         positionDifference = Position.subtractPositions(position, tempPlantPosition);
