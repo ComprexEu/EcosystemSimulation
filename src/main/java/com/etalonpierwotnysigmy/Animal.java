@@ -88,6 +88,7 @@ public abstract class Animal extends Entity{
                         if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
                             if (entityMap[y][x] == null && terrainMap[y][x] == Terrain.GRASS) {
                                 entityMap[y][x] = new Sheep(new Position(x, y));
+                                return;
                             }
                         }
                     }
