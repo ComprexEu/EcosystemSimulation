@@ -21,46 +21,43 @@ public abstract class Animal extends Entity{
 
     abstract void updateStats(Entity[][] entityMap, Terrain[][] terrainMap);
 
-    protected Position findWater(Terrain[][] terrainMap) { // znalezienie najbliższej wody
-        Position closestPosition = new Position(position.getX(), position.getY());
-        Position positionDifference;
-        Position tempWaterPosition = new Position(position.getX(), position.getY());
-        double closestPositionDistance = Double.MAX_VALUE;
-        for (int y = position.getY() - getSightRange(); y < position.getY() + getSightRange(); y++) {
-            for (int x = position.getX() - getSightRange(); x < position.getX() + getSightRange(); x++) {
-                if (Map.isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {
-                    if (terrainMap[y][x] == Terrain.WATER) {
-                        tempWaterPosition.setX(x);
-                        tempWaterPosition.setY(y);
-                        positionDifference = Position.subtractPositions(position, tempWaterPosition);
-                        double distance = Position.positionVectorLength(positionDifference);
-                        if (distance < closestPositionDistance) {
-                            closestPositionDistance = distance;
-                            closestPosition = new Position(tempWaterPosition.getX(), tempWaterPosition.getY());
-                        }
-                    }
-                }
-            }
-        }
-        return closestPosition;
+    enum SearchType {
+        WATER,
+        ENTITY,
+        LOVE
     }
 
-    protected Position findEntity(Entity[][] entityMap, Class<?> entityType) { // znalezienie najbliższego entity danej klasy
-        Position closestPosition = new Position(position.getX(), position.getY());
-        Position positionDifference;
-        Position tempPlantPosition = new Position(position.getX(), position.getY());
-        double closestPositionDistance = Double.MAX_VALUE;
-        for (int y = position.getY() - getSightRange(); y < position.getY() + getSightRange(); y++) {
-            for (int x = position.getX() - getSightRange(); x < position.getX() + getSightRange(); x++) {
-                if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
-                    if (entityType.isInstance(entityMap[y][x])) {
-                        tempPlantPosition.setX(x);
-                        tempPlantPosition.setY(y);
-                        positionDifference = Position.subtractPositions(position, tempPlantPosition);
+    protected Position findClosest(Terrain[][] terrainMap, Entity[][] entityMap, Class<?> entityType, SearchType searchType) {
+        Position closestPosition = new Position(position.getX(), position.getY()); // znajdowanie najbliższego zapotrzebowania
+        Position tempPosition = new Position(position.getX(), position.getY());
+        double closestPositionDistance = sightRange;
+        for (int y = position.getY() - sightRange; y < position.getY() + sightRange; y++) {
+            for (int x = position.getX() - sightRange; x < position.getX() + sightRange; x++) {
+                if (Map.isInBounds(x, y, terrainMap != null ? terrainMap[0].length : entityMap[0].length,
+                        terrainMap != null ? terrainMap.length : entityMap.length)) {
+                    boolean isValid = false;
+
+                    switch (searchType) {
+                        case WATER:
+                            isValid = terrainMap[y][x] == Terrain.WATER;
+                            break;
+                        case ENTITY:
+                            isValid = entityType.isInstance(entityMap[y][x]);
+                            break;
+                        case LOVE:
+                            Entity entity = entityMap[y][x];
+                            isValid = entity != null && entity.getClass().equals(entityMap[position.getY()][position.getX()].getClass()) &&
+                                    ((Animal) entity).isBreedable() && ((Animal) entity).getGender() != gender;
+                            break;
+                    }
+                    if (isValid) {
+                        tempPosition.setX(x);
+                        tempPosition.setY(y);
+                        Position positionDifference = Position.subtractPositions(position, tempPosition);
                         double distance = Position.positionVectorLength(positionDifference);
-                        if (distance < closestPositionDistance) {
+                        if (distance <= closestPositionDistance) {
                             closestPositionDistance = distance;
-                            closestPosition = new Position(tempPlantPosition.getX(), tempPlantPosition.getY());
+                            closestPosition = new Position(tempPosition.getX(), tempPosition.getY());
                         }
                     }
                 }
@@ -68,6 +65,18 @@ public abstract class Animal extends Entity{
         }
         return closestPosition;
     }
+    protected Position findWater(Terrain[][] terrainMap) {
+        return findClosest(terrainMap, null, null, SearchType.WATER);
+    }
+
+    protected Position findEntity(Entity[][] entityMap, Class<?> entityType) {
+        return findClosest(null, entityMap, entityType, SearchType.ENTITY);
+    }
+
+    protected Position findLove(Entity[][] entityMap) {
+        return findClosest(null, entityMap, null, SearchType.LOVE);
+    }
+
     public void move(Entity[][] entityMap, Position nextPosition) { // logika odpowiadająca za zmianę pozycji
         entityMap[nextPosition.getY()][nextPosition.getX()] = entityMap[position.getY()][position.getX()];
         entityMap[position.getY()][position.getX()] = null;
@@ -99,6 +108,14 @@ public abstract class Animal extends Entity{
         return thirst;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public boolean isBreedable() {
+        return breedable;
+    }
+
     public void setThirst(int thirst) {
         this.thirst = thirst;
     }
@@ -118,4 +135,6 @@ public abstract class Animal extends Entity{
     public void setSaturation(int saturation) {
         this.saturation = saturation;
     }
+
+
 }

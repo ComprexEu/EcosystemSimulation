@@ -50,7 +50,7 @@ public class EcosystemSimulation {
                                     for(int y2 = Math.max(0,y-1); y2 < Math.min(y+1,ySize); y2++){
                                         for(int x2 = Math.max(0,x-1); x2 < Math.min(x+1,ySize); x2++){
                                             if(entityMap[y2][x2] == null){
-                                                if(entityMap[y][x].getClass()== Sheep.class){
+                                                if(entityMap[y][x].getClass() == Sheep.class){
                                                     entityMap[y2][x2] = new Sheep(new Position(x2,y2));
                                                     System.out.println("nowa owca w miejscu "+ y2 + " "+ x2);
                                                 }

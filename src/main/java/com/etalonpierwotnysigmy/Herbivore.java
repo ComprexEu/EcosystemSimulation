@@ -18,9 +18,8 @@ public abstract class Herbivore extends Animal {
         else if (thirst > saturation && saturation < 30) {
             targetPosition = findEntity(entityMap, Plant.class);
         }
-        if(breedable){
-            if(this instanceof Sheep)
-                targetPosition = findEntity(entityMap, Sheep.class);
+        if (breedable){
+                targetPosition = findLove(entityMap);
         }
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji roślinożercy
         Position positionDifference;
@@ -29,7 +28,7 @@ public abstract class Herbivore extends Animal {
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
                 if (Map.isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {
-                    if (terrainMap[y][x] == Terrain.GRASS && entityMap[y][x] == null) {
+                    if (terrainMap[y][x] == Terrain.GRASS && (entityMap[y][x] == null || entityMap[y][x] == entityMap[position.getY()][position.getX()])) {
                         potentialNewPosition.setX(x);
                         potentialNewPosition.setY(y);
                         positionDifference = Position.subtractPositions(targetPosition, potentialNewPosition);
@@ -75,6 +74,6 @@ public abstract class Herbivore extends Animal {
                 }
             }
         }
-        breedable = thirst > 40 && saturation > 40;
+        breedable = thirst > 45 && saturation > 45;
     }
 }
