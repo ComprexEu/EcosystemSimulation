@@ -45,9 +45,8 @@ public abstract class Animal extends Entity{
                             isValid = entityType.isInstance(entityMap[y][x]);
                             break;
                         case LOVE:
-                            Entity entity = entityMap[y][x];
-                            isValid = entity != null && entity.getClass().equals(entityMap[position.getY()][position.getX()].getClass()) &&
-                                    ((Animal) entity).isBreedable() && ((Animal) entity).getGender() != gender;
+                            isValid = entityMap[y][x] != null && entityMap[y][x].getClass().equals(entityMap[position.getY()][position.getX()].getClass()) &&
+                                    ((Animal) entityMap[y][x]).isBreedable() && ((Animal) entityMap[y][x]).getGender() != gender;
                             break;
                     }
                     if (isValid) {
@@ -65,16 +64,35 @@ public abstract class Animal extends Entity{
         }
         return closestPosition;
     }
-    protected Position findWater(Terrain[][] terrainMap) {
+    protected Position findWater(Terrain[][] terrainMap) { // metoda do znajdywania najbliższej wody
         return findClosest(terrainMap, null, null, SearchType.WATER);
     }
 
-    protected Position findEntity(Entity[][] entityMap, Class<?> entityType) {
+    protected Position findEntity(Entity[][] entityMap, Class<?> entityType) { // metoda do znajdywania najbliższego wybranego przez nas entity
         return findClosest(null, entityMap, entityType, SearchType.ENTITY);
     }
 
-    protected Position findLove(Entity[][] entityMap) {
+    protected Position findLove(Entity[][] entityMap) { // metoda do znajdywania najbliższego partnera
         return findClosest(null, entityMap, null, SearchType.LOVE);
+    }
+
+    public void breed(Entity[][] entityMap, Terrain[][] terrainMap) { // chwiliwo tylko dla sheepów
+        if (breedable && gender == Gender.FEMALE) {
+            Position closestPosition;
+            closestPosition = findLove(entityMap);
+            Position differenceVector = Position.subtractPositions(closestPosition, position);
+            if (Position.positionVectorLength(differenceVector) < 2) {
+                for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
+                    for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
+                        if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
+                            if (entityMap[y][x] == null && terrainMap[y][x] == Terrain.GRASS) {
+                                entityMap[y][x] = new Sheep(new Position(x, y));
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void move(Entity[][] entityMap, Position nextPosition) { // logika odpowiadająca za zmianę pozycji

@@ -38,45 +38,28 @@ public class EcosystemSimulation {
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) {
+        for (int y = 0; y < ySize; y++) { // zmienianie pozycji
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] instanceof Animal && !entityMap[y][x].isUpdated()) {
                     entityMap[y][x].setUpdated(true);
                     ((Animal) entityMap[y][x]).updatePosition(entityMap, terrainMap);
-                    if(entityMap[y][x] instanceof Animal && ((Animal) entityMap[y][x]).breedable){
-                        for(int y1 = Math.max(0,y-1); y1 < Math.min(y+1,ySize); y1++){
-                            for(int x1 = Math.max(0,x-1); x1 < Math.min(x+1,ySize); x1++){
-                                if(entityMap[y][x].getClass().isInstance(entityMap[y1][x1]) && ((Animal) entityMap[y1][x1]).breedable){
-                                    for(int y2 = Math.max(0,y-1); y2 < Math.min(y+1,ySize); y2++){
-                                        for(int x2 = Math.max(0,x-1); x2 < Math.min(x+1,ySize); x2++){
-                                            if(entityMap[y2][x2] == null){
-                                                if(entityMap[y][x].getClass() == Sheep.class){
-                                                    entityMap[y2][x2] = new Sheep(new Position(x2,y2));
-                                                    System.out.println("nowa owca w miejscu "+ y2 + " "+ x2);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) {
+        for (int y = 0; y < ySize; y++) { // zmienianie rzeczy już po przemieszczeniu się (staty, breedowanie)
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] instanceof Animal) {
                     ((Animal) entityMap[y][x]).updateStats(entityMap, terrainMap);
                     if(entityMap[y][x] != null && ((Animal) entityMap[y][x]).health <= 0) {
                         entityMap[y][x] = null; //usuwanie obiektu, którego 'health' spadnie poniżej 0
                     }
+                    if (entityMap[y][x] != null) ((Animal) entityMap[y][x]).breed(entityMap, terrainMap); // rozmnażanie się
                 }
             }
         }
         System.out.println();
     }
-    public static void clearScreen() {      //działa chyba tylko w terminalu windowsowym, potem się to wywali jak będzie gui
+    public static void clearScreen() {      // działa chyba tylko w terminalu windowsowym, potem się to wywali jak będzie gui
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
