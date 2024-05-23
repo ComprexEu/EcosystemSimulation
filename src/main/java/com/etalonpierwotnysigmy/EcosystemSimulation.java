@@ -50,10 +50,17 @@ public class EcosystemSimulation {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] instanceof Animal) {
                     ((Animal) entityMap[y][x]).updateStats(entityMap, terrainMap);
-                    if(entityMap[y][x] != null && ((Animal) entityMap[y][x]).health <= 0) {
-                        entityMap[y][x] = null; //usuwanie obiektu, którego 'health' spadnie poniżej 0
+                    if (entityMap[y][x] != null && ((Animal) entityMap[y][x]).health <= 0) {
+                        entityMap[y][x] = null; // usuwanie obiektu, którego 'health' spadnie poniżej 0
                     }
                     if (entityMap[y][x] != null) ((Animal) entityMap[y][x]).breed(entityMap, terrainMap); // rozmnażanie się
+                }
+            }
+        }
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++) {
+                if (entityMap[y][x] instanceof Plant) {
+                    ((Plant) entityMap[y][x]).changeGrowthStatus();
                 }
             }
         }

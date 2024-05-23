@@ -12,10 +12,10 @@ public abstract class Herbivore extends Animal {
 
     public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
         Position targetPosition = new Position(position.getX(), position.getY());;
-        if (thirst < saturation && thirst < 40) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
+        if (thirst < saturation && thirst <= 45) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
             targetPosition = findWater(terrainMap);
         }
-        else if (thirst > saturation && saturation < 40) {
+        else if (thirst >= saturation && saturation <= 45) {
             targetPosition = findEntity(entityMap, Plant.class);
         }
         if (breedable){
@@ -45,15 +45,15 @@ public abstract class Herbivore extends Animal {
     }
 
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
-        if (saturation == 0 || thirst == 0) {
+        if (saturation <= 0 || thirst <= 0) {
             health -= 5;
             if (health <= 0){
                 return;
             }
         }
         else {
-            saturation --;
-            thirst --;
+            saturation -= 4;
+            thirst -= 4;
         }
         Position closestPosition;
         if (thirst < saturation) {
@@ -68,8 +68,11 @@ public abstract class Herbivore extends Animal {
             closestPosition = findEntity(entityMap, Plant.class);
             Position differenceVector = Position.subtractPositions(closestPosition, position);
             if (Position.positionVectorLength(differenceVector) < 2) {
-                if (((Plant) entityMap[closestPosition.getY()][closestPosition.getX()]).isGrown()) {
+                Plant plant = ((Plant) entityMap[closestPosition.getY()][closestPosition.getX()]);
+                if (plant.isGrown() && saturation != maxSaturation) {
                     saturation += ((Plant) entityMap[closestPosition.getY()][closestPosition.getX()]).getFoodValue();
+                    plant.setGrown(false);
+                    plant.resetGrowthState();
                     if (saturation > maxSaturation) saturation = maxSaturation;
                 }
             }

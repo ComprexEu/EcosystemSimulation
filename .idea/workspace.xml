@@ -8,6 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/EcosystemSimulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/EcosystemSimulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Herbivore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Herbivore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Plant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Plant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Turnip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/Turnip.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,6 +165,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="5" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ClassCastException" package="java.lang" />
+          <option name="timeStamp" value="7" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -81,7 +81,8 @@ public abstract class Animal extends Entity{
             Position closestPosition;
             closestPosition = findLove(entityMap);
             Position differenceVector = Position.subtractPositions(closestPosition, position);
-            if (Position.positionVectorLength(differenceVector) < 2) {
+            if (Position.positionVectorLength(differenceVector) < 2 &&
+                    ((Animal)entityMap[closestPosition.getY()][closestPosition.getX()]).isBreedable()) {
                 for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
                     for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
                         if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {

@@ -11,9 +11,9 @@ public abstract class Plant extends Entity{
 
     public void changeGrowthStatus(){
         if (growthState == 0)
-            isGrown = !isGrown;
+            isGrown = true;
         else
-            this.growthState -= 1;
+            growthState -= 1;
     }
 
     public void resetGrowthState() {
@@ -34,5 +34,9 @@ public abstract class Plant extends Entity{
 
     public boolean isGrown() {
         return isGrown;
+    }
+
+    public void setGrown(boolean grown) {
+        isGrown = grown;
     }
 }
