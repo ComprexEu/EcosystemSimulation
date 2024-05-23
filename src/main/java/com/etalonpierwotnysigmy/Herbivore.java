@@ -12,14 +12,14 @@ public abstract class Herbivore extends Animal {
 
     public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
         Position targetPosition = new Position(position.getX(), position.getY());;
-        if (thirst < saturation && !breedable) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
+        if (breedable){
+            targetPosition = findLove(entityMap);
+        }
+        else if (thirst < saturation) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
             targetPosition = findWater(terrainMap);
         }
-        else if (thirst >= saturation && !breedable) {
+        else {
             targetPosition = findEntity(entityMap, Plant.class);
-        }
-        if (breedable){
-                targetPosition = findLove(entityMap);
         }
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji roślinożercy
         Position positionDifference;
