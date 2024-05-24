@@ -11,6 +11,7 @@ public abstract class Animal extends Entity{
     protected int maxThirst;
     protected Gender gender;
     protected boolean breedable;
+    protected boolean breeding;
 
     Animal(){
         if (Math.random() < 0.5) gender = Gender.MALE;
@@ -76,20 +77,27 @@ public abstract class Animal extends Entity{
         return findClosest(null, entityMap, null, SearchType.LOVE);
     }
 
-    public void breed(Entity[][] entityMap, Terrain[][] terrainMap) { // chwiliwo tylko dla sheepów
+    protected boolean isBreeding(Entity[][] entityMap, Terrain[][] terrainMap) {
         if (breedable && gender == Gender.FEMALE) {
             Position closestPosition;
             closestPosition = findLove(entityMap);
             Position differenceVector = Position.subtractPositions(closestPosition, position);
             if (Position.positionVectorLength(differenceVector) < 2 &&
-                    ((Animal)entityMap[closestPosition.getY()][closestPosition.getX()]).isBreedable()) {
-                for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
-                    for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
-                        if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
-                            if (entityMap[y][x] == null && terrainMap[y][x] == Terrain.GRASS) {
-                                entityMap[y][x] = new Sheep(new Position(x, y));
-                                return;
-                            }
+                    ((Animal) entityMap[closestPosition.getY()][closestPosition.getX()]).isBreedable()) {
+                return breeding = true;
+            }
+        }
+        return breeding = false;
+    }
+
+    public void breed(Entity[][] entityMap, Terrain[][] terrainMap) { // chwiliwo tylko dla sheepów
+        if (isBreeding(entityMap, terrainMap)) {
+            for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
+                for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
+                    if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
+                        if (entityMap[y][x] == null && terrainMap[y][x] == Terrain.GRASS) {
+                            entityMap[y][x] = new Sheep(new Position(x, y));
+                            return;
                         }
                     }
                 }
