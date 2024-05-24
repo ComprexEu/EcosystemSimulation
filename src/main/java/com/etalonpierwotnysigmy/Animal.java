@@ -116,6 +116,10 @@ public abstract class Animal extends Entity{
         if (entityMap[nextPosition.getY()][nextPosition.getX()] == null) move(entityMap, nextPosition);
     }
 
+    public boolean getBreeding() {
+        return breeding;
+    }
+
     public int getHealth() {
         return health;
     }
