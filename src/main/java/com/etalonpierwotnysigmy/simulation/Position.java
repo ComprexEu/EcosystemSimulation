@@ -1,4 +1,4 @@
-package com.etalonpierwotnysigmy;
+package com.etalonpierwotnysigmy.simulation;
 
 public class Position {
     private int x;

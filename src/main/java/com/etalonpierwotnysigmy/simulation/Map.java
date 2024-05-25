@@ -1,4 +1,4 @@
-package com.etalonpierwotnysigmy;
+package com.etalonpierwotnysigmy.simulation;
 
 import de.articdive.jnoise.core.api.functions.Interpolation;
 import de.articdive.jnoise.generators.noise_parameters.fade_functions.FadeFunction;

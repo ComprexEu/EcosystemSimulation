@@ -1,9 +1,9 @@
-package com.etalonpierwotnysigmy;
+package com.etalonpierwotnysigmy.entity.plant;
 
-import java.util.Random;
+import com.etalonpierwotnysigmy.simulation.Position;
 
-public class Turnip extends Plant{
-    Turnip(Position position){
+public class Turnip extends Plant {
+    public Turnip(Position position){
         super();
         this.position = position;
         foodValue = 30;

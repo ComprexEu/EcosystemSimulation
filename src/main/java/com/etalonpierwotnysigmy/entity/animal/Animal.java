@@ -1,6 +1,11 @@
-package com.etalonpierwotnysigmy;
+package com.etalonpierwotnysigmy.entity.animal;
 
-public abstract class Animal extends Entity{
+import com.etalonpierwotnysigmy.entity.Entity;
+import com.etalonpierwotnysigmy.simulation.Map;
+import com.etalonpierwotnysigmy.simulation.Position;
+import com.etalonpierwotnysigmy.simulation.Terrain;
+
+public abstract class Animal extends Entity {
     protected int health;
     protected int maxHealth;
     protected int sightRange;
@@ -10,13 +15,13 @@ public abstract class Animal extends Entity{
     protected int thirst;
     protected int maxThirst;
     protected Gender gender;
-    protected boolean breedable;
+    protected boolean metBreedingRequirements;
     protected boolean breeding;
 
-    Animal(){
+    public Animal(){
         if (Math.random() < 0.5) gender = Gender.MALE;
         else gender = Gender.FEMALE;
-        breedable = false;
+        metBreedingRequirements = false;
     }
     abstract Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap);
 
@@ -40,14 +45,16 @@ public abstract class Animal extends Entity{
 
                     switch (searchType) {
                         case WATER:
+                            assert terrainMap != null;
                             isValid = terrainMap[y][x] == Terrain.WATER;
                             break;
                         case ENTITY:
-                            isValid = entityType.isInstance(entityMap[y][x]);
+                            isValid = entityMap[y][x] != null && entityType.isInstance(entityMap[y][x]);
                             break;
                         case LOVE:
-                            isValid = entityMap[y][x] != null && entityMap[y][x].getClass().equals(entityMap[position.getY()][position.getX()].getClass()) &&
-                                    ((Animal) entityMap[y][x]).isBreedable() && ((Animal) entityMap[y][x]).getGender() != gender;
+                            isValid = entityMap[y][x] != null &&
+                                    entityMap[y][x].getClass().equals(entityMap[position.getY()][position.getX()].getClass()) &&
+                                    ((Animal) entityMap[y][x]).metBreedingRequirements() && ((Animal) entityMap[y][x]).getGender() != gender;
                             break;
                     }
                     if (isValid) {
@@ -78,12 +85,12 @@ public abstract class Animal extends Entity{
     }
 
     protected boolean isBreeding(Entity[][] entityMap, Terrain[][] terrainMap) {
-        if (breedable && gender == Gender.FEMALE) {
+        if (metBreedingRequirements && gender == Gender.FEMALE) {
             Position closestPosition;
             closestPosition = findLove(entityMap);
             Position differenceVector = Position.subtractPositions(closestPosition, position);
             if (Position.positionVectorLength(differenceVector) < 2 &&
-                    ((Animal) entityMap[closestPosition.getY()][closestPosition.getX()]).isBreedable()) {
+                    ((Animal) entityMap[closestPosition.getY()][closestPosition.getX()]).metBreedingRequirements()) {
                 return breeding = true;
             }
         }
@@ -144,8 +151,8 @@ public abstract class Animal extends Entity{
         return gender;
     }
 
-    public boolean isBreedable() {
-        return breedable;
+    public boolean metBreedingRequirements() {
+        return metBreedingRequirements;
     }
 
     public void setThirst(int thirst) {

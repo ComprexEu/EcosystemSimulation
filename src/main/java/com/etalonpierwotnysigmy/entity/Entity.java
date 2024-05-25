@@ -1,4 +1,6 @@
-package com.etalonpierwotnysigmy;
+package com.etalonpierwotnysigmy.entity;
+
+import com.etalonpierwotnysigmy.simulation.Position;
 
 public abstract class Entity {
     protected Position position;

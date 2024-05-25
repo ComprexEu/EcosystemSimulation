@@ -1,6 +1,14 @@
-package com.etalonpierwotnysigmy;
+package com.etalonpierwotnysigmy.entity.animal;
+
+import com.etalonpierwotnysigmy.simulation.Map;
+import com.etalonpierwotnysigmy.entity.plant.Plant;
+import com.etalonpierwotnysigmy.simulation.Position;
+import com.etalonpierwotnysigmy.simulation.Terrain;
+import com.etalonpierwotnysigmy.entity.Entity;
 
 public abstract class Herbivore extends Animal {
+    protected Position targetPosition;
+    protected boolean foundTarget;
     public Herbivore(){
         super();
         sightRange = 10;
@@ -11,8 +19,7 @@ public abstract class Herbivore extends Animal {
     }
 
     public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
-        Position targetPosition = new Position(position.getX(), position.getY());;
-        if (breedable){
+        if (metBreedingRequirements){
             targetPosition = findLove(entityMap);
         }
         else if (thirst < saturation) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
@@ -37,6 +44,9 @@ public abstract class Herbivore extends Animal {
                             closestPositionDistance = distance;
                             newPosition = new Position(potentialNewPosition.getX(), potentialNewPosition.getY());
                         }
+                        if (distance < 2 && distance > 0) {
+                            foundTarget = true;
+                        }
                     }
                 }
             }
@@ -55,28 +65,23 @@ public abstract class Herbivore extends Animal {
             saturation -= 2;
             thirst -= 2;
         }
-        Position closestPosition;
-        if (thirst < saturation) {
-            closestPosition = findWater(terrainMap);
-            Position differenceVector = Position.subtractPositions(closestPosition, position);
-            if (Position.positionVectorLength(differenceVector) < 2) {
-                thirst += 10;
-                if (thirst > maxThirst) thirst = maxThirst;
+        if (targetPosition == null) {
+            targetPosition = position;
+        }
+        if (terrainMap[targetPosition.getY()][targetPosition.getX()].equals(Terrain.WATER) && foundTarget) {
+            thirst += 10;
+            if (thirst > maxThirst) thirst = maxThirst;
+        }
+        else if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Plant && foundTarget) {
+            Plant plant = ((Plant) entityMap[targetPosition.getY()][targetPosition.getX()]);
+            if (plant.isGrown() && saturation != maxSaturation) {
+                saturation += plant.getFoodValue();
+                plant.setGrown(false);
+                plant.resetGrowthState();
+                if (saturation > maxSaturation) saturation = maxSaturation;
             }
         }
-        if (thirst >= saturation) {
-            closestPosition = findEntity(entityMap, Plant.class);
-            Position differenceVector = Position.subtractPositions(closestPosition, position);
-            if (Position.positionVectorLength(differenceVector) < 2) {
-                Plant plant = ((Plant) entityMap[closestPosition.getY()][closestPosition.getX()]);
-                if (plant.isGrown() && saturation != maxSaturation) {
-                    saturation += ((Plant) entityMap[closestPosition.getY()][closestPosition.getX()]).getFoodValue();
-                    plant.setGrown(false);
-                    plant.resetGrowthState();
-                    if (saturation > maxSaturation) saturation = maxSaturation;
-                }
-            }
-        }
-        breedable = thirst > 40 && saturation > 40;
+        metBreedingRequirements = thirst > 40 && saturation > 40;
+        foundTarget = false;
     }
 }

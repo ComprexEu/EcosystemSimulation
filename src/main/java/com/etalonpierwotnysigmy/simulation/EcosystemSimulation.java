@@ -1,4 +1,11 @@
-package com.etalonpierwotnysigmy;
+package com.etalonpierwotnysigmy.simulation;
+
+import com.etalonpierwotnysigmy.entity.Entity;
+import com.etalonpierwotnysigmy.entity.animal.Animal;
+import com.etalonpierwotnysigmy.entity.animal.Herbivore;
+import com.etalonpierwotnysigmy.entity.animal.Sheep;
+import com.etalonpierwotnysigmy.entity.plant.Plant;
+import com.etalonpierwotnysigmy.entity.plant.Turnip;
 
 public class EcosystemSimulation {
     int xSize;
@@ -40,7 +47,8 @@ public class EcosystemSimulation {
         }
         for (int y = 0; y < ySize; y++) { // zmienianie pozycji
             for (int x = 0; x < xSize; x++) {
-                if (entityMap[y][x] instanceof Animal && !entityMap[y][x].isUpdated()) {
+                if (entityMap[y][x] instanceof Animal &&
+                        !entityMap[y][x].isUpdated()) {
                     entityMap[y][x].setUpdated(true);
                     if (!((Animal) entityMap[y][x]).getBreeding()) {
                         ((Animal) entityMap[y][x]).updatePosition(entityMap, terrainMap);
@@ -50,9 +58,9 @@ public class EcosystemSimulation {
         }
         for (int y = 0; y < ySize; y++) { // zmienianie rzeczy już po przemieszczeniu się (staty, breedowanie)
             for (int x = 0; x < xSize; x++) {
-                if (entityMap[y][x] instanceof Animal) {
-                    ((Animal) entityMap[y][x]).updateStats(entityMap, terrainMap);
-                    if (entityMap[y][x] != null && ((Animal) entityMap[y][x]).health <= 0) {
+                if (entityMap[y][x] != null && entityMap[y][x] instanceof Animal) {
+                    ((Herbivore) entityMap[y][x]).updateStats(entityMap, terrainMap);
+                    if (entityMap[y][x] != null && ((Animal) entityMap[y][x]).getHealth() <= 0) {
                         entityMap[y][x] = null; // usuwanie obiektu, którego 'health' spadnie poniżej 0
                     }
                     if (entityMap[y][x] != null) ((Animal) entityMap[y][x]).breed(entityMap, terrainMap); // rozmnażanie się

@@ -1,6 +1,8 @@
-package com.etalonpierwotnysigmy;
+package com.etalonpierwotnysigmy.entity.plant;
 
-public abstract class Plant extends Entity{
+import com.etalonpierwotnysigmy.entity.Entity;
+
+public abstract class Plant extends Entity {
     protected boolean isGrown;
     protected int foodValue;
     protected int timeToRegrow;
