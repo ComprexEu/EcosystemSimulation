@@ -21,6 +21,7 @@ public class EcosystemSimulation {
         Thread.sleep(2000);
         while (true) {
             printMap(terrainMap);
+            System.out.println();
             updateEntities(terrainMap);
             Thread.sleep(500);
         }
@@ -75,7 +76,6 @@ public class EcosystemSimulation {
                 }
             }
         }
-        System.out.println();
     }
     public static void clearScreen() {      // działa chyba tylko w terminalu windowsowym, potem się to wywali jak będzie gui
         System.out.print("\033[H\033[2J");
