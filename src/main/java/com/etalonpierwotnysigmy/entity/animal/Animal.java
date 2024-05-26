@@ -54,7 +54,8 @@ public abstract class Animal extends Entity {
                         case LOVE:
                             isValid = entityMap[y][x] != null &&
                                     entityMap[y][x].getClass().equals(entityMap[position.getY()][position.getX()].getClass()) &&
-                                    ((Animal) entityMap[y][x]).metBreedingRequirements() && ((Animal) entityMap[y][x]).getGender() != gender;
+                                    ((Animal) entityMap[y][x]).metBreedingRequirements() &&
+                                    ((Animal) entityMap[y][x]).getGender() != gender;
                             break;
                     }
                     if (isValid) {
@@ -97,7 +98,7 @@ public abstract class Animal extends Entity {
         return breeding = false;
     }
 
-    public void breed(Entity[][] entityMap, Terrain[][] terrainMap) { // chwiliwo tylko dla sheepów
+    public void breed(Entity[][] entityMap, Terrain[][] terrainMap) { // chwiliwo tylko dla sheepów, pewnie później przeniesione do osobnych klas
         if (isBreeding(entityMap, terrainMap)) {
             for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
                 for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {

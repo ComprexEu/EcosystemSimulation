@@ -7,18 +7,19 @@ import com.etalonpierwotnysigmy.simulation.Terrain;
 import com.etalonpierwotnysigmy.entity.Entity;
 
 public abstract class Herbivore extends Animal {
-    protected Position targetPosition;
-    protected boolean foundTarget;
+    private Position targetPosition;
+    private boolean foundTarget;
     public Herbivore(){
         super();
-        sightRange = 10;
-        thirst = 31;
+        sightRange = 5;
+        thirst = 30;
         saturation = 30;
         maxSaturation = 50;
         maxThirst = 50;
     }
 
     public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
+        targetPosition = position;
         if (metBreedingRequirements){
             targetPosition = findLove(entityMap);
         }
@@ -43,9 +44,9 @@ public abstract class Herbivore extends Animal {
                         if (distance < closestPositionDistance) {
                             closestPositionDistance = distance;
                             newPosition = new Position(potentialNewPosition.getX(), potentialNewPosition.getY());
-                        }
-                        if (distance < 2 && distance > 0) {
-                            foundTarget = true;
+                            if (distance < 2 && distance > 0) {
+                                foundTarget = true;
+                            }
                         }
                     }
                 }
@@ -66,7 +67,7 @@ public abstract class Herbivore extends Animal {
             thirst -= 2;
         }
         if (targetPosition == null) {
-            targetPosition = position;
+            targetPosition = position; // wyeliminowanie przypadku kiedy findNextPosition zmieniło targetPosition na potencjalnego partnera, ale on przemieścił się
         }
         if (terrainMap[targetPosition.getY()][targetPosition.getX()].equals(Terrain.WATER) && foundTarget) {
             thirst += 10;

@@ -45,29 +45,30 @@ public class EcosystemSimulation {
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) { // zmienianie pozycji
+        for (int y = 0; y < ySize; y++) { // wykonywanie ruchu (poruszenie się, albo rozmnażanie)
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] instanceof Animal &&
                         !entityMap[y][x].isUpdated()) {
                     entityMap[y][x].setUpdated(true);
+                    ((Animal) entityMap[y][x]).breed(entityMap, terrainMap);
                     if (!((Animal) entityMap[y][x]).getBreeding()) {
                         ((Animal) entityMap[y][x]).updatePosition(entityMap, terrainMap);
+
                     }
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) { // zmienianie rzeczy już po przemieszczeniu się (staty, breedowanie)
+        for (int y = 0; y < ySize; y++) { // zmienianie statystyk po przemieszczeniu się
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] != null && entityMap[y][x] instanceof Animal) {
                     ((Herbivore) entityMap[y][x]).updateStats(entityMap, terrainMap);
                     if (entityMap[y][x] != null && ((Animal) entityMap[y][x]).getHealth() <= 0) {
                         entityMap[y][x] = null; // usuwanie obiektu, którego 'health' spadnie poniżej 0
                     }
-                    if (entityMap[y][x] != null) ((Animal) entityMap[y][x]).breed(entityMap, terrainMap); // rozmnażanie się
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) {
+        for (int y = 0; y < ySize; y++) { // wyrastanie planta
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] instanceof Plant) {
                     ((Plant) entityMap[y][x]).changeGrowthStatus();
