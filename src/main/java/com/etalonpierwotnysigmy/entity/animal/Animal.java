@@ -85,7 +85,7 @@ public abstract class Animal extends Entity {
         return findClosest(null, entityMap, null, SearchType.LOVE);
     }
 
-    public boolean isBreeding(Entity[][] entityMap, Terrain[][] terrainMap) {
+    public boolean isBreeding(Entity[][] entityMap) {
         if (metBreedingRequirements && gender == Gender.FEMALE) {
             Position closestPosition;
             closestPosition = findLove(entityMap);
@@ -126,18 +126,6 @@ public abstract class Animal extends Entity {
         return health;
     }
 
-    public int getSightRange() {
-        return sightRange;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public int getThirst() {
-        return thirst;
-    }
-
     public Gender getGender() {
         return gender;
     }
@@ -146,25 +134,8 @@ public abstract class Animal extends Entity {
         return metBreedingRequirements;
     }
 
-    public void setThirst(int thirst) {
-        this.thirst = thirst;
-    }
-
-    public void setSightRange(int sightRange) {
-        this.sightRange = sightRange;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
     public void setHealth(int health) {
         this.health = health;
     }
-
-    public void setSaturation(int saturation) {
-        this.saturation = saturation;
-    }
-
 
 }

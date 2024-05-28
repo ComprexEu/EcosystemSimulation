@@ -34,7 +34,7 @@ public abstract class Herbivore extends Animal {
         Position positionDifference;
         Position newPosition = new Position(position.getX(), position.getY());
         double closestPositionDistance = Double.MAX_VALUE;
-        double furthestPositionDistance = 0;
+        double furthestPositionDistance = -1;
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
                 if (Map.isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {
@@ -100,4 +100,5 @@ public abstract class Herbivore extends Animal {
         metBreedingRequirements = thirst > 40 && saturation > 40;
         foundTarget = false;
     }
+
 }

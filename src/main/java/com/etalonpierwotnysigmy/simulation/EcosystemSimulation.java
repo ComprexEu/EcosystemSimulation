@@ -49,7 +49,7 @@ public class EcosystemSimulation {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] instanceof Animal &&
                         entityMap[y][x].didntMove() &&
-                        ((Animal) entityMap[y][x]).isBreeding(entityMap, terrainMap)) {
+                        ((Animal) entityMap[y][x]).isBreeding(entityMap)) {
                     entityMap[y][x].setMoved(true);
                     ((Animal) entityMap[y][x]).breed(entityMap, terrainMap);
                 }

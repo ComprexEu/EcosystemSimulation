@@ -19,10 +19,6 @@ public abstract class Predator extends Animal {
         maxThirst = 50;
     }
 
-    public int getDamage() {
-        return damage;
-    }
-
     @Override
     public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
         targetPosition = position;
