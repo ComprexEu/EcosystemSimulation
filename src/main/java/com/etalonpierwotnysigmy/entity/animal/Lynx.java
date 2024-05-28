@@ -5,12 +5,13 @@ import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 
-public class Sheep extends Herbivore {
-    public Sheep(Position position) {
+public class Lynx extends Predator{
+    public Lynx(Position position) {
         super();
-        health = 50;
-        maxHealth = 50;
-        speed = 1;
+        damage = 5;
+        health = 35;
+        maxHealth = 35;
+        speed = 3;
         this.position = position;
     }
 
@@ -19,7 +20,7 @@ public class Sheep extends Herbivore {
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
                 if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
                     if (entityMap[y][x] == null && terrainMap[y][x] == Terrain.GRASS) {
-                        entityMap[y][x] = new Sheep(new Position(x, y));
+                        entityMap[y][x] = new Wolf(new Position(x, y));
                         entityMap[y][x].setMoved(true);
                         return;
                     }
@@ -27,5 +28,4 @@ public class Sheep extends Herbivore {
             }
         }
     }
-
 }

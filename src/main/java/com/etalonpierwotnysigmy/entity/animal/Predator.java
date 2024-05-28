@@ -11,7 +11,6 @@ public abstract class Predator extends Animal {
 
     public Predator() {
         super();
-        damage = 10;
         sightRange = 10;
         thirst = 30;
         saturation = 30;

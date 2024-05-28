@@ -5,12 +5,12 @@ import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 
-public class Sheep extends Herbivore {
-    public Sheep(Position position) {
+public class Deer extends Herbivore{
+    public Deer(Position position) {
         super();
-        health = 50;
-        maxHealth = 50;
-        speed = 1;
+        health = 40;
+        maxHealth = 40;
+        speed = 2;
         this.position = position;
     }
 
@@ -27,5 +27,4 @@ public class Sheep extends Herbivore {
             }
         }
     }
-
 }
