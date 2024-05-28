@@ -6,7 +6,7 @@ public class Turnip extends Plant {
     public Turnip(Position position){
         super();
         this.position = position;
-        foodValue = 30;
+        foodValue = 40;
         timeToRegrow = 3; // liczba iteracji symulacji, po której odrośnie
         growthState = 0;
     }
