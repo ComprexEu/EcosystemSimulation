@@ -6,6 +6,8 @@ import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 import com.etalonpierwotnysigmy.entity.Entity;
 
+import java.util.Random;
+
 public abstract class Herbivore extends Animal {
     private Position targetPosition;
     private boolean foundTarget;
@@ -29,6 +31,12 @@ public abstract class Herbivore extends Animal {
             } else {
                 targetPosition = findEntity(entityMap, Plant.class);
             }
+        }
+        if (targetPosition == position) {
+            Random rand = new Random();
+            int randomNumber1 = rand.nextInt(3) - 1;
+            int randomNumber2 = rand.nextInt(3) - 1;
+            return new Position(position.getX() + randomNumber1, position.getY() + randomNumber2);
         }
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji roślinożercy
         Position positionDifference;

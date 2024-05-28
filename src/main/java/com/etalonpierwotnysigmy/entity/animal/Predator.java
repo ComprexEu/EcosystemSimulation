@@ -4,6 +4,8 @@ import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 
+import java.util.Random;
+
 public abstract class Predator extends Animal {
     protected int damage;
     private Position targetPosition;
@@ -29,6 +31,12 @@ public abstract class Predator extends Animal {
         }
         else {
             targetPosition = findEntity(entityMap, Herbivore.class);
+        }
+        if (targetPosition == position) {
+            Random rand = new Random();
+            int randomNumber1 = rand.nextInt(3) - 1;
+            int randomNumber2 = rand.nextInt(3) - 1;
+            return new Position(position.getX() + randomNumber1, position.getY() + randomNumber2);
         }
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji drapieżnika
         Position positionDifference;
