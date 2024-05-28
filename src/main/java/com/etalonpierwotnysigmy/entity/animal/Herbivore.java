@@ -32,12 +32,6 @@ public abstract class Herbivore extends Animal {
                 targetPosition = findEntity(entityMap, Plant.class);
             }
         }
-        if (targetPosition == position) {
-            Random rand = new Random();
-            int randomNumber1 = rand.nextInt(3) - 1;
-            int randomNumber2 = rand.nextInt(3) - 1;
-            return new Position(position.getX() + randomNumber1, position.getY() + randomNumber2);
-        }
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji roślinożercy
         Position positionDifference;
         Position newPosition = new Position(position.getX(), position.getY());
@@ -105,7 +99,7 @@ public abstract class Herbivore extends Animal {
                 if (saturation > maxSaturation) saturation = maxSaturation;
             }
         }
-        metBreedingRequirements = thirst > 40 && saturation > 40;
+        metBreedingRequirements = thirst > 35 && saturation > 35;
         foundTarget = false;
     }
 
