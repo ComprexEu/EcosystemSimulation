@@ -1,9 +1,7 @@
 package com.etalonpierwotnysigmy.simulation;
 
 import com.etalonpierwotnysigmy.entity.Entity;
-import com.etalonpierwotnysigmy.entity.animal.Animal;
-import com.etalonpierwotnysigmy.entity.animal.Herbivore;
-import com.etalonpierwotnysigmy.entity.animal.Sheep;
+import com.etalonpierwotnysigmy.entity.animal.*;
 import com.etalonpierwotnysigmy.entity.plant.Plant;
 import com.etalonpierwotnysigmy.entity.plant.Turnip;
 
@@ -33,6 +31,7 @@ public class EcosystemSimulation {
                 if (terrainMap[y][x] == Terrain.GRASS) {
                     if (Math.random() < 0.1) entityMap[y][x] = new Sheep(new Position(x, y)); // for testing only
                     else if (Math.random() < 0.1) entityMap[y][x] = new Turnip(new Position(x, y));
+                    else if (Math.random() < 0.04) entityMap[y][x] = new Wolf(new Position(x, y));
                 }
             }
         }
@@ -42,27 +41,44 @@ public class EcosystemSimulation {
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] != null) {
-                    entityMap[y][x].setUpdated(false);
+                    entityMap[y][x].setMoved(false);
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) { // wykonywanie ruchu (poruszenie się, albo rozmnażanie)
+        for (int y = 0; y < ySize; y++) { // rozmnażanie się
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] instanceof Animal &&
-                        !entityMap[y][x].isUpdated()) {
-                    entityMap[y][x].setUpdated(true);
+                        entityMap[y][x].didntMove() &&
+                        ((Animal) entityMap[y][x]).isBreeding(entityMap, terrainMap)) {
+                    entityMap[y][x].setMoved(true);
                     ((Animal) entityMap[y][x]).breed(entityMap, terrainMap);
-                    if (!((Animal) entityMap[y][x]).getBreeding()) {
-                        ((Animal) entityMap[y][x]).updatePosition(entityMap, terrainMap);
-
-                    }
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) { // zmienianie statystyk po przemieszczeniu się
+        for (int y = 0; y < ySize; y++) { // poruszenie się roślinożerców
+            for (int x = 0; x < xSize; x++) {
+                if (entityMap[y][x] != null && entityMap[y][x] instanceof Herbivore &&
+                        entityMap[y][x].didntMove() &&
+                        !((Herbivore) entityMap[y][x]).getBreeding()) {
+                    entityMap[y][x].setMoved(true);
+                    ((Herbivore) entityMap[y][x]).updatePosition(entityMap, terrainMap);
+                }
+            }
+        }
+        for (int y = 0; y < ySize; y++) { // poruszenie się drapieżników
+            for (int x = 0; x < xSize; x++) {
+                if (entityMap[y][x] != null && entityMap[y][x] instanceof Predator &&
+                        entityMap[y][x].didntMove() &&
+                        !((Predator) entityMap[y][x]).getBreeding()) {
+                    entityMap[y][x].setMoved(true);
+                    ((Predator) entityMap[y][x]).updatePosition(entityMap, terrainMap);
+                }
+            }
+        }
+        for (int y = 0; y < ySize; y++) { // zmiana statystyk po wykonaniu ruchu
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] != null && entityMap[y][x] instanceof Animal) {
-                    ((Herbivore) entityMap[y][x]).updateStats(entityMap, terrainMap);
+                    ((Animal) entityMap[y][x]).updateStats(entityMap, terrainMap);
                     if (entityMap[y][x] != null && ((Animal) entityMap[y][x]).getHealth() <= 0) {
                         entityMap[y][x] = null; // usuwanie obiektu, którego 'health' spadnie poniżej 0
                     }
@@ -98,6 +114,10 @@ public class EcosystemSimulation {
                     else if (entityMap[y][x] instanceof Turnip) {
                         System.out.print("\u001B[35m");
                         System.out.print("TURNP ");
+                    }
+                    else if (entityMap[y][x] instanceof Wolf) {
+                        System.out.print("\u001B[33m");
+                        System.out.print("WOOLF ");
                     }
                 }
             }

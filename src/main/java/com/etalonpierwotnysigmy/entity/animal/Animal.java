@@ -25,7 +25,7 @@ public abstract class Animal extends Entity {
     }
     abstract Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap);
 
-    abstract void updateStats(Entity[][] entityMap, Terrain[][] terrainMap);
+    public abstract void updateStats(Entity[][] entityMap, Terrain[][] terrainMap);
 
     enum SearchType {
         WATER,
@@ -85,33 +85,21 @@ public abstract class Animal extends Entity {
         return findClosest(null, entityMap, null, SearchType.LOVE);
     }
 
-    protected boolean isBreeding(Entity[][] entityMap, Terrain[][] terrainMap) {
+    public boolean isBreeding(Entity[][] entityMap, Terrain[][] terrainMap) {
         if (metBreedingRequirements && gender == Gender.FEMALE) {
             Position closestPosition;
             closestPosition = findLove(entityMap);
             Position differenceVector = Position.subtractPositions(closestPosition, position);
             if (Position.positionVectorLength(differenceVector) < 2 &&
+                    Position.positionVectorLength(differenceVector) > 0 &&
                     ((Animal) entityMap[closestPosition.getY()][closestPosition.getX()]).metBreedingRequirements()) {
                 return breeding = true;
             }
+
         }
         return breeding = false;
     }
-
-    public void breed(Entity[][] entityMap, Terrain[][] terrainMap) { // chwiliwo tylko dla sheepów, pewnie później przeniesione do osobnych klas
-        if (isBreeding(entityMap, terrainMap)) {
-            for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
-                for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
-                    if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
-                        if (entityMap[y][x] == null && terrainMap[y][x] == Terrain.GRASS) {
-                            entityMap[y][x] = new Sheep(new Position(x, y));
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    public abstract void breed(Entity[][] entityMap, Terrain[][] terrainMap);
 
     public void move(Entity[][] entityMap, Position nextPosition) { // logika odpowiadająca za zmianę pozycji
         entityMap[nextPosition.getY()][nextPosition.getX()] = entityMap[position.getY()][position.getX()];
@@ -120,12 +108,18 @@ public abstract class Animal extends Entity {
     }
 
     public void updatePosition(Entity[][] entityMap, Terrain[][] terrainMap) { // poruszenie animala na następne miejsce
-        Position nextPosition = findNextPosition(entityMap, terrainMap);
-        if (entityMap[nextPosition.getY()][nextPosition.getX()] == null) move(entityMap, nextPosition);
+        for (int i = 0; i < speed; i++) {
+            Position nextPosition = findNextPosition(entityMap, terrainMap);
+            if (entityMap[nextPosition.getY()][nextPosition.getX()] == null) move(entityMap, nextPosition);
+        }
     }
 
     public boolean getBreeding() {
         return breeding;
+    }
+
+    public int getSaturation() {
+        return saturation;
     }
 
     public int getHealth() {
@@ -138,10 +132,6 @@ public abstract class Animal extends Entity {
 
     public int getSpeed() {
         return speed;
-    }
-
-    public int getSatiety() {
-        return saturation;
     }
 
     public int getThirst() {

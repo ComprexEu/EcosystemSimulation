@@ -4,17 +4,17 @@ import com.etalonpierwotnysigmy.simulation.Position;
 
 public abstract class Entity {
     protected Position position;
-    protected boolean updated;
+    protected boolean moved; // zmienna dbająca o to, aby wykonywany był tylko jeden ruch w iteracji
 
     public Position getPosition() {
         return position;
     }
 
-    public boolean isUpdated() {
-        return updated;
+    public boolean didntMove() {
+        return !moved;
     }
 
-    public void setUpdated(boolean updated) {
-        this.updated = updated;
+    public void setMoved(boolean moved) {
+        this.moved = moved;
     }
 }

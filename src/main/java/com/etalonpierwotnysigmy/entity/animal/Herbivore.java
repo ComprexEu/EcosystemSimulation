@@ -18,34 +18,48 @@ public abstract class Herbivore extends Animal {
         maxThirst = 50;
     }
 
+    @Override
     public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
-        targetPosition = position;
-        if (metBreedingRequirements){
-            targetPosition = findLove(entityMap);
-        }
-        else if (thirst < saturation) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
-            targetPosition = findWater(terrainMap);
-        }
-        else {
-            targetPosition = findEntity(entityMap, Plant.class);
+        targetPosition = findEntity(entityMap, Predator.class);
+        if (!(entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator)) {
+            if (metBreedingRequirements) {
+                targetPosition = findLove(entityMap);
+            } else if (thirst < saturation) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
+                targetPosition = findWater(terrainMap);
+            } else {
+                targetPosition = findEntity(entityMap, Plant.class);
+            }
         }
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji roślinożercy
         Position positionDifference;
         Position newPosition = new Position(position.getX(), position.getY());
         double closestPositionDistance = Double.MAX_VALUE;
+        double furthestPositionDistance = 0;
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
                 if (Map.isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {
-                    if (terrainMap[y][x] == Terrain.GRASS && (entityMap[y][x] == null || entityMap[y][x] == entityMap[position.getY()][position.getX()])) {
+                    if (terrainMap[y][x] == Terrain.GRASS &&
+                            (entityMap[y][x] == null || entityMap[y][x] == entityMap[position.getY()][position.getX()])) {
                         potentialNewPosition.setX(x);
                         potentialNewPosition.setY(y);
                         positionDifference = Position.subtractPositions(targetPosition, potentialNewPosition);
                         double distance = Position.positionVectorLength(positionDifference);
-                        if (distance < closestPositionDistance) {
-                            closestPositionDistance = distance;
-                            newPosition = new Position(potentialNewPosition.getX(), potentialNewPosition.getY());
-                            if (distance < 2 && distance > 0) {
-                                foundTarget = true;
+                        if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator) {
+                            if (distance > furthestPositionDistance) {
+                                furthestPositionDistance = distance;
+                                newPosition = new Position(potentialNewPosition.getX(), potentialNewPosition.getY());
+                                if (distance < 2 && distance > 0) {
+                                    foundTarget = true;
+                                }
+                            }
+                        }
+                        else {
+                            if (distance < closestPositionDistance) {
+                                closestPositionDistance = distance;
+                                newPosition = new Position(potentialNewPosition.getX(), potentialNewPosition.getY());
+                                if (distance < 2 && distance > 0) {
+                                    foundTarget = true;
+                                }
                             }
                         }
                     }
@@ -55,6 +69,7 @@ public abstract class Herbivore extends Animal {
         return newPosition;
     }
 
+    @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
         if (saturation <= 0 || thirst <= 0) {
             health -= 5;
