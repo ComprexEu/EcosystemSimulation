@@ -2,6 +2,7 @@ package com.etalonpierwotnysigmy.simulation;
 
 import com.etalonpierwotnysigmy.entity.Entity;
 import com.etalonpierwotnysigmy.entity.animal.*;
+import com.etalonpierwotnysigmy.entity.plant.Mushroom;
 import com.etalonpierwotnysigmy.entity.plant.Plant;
 import com.etalonpierwotnysigmy.entity.plant.Turnip;
 
@@ -23,7 +24,7 @@ public class EcosystemSimulation {
             printMap(terrainMap);
             System.out.println();
             updateEntities(terrainMap);
-            Thread.sleep(500);
+            Thread.sleep(100);
         }
     }
 
@@ -31,9 +32,26 @@ public class EcosystemSimulation {
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (terrainMap[y][x] == Terrain.GRASS) {
-                    if (Math.random() < 0.1) entityMap[y][x] = new Sheep(new Position(x, y)); // for testing only
-                    else if (Math.random() < 0.1) entityMap[y][x] = new Turnip(new Position(x, y));
-                    else if (Math.random() < 0.04) entityMap[y][x] = new Wolf(new Position(x, y));
+                    if (y < ySize / 2 && x < xSize / 2 && Math.random() < 0.2) entityMap[y][x] =
+                            new Sheep(new Position(x, y)); // for testing only
+                    else if (y < ySize / 2 && x > xSize / 2 && Math.random() < 0.2)
+                        entityMap[y][x] = new Wolf(new Position(x, y));
+                    else if (y >= ySize / 2 && x >= xSize / 2 && Math.random() < 0.15)
+                        entityMap[y][x] = new Deer(new Position(x, y));
+                    else if (y >= ySize / 2 && x < xSize / 2 && Math.random() < 0.1)
+                        entityMap[y][x] = new Lynx(new Position(x, y));
+                    else if (Math.random() < 0.01)
+                        entityMap[y][x] = new Sheep(new Position(x, y));
+                    else if (Math.random() < 0.01)
+                        entityMap[y][x] = new Deer(new Position(x, y));
+                    else if (Math.random() < 0.01)
+                        entityMap[y][x] = new Wolf(new Position(x, y));
+                    else if (Math.random() < 0.01)
+                        entityMap[y][x] = new Lynx(new Position(x, y));
+                    else if (Math.random() < 0.05)
+                        entityMap[y][x] = new Mushroom(new Position(x, y));
+                    else if (Math.random() < 0.05)
+                        entityMap[y][x] = new Turnip(new Position(x, y));
                 }
             }
         }
@@ -118,7 +136,7 @@ public class EcosystemSimulation {
                         // https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
                         // \033[38;2;<r>;<g>;<b>m     #Select RGB foreground color
                         // \033[48;2;<r>;<g>;<b>m     #Select RGB background color
-                        System.out.print("\033[48;2;210;210;210m");
+                        System.out.print("\033[48;2;160;160;160m");
                         System.out.print(" S");
                     }
                     else if (entityMap[y][x] instanceof Turnip) {
@@ -126,9 +144,22 @@ public class EcosystemSimulation {
                         System.out.print(" T");
                     }
                     else if (entityMap[y][x] instanceof Wolf) {
-                        System.out.print("\033[48;2;94;94;94m");
+                        System.out.print("\033[48;2;85;85;85m");
                         System.out.print(" W");
                     }
+                    else if (entityMap[y][x] instanceof Lynx) {
+                        System.out.print("\033[48;2;252;127;0m");
+                        System.out.print(" L");
+                    }
+                    else if (entityMap[y][x] instanceof Mushroom) {
+                        System.out.print("\033[48;2;255;85;85m");
+                        System.out.print(" M");
+                    }
+                    else if (entityMap[y][x] instanceof Deer) {
+                        System.out.print("\033[48;2;170;85;0m");
+                        System.out.print(" D");
+                    }
+
                 }
                 System.out.print(" \u001B[0m");
             }
