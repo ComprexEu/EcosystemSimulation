@@ -5,6 +5,8 @@ import com.etalonpierwotnysigmy.entity.animal.*;
 import com.etalonpierwotnysigmy.entity.plant.Plant;
 import com.etalonpierwotnysigmy.entity.plant.Turnip;
 
+import java.sql.SQLOutput;
+
 public class EcosystemSimulation {
     int xSize;
     int ySize;
@@ -102,24 +104,33 @@ public class EcosystemSimulation {
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] == null) {
-                    if (terrainMap[y][x] == Terrain.GRASS) System.out.print("\u001B[32m");
-                    else if (terrainMap[y][x] == Terrain.WATER) System.out.print("\u001B[34m");
-                    System.out.print(terrainMap[y][x] + " \u001B[0m");
+                    if (terrainMap[y][x] == Terrain.GRASS) {
+                        System.out.print("\033[42m");
+                        System.out.print(" G");
+                    }
+                    else if (terrainMap[y][x] == Terrain.WATER) {
+                        System.out.print("\033[44m");
+                        System.out.print(" W");
+                    }
                 }
                 else {
                     if (entityMap[y][x] instanceof Sheep) {
-                        System.out.print("\u001B[0m");
-                        System.out.print("SHEEP ");
+                        // https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
+                        // \033[38;2;<r>;<g>;<b>m     #Select RGB foreground color
+                        // \033[48;2;<r>;<g>;<b>m     #Select RGB background color
+                        System.out.print("\033[48;2;210;210;210m");
+                        System.out.print(" S");
                     }
                     else if (entityMap[y][x] instanceof Turnip) {
-                        System.out.print("\u001B[35m");
-                        System.out.print("TURNP ");
+                        System.out.print("\033[45m");
+                        System.out.print(" T");
                     }
                     else if (entityMap[y][x] instanceof Wolf) {
-                        System.out.print("\u001B[33m");
-                        System.out.print("WOOLF ");
+                        System.out.print("\033[48;2;94;94;94m");
+                        System.out.print(" W");
                     }
                 }
+                System.out.print(" \u001B[0m");
             }
             System.out.println();
         }
