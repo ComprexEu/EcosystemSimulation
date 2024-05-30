@@ -21,21 +21,6 @@ public abstract class Predator extends Animal {
         maxSaturation = 50;
         maxThirst = 50;
     }
-
-    protected void findTargetPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
-        // znalezienie celu w zależności od potrzeb
-        targetPosition = position;
-        if (metBreedingRequirements){
-            targetPosition = findLove(entityMap);
-        }
-        else if (thirst < saturation) {
-            targetPosition = findWater(terrainMap);
-        }
-        else {
-            targetPosition = findEntity(entityMap, Herbivore.class);
-        }
-    }
-
     public Position findNextPositionPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
         // znajdowanie następnej pozycji drapieżnika (najlepsze pole spośród 9 możliwych)
         Position potentialNewPosition = new Position(position.getX(), position.getY());
@@ -83,12 +68,10 @@ public abstract class Predator extends Animal {
             thirst += 10;
             if (thirst > maxThirst) thirst = maxThirst;
         }
-        else if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Herbivore && foundTarget) {
-            Herbivore herbivore = ((Herbivore) entityMap[targetPosition.getY()][targetPosition.getX()]);
-            herbivore.setHealth(herbivore.getHealth() - damage);
-            if (herbivore.getHealth() <= 0) saturation += herbivore.getSaturation();
-            if (saturation > maxSaturation) saturation = maxSaturation;
-
+        else if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Animal && foundTarget) {
+            Animal animal = ((Animal) entityMap[targetPosition.getY()][targetPosition.getX()]);
+            animal.setHealth(animal.getHealth() - damage);
+            if (animal.getHealth() <= 0) saturation = maxSaturation;
         }
         metBreedingRequirements = thirst > 35 && saturation > 35;
         foundTarget = false;
