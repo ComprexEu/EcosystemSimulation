@@ -10,7 +10,7 @@ public abstract class Herbivore extends Animal {
     protected boolean foundTarget;
     public Herbivore(){
         super();
-        sightRange = 10;
+        sightRange = 5;
         thirst = 30;
         saturation = 30;
         maxSaturation = 50;
@@ -18,6 +18,7 @@ public abstract class Herbivore extends Animal {
     }
 
     protected void findTargetHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
+        // znalezienie celu w zależności od potrzeb
         targetPosition = findEntity(entityMap, Predator.class);
         if (!(entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator)) { // jeśli entity nie jest predatorem (jak jest to ucieczka)
             if (metBreedingRequirements) {
@@ -31,7 +32,8 @@ public abstract class Herbivore extends Animal {
     }
 
     public Position findNextPositionHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
-        Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji roślinożercy
+        // znajdowanie następnej pozycji roślinożercy (najlepsze pole spośród 9 możliwych)
+        Position potentialNewPosition = new Position(position.getX(), position.getY());
         Position positionDifference;
         Position newPosition = new Position(position.getX(), position.getY());
         double closestPositionDistance = Double.MAX_VALUE;
@@ -82,7 +84,8 @@ public abstract class Herbivore extends Animal {
             thirst -= 2;
         }
         if (targetPosition == null) {
-            targetPosition = position; // wyeliminowanie przypadku kiedy findNextPosition zmieniło targetPosition na potencjalnego partnera, ale on przemieścił się
+            targetPosition = position;
+            // wyeliminowanie przypadku kiedy findNextPosition zmieniło targetPosition na potencjalnego partnera, ale on przemieścił się
         }
         if (terrainMap[targetPosition.getY()][targetPosition.getX()].equals(Terrain.WATER) && foundTarget) {
             thirst += 10;

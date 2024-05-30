@@ -48,7 +48,7 @@ public class Deer extends Herbivore{
                 if (saturation > maxSaturation) saturation = maxSaturation;
             }
         }
-        metBreedingRequirements = thirst > 35 && saturation > 35;
+        metBreedingRequirements = thirst > 32 && saturation > 32;
         foundTarget = false;
     }
     public void breed(Entity[][] entityMap, Terrain[][] terrainMap) {

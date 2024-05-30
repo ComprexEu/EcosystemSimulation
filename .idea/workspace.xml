@@ -8,9 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/animal/Deer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/animal/Deer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/animal/Herbivore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/animal/Herbivore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/animal/Lynx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/animal/Lynx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/animal/Wolf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/animal/Wolf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/plant/Mushroom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/plant/Mushroom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/animal/Predator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etalonpierwotnysigmy/entity/animal/Predator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

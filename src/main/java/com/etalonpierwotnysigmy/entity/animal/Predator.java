@@ -23,6 +23,7 @@ public abstract class Predator extends Animal {
     }
 
     protected void findTargetPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
+        // znalezienie celu w zależności od potrzeb
         targetPosition = position;
         if (metBreedingRequirements){
             targetPosition = findLove(entityMap);
@@ -36,7 +37,8 @@ public abstract class Predator extends Animal {
     }
 
     public Position findNextPositionPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
-        Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji drapieżnika
+        // znajdowanie następnej pozycji drapieżnika (najlepsze pole spośród 9 możliwych)
+        Position potentialNewPosition = new Position(position.getX(), position.getY());
         Position positionDifference;
         Position newPosition = new Position(position.getX(), position.getY());
         double closestPositionDistance = Double.MAX_VALUE;
@@ -74,7 +76,8 @@ public abstract class Predator extends Animal {
             thirst -= 3;
         }
         if (targetPosition == null) {
-            targetPosition = position; // wyeliminowanie przypadku kiedy findNextPosition zmieniło targetPosition na potencjalnego partnera, ale on przemieścił się
+            targetPosition = position;
+            // wyeliminowanie przypadku kiedy findNextPosition zmieniło targetPosition na potencjalnego partnera, ale on przemieścił się
         }
         if (terrainMap[targetPosition.getY()][targetPosition.getX()].equals(Terrain.WATER) && foundTarget) {
             thirst += 10;
