@@ -129,7 +129,12 @@ public class EcosystemSimulation {
                         // \033[38;2;<r>;<g>;<b>m     #Select RGB foreground color
                         // \033[48;2;<r>;<g>;<b>m     #Select RGB background color
                         System.out.print("\033[48;2;160;160;160m");
-                        System.out.print(" S");
+                        if(((Sheep) entityMap[y][x]).getHealth() >= 30)
+                            System.out.print(" S");
+                        else if(((Sheep) entityMap[y][x]).getHealth() > 10 && ((Sheep) entityMap[y][x]).getHealth() < 30)
+                            System.out.print("\033[38;2;255;255;0m S");
+                        else
+                            System.out.print("\033[38;2;255;0;0m S");
                     }
                     else if (entityMap[y][x] instanceof Turnip) {
                         System.out.print("\033[45m");
@@ -137,11 +142,21 @@ public class EcosystemSimulation {
                     }
                     else if (entityMap[y][x] instanceof Wolf) {
                         System.out.print("\033[48;2;85;85;85m");
-                        System.out.print(" W");
+                        if(((Wolf) entityMap[y][x]).getHealth() >= 30)
+                            System.out.print(" W");
+                        else if(((Wolf) entityMap[y][x]).getHealth() > 10 && ((Wolf) entityMap[y][x]).getHealth() < 30)
+                            System.out.print("\033[38;2;255;255;0m W");
+                        else
+                            System.out.print("\033[38;2;255;0;0m W");
                     }
                     else if (entityMap[y][x] instanceof Lynx) {
                         System.out.print("\033[48;2;252;127;0m");
-                        System.out.print(" L");
+                        if(((Lynx) entityMap[y][x]).getHealth() >= 30)
+                            System.out.print(" L");
+                        else if(((Lynx) entityMap[y][x]).getHealth() > 10 && ((Lynx) entityMap[y][x]).getHealth() < 30)
+                            System.out.print("\033[38;2;255;255;0m L");
+                        else
+                            System.out.print("\033[38;2;255;0;0m L");
                     }
                     else if (entityMap[y][x] instanceof Mushroom) {
                         System.out.print("\033[48;2;255;85;85m");
@@ -149,7 +164,12 @@ public class EcosystemSimulation {
                     }
                     else if (entityMap[y][x] instanceof Deer) {
                         System.out.print("\033[48;2;170;85;0m");
-                        System.out.print(" D");
+                        if(((Deer) entityMap[y][x]).getHealth() >= 30)
+                            System.out.print(" D");
+                        else if(((Deer) entityMap[y][x]).getHealth() > 10 && ((Deer) entityMap[y][x]).getHealth() < 30)
+                            System.out.print("\033[38;2;255;255;0m D");
+                        else
+                            System.out.print("\033[38;2;255;0;0m D");
                     }
 
                 }
