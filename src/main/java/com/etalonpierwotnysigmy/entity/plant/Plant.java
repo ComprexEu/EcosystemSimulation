@@ -22,14 +22,6 @@ public abstract class Plant extends Entity {
         growthState = timeToRegrow;
     }
 
-    public void setFoodValue(int foodValue) {
-        this.foodValue = foodValue;
-    }
-
-    public void setTimeToRegrow(int timeToRegrow) {
-        this.timeToRegrow = timeToRegrow;
-    }
-
     public int getFoodValue() {
         return foodValue;
     }

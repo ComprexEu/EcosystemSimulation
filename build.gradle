@@ -11,7 +11,7 @@ repositories {
 }
 
 application {
-    mainClass = 'com.etalonpierwotnysigmy.Main' //nie wiem co tu wpisać by działało, kiedyś się ogarnie
+    mainClass = 'com.etalonpierwotnysigmy.Main'
 }
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
