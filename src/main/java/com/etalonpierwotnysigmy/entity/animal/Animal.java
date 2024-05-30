@@ -63,7 +63,7 @@ public abstract class Animal extends Entity {
                         tempPosition.setY(y);
                         Position positionDifference = Position.subtractPositions(position, tempPosition);
                         double distance = Position.positionVectorLength(positionDifference);
-                        if (distance <= closestPositionDistance) {
+                        if (distance <= closestPositionDistance && distance > 0) {
                             closestPositionDistance = distance;
                             closestPosition = new Position(tempPosition.getX(), tempPosition.getY());
                         }
@@ -116,10 +116,6 @@ public abstract class Animal extends Entity {
 
     public boolean getBreeding() {
         return breeding;
-    }
-
-    public int getSaturation() {
-        return saturation;
     }
 
     public int getHealth() {
