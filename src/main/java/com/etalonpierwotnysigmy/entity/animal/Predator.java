@@ -8,8 +8,10 @@ import java.util.Random;
 
 public abstract class Predator extends Animal {
     protected int damage;
-    private Position targetPosition;
-    private boolean foundTarget;
+    protected Position targetPosition;
+    protected boolean foundTarget;
+
+    protected abstract void findTarget(Entity[][] entityMap, Terrain[][] terrainMap);
 
     public Predator() {
         super();
@@ -20,18 +22,20 @@ public abstract class Predator extends Animal {
         maxThirst = 50;
     }
 
-    @Override
-    public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
+    protected void findTargetPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
         targetPosition = position;
         if (metBreedingRequirements){
             targetPosition = findLove(entityMap);
         }
-        else if (thirst < saturation) { // wybieranie pozycji do której zmierza drapieżnik za pomocą hierarchii
+        else if (thirst < saturation) {
             targetPosition = findWater(terrainMap);
         }
         else {
             targetPosition = findEntity(entityMap, Herbivore.class);
         }
+    }
+
+    public Position findNextPositionPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji drapieżnika
         Position positionDifference;
         Position newPosition = new Position(position.getX(), position.getY());
@@ -58,8 +62,7 @@ public abstract class Predator extends Animal {
         return newPosition;
     }
 
-    @Override
-    public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
+    public void updateStatsPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
         if (saturation <= 0 || thirst <= 0) {
             health -= 5;
             if (health <= 0){
@@ -87,4 +90,5 @@ public abstract class Predator extends Animal {
         metBreedingRequirements = thirst > 35 && saturation > 35;
         foundTarget = false;
     }
+
 }

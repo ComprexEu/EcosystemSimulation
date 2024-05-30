@@ -1,6 +1,9 @@
 package com.etalonpierwotnysigmy.entity.animal;
 
 import com.etalonpierwotnysigmy.entity.Entity;
+import com.etalonpierwotnysigmy.entity.plant.Mushroom;
+import com.etalonpierwotnysigmy.entity.plant.Plant;
+import com.etalonpierwotnysigmy.entity.plant.Turnip;
 import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
@@ -14,6 +17,42 @@ public class Deer extends Herbivore{
         this.position = position;
     }
 
+    private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
+        super.findTargetHerbivore(entityMap, terrainMap);
+        if (!(entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator) &&
+                thirst >= saturation && !metBreedingRequirements) {
+            targetPosition = findEntity(entityMap, Plant.class);
+        }
+    }
+
+    @Override
+    public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
+        findTarget(entityMap, terrainMap);
+        return super.findNextPositionHerbivore(entityMap, terrainMap);
+    }
+
+    @Override
+    public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
+        super.updateStatsHerbivore(entityMap, terrainMap);
+        if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Plant && foundTarget) {
+            Plant plant = ((Plant) entityMap[targetPosition.getY()][targetPosition.getX()]);
+            if (plant.isGrown() && saturation != maxSaturation) {
+                if (plant instanceof Mushroom && ((Mushroom) plant).isPoisoned()) {
+                    saturation -= plant.getFoodValue();
+                    plant.setGrown(false);
+                    plant.resetGrowthState();
+                }
+                else {
+                    saturation += plant.getFoodValue();
+                    plant.setGrown(false);
+                    plant.resetGrowthState();
+                    if (saturation > maxSaturation) saturation = maxSaturation;
+                }
+            }
+        }
+        metBreedingRequirements = thirst > 35 && saturation > 35;
+        foundTarget = false;
+    }
     public void breed(Entity[][] entityMap, Terrain[][] terrainMap) {
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {

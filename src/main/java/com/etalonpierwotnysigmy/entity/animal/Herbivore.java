@@ -6,11 +6,9 @@ import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 import com.etalonpierwotnysigmy.entity.Entity;
 
-import java.util.Random;
-
 public abstract class Herbivore extends Animal {
-    private Position targetPosition;
-    private boolean foundTarget;
+    protected Position targetPosition;
+    protected boolean foundTarget;
     public Herbivore(){
         super();
         sightRange = 10;
@@ -20,18 +18,19 @@ public abstract class Herbivore extends Animal {
         maxThirst = 50;
     }
 
-    @Override
-    public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
+    protected void findTargetHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
         targetPosition = findEntity(entityMap, Predator.class);
         if (!(entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator)) {
             if (metBreedingRequirements) {
                 targetPosition = findLove(entityMap);
-            } else if (thirst < saturation) { // wybieranie pozycji do której zmierza roślinożerca za pomocą hierarchii
+            }
+            else if (thirst < saturation) {
                 targetPosition = findWater(terrainMap);
-            } else {
-                targetPosition = findEntity(entityMap, Plant.class);
             }
         }
+    }
+
+    public Position findNextPositionHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
         Position potentialNewPosition = new Position(position.getX(), position.getY()); // znajdowanie następnej pozycji roślinożercy
         Position positionDifference;
         Position newPosition = new Position(position.getX(), position.getY());
@@ -71,8 +70,7 @@ public abstract class Herbivore extends Animal {
         return newPosition;
     }
 
-    @Override
-    public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
+    public void updateStatsHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
         if (saturation <= 0 || thirst <= 0) {
             health -= 5;
             if (health <= 0){
@@ -90,17 +88,7 @@ public abstract class Herbivore extends Animal {
             thirst += 10;
             if (thirst > maxThirst) thirst = maxThirst;
         }
-        else if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Plant && foundTarget) {
-            Plant plant = ((Plant) entityMap[targetPosition.getY()][targetPosition.getX()]);
-            if (plant.isGrown() && saturation != maxSaturation) {
-                saturation += plant.getFoodValue();
-                plant.setGrown(false);
-                plant.resetGrowthState();
-                if (saturation > maxSaturation) saturation = maxSaturation;
-            }
-        }
-        metBreedingRequirements = thirst > 35 && saturation > 35;
-        foundTarget = false;
+
     }
 
 }

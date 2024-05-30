@@ -16,6 +16,22 @@ public class Wolf extends Predator {
         this.position = position;
     }
 
+    @Override
+    protected void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
+        super.findTargetPredator(entityMap, terrainMap);
+    }
+
+    @Override
+    public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
+        findTarget(entityMap, terrainMap);
+        return super.findNextPositionPredator(entityMap, terrainMap);
+    }
+
+    @Override
+    public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
+        super.updateStatsPredator(entityMap, terrainMap);
+    }
+
     public void breed(Entity[][] entityMap, Terrain[][] terrainMap) {
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
