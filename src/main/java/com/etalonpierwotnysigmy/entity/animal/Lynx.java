@@ -14,9 +14,7 @@ public class Lynx extends Predator{
         speed = 3;
         this.position = position;
     }
-
-    @Override
-    protected void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
+    public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetPredator(entityMap, terrainMap);
     }
 

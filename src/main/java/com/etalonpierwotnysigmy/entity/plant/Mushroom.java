@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Mushroom extends Plant {
 
-    private final boolean poisoned;
+    private boolean poisoned;
     public Mushroom(Position position){
         super();
         this.position = position;
@@ -18,5 +18,9 @@ public class Mushroom extends Plant {
 
     public boolean isPoisoned() {
         return poisoned;
+    }
+
+    public void setPoisoned(boolean poisoned) {
+        this.poisoned = poisoned;
     }
 }

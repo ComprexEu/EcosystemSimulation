@@ -16,8 +16,7 @@ public class Wolf extends Predator {
         this.position = position;
     }
 
-    @Override
-    protected void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
+    public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetPredator(entityMap, terrainMap);
     }
 

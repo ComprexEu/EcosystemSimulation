@@ -3,7 +3,6 @@ package com.etalonpierwotnysigmy.entity.animal;
 import com.etalonpierwotnysigmy.entity.Entity;
 import com.etalonpierwotnysigmy.entity.plant.Mushroom;
 import com.etalonpierwotnysigmy.entity.plant.Plant;
-import com.etalonpierwotnysigmy.entity.plant.Turnip;
 import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
@@ -39,15 +38,14 @@ public class Deer extends Herbivore{
             if (plant.isGrown() && saturation != maxSaturation) {
                 if (plant instanceof Mushroom && ((Mushroom) plant).isPoisoned()) {
                     saturation -= plant.getFoodValue();
-                    plant.setGrown(false);
-                    plant.resetGrowthState();
+                    ((Mushroom) plant).setPoisoned(Math.random() < 0.2);
                 }
                 else {
                     saturation += plant.getFoodValue();
-                    plant.setGrown(false);
-                    plant.resetGrowthState();
-                    if (saturation > maxSaturation) saturation = maxSaturation;
                 }
+                plant.setGrown(false);
+                plant.resetGrowthState();
+                if (saturation > maxSaturation) saturation = maxSaturation;
             }
         }
         metBreedingRequirements = thirst > 35 && saturation > 35;

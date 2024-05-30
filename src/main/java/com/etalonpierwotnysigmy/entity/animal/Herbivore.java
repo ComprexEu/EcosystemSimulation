@@ -1,7 +1,6 @@
 package com.etalonpierwotnysigmy.entity.animal;
 
 import com.etalonpierwotnysigmy.simulation.Map;
-import com.etalonpierwotnysigmy.entity.plant.Plant;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 import com.etalonpierwotnysigmy.entity.Entity;
@@ -20,13 +19,14 @@ public abstract class Herbivore extends Animal {
 
     protected void findTargetHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
         targetPosition = findEntity(entityMap, Predator.class);
-        if (!(entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator)) {
+        if (!(entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator)) { // jeśli entity nie jest predatorem (jak jest to ucieczka)
             if (metBreedingRequirements) {
                 targetPosition = findLove(entityMap);
             }
             else if (thirst < saturation) {
                 targetPosition = findWater(terrainMap);
             }
+            // warunek z mniejszą lub równą saturacją osobno dla poszczególnych gatunków
         }
     }
 
