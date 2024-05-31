@@ -20,17 +20,13 @@ public class Wolf extends Predator {
         this.position = position;
         rabies = 0;
     }
-    @Override
-    protected void findTargetPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
+    public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetPredator(entityMap, terrainMap);
         if(!metBreedingRequirements && saturation >= thirst && rabies >= 3){
             targetPosition = findEntity(entityMap, Animal.class);
         }
         else
             targetPosition = findEntity(entityMap, Herbivore.class);
-    }
-    public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
-        findTargetPredator(entityMap, terrainMap);
     }
 
     @Override
