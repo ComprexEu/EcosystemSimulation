@@ -42,7 +42,7 @@ public class Sheep extends Herbivore {
                 if (saturation > maxSaturation) saturation = maxSaturation;
             }
         }
-        metBreedingRequirements = thirst > 35 && saturation > 35;
+        metBreedingRequirements = thirst > 30 && saturation > 30;
         foundTarget = false;
     }
 

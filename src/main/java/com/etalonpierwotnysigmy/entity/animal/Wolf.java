@@ -15,7 +15,7 @@ public class Wolf extends Predator {
         super();
         damage = 10;
         health = 50;
-        maxHealth = 50;
+        maxHealth = 60;
         speed = 2;
         this.position = position;
         rabies = 0;

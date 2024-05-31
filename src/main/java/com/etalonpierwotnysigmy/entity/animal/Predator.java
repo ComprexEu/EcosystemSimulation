@@ -15,7 +15,7 @@ public abstract class Predator extends Animal {
 
     public Predator() {
         super();
-        sightRange = 15;
+        sightRange = 20;
         thirst = 30;
         saturation = 30;
         maxSaturation = 50;
@@ -68,8 +68,8 @@ public abstract class Predator extends Animal {
             }
         }
         else {
-            saturation -= 3;
-            thirst -= 3;
+            saturation -= 2;
+            thirst -= 2;
         }
         if (targetPosition == null) {
             targetPosition = position;
@@ -79,12 +79,16 @@ public abstract class Predator extends Animal {
             thirst += 10;
             if (thirst > maxThirst) thirst = maxThirst;
         }
-        else if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Animal && foundTarget) {
-            Animal animal = ((Animal) entityMap[targetPosition.getY()][targetPosition.getX()]);
+        else if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Animal animal && foundTarget) {
             animal.setHealth(animal.getHealth() - damage);
-            if (animal.getHealth() <= 0) saturation = maxSaturation;
+            if (animal.getHealth() <= 0) {
+                saturation = maxSaturation;
+                health = maxHealth;
+            }
         }
-        metBreedingRequirements = thirst > 35 && saturation > 35;
+        metBreedingRequirements = thirst > 40 && saturation > 40;
+        if(metBreedingRequirements)
+            health+=5;
         foundTarget = false;
     }
 

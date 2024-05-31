@@ -33,11 +33,11 @@ public class Deer extends Herbivore{
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.updateStatsHerbivore(entityMap, terrainMap);
-        if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Plant && foundTarget) {
-            Plant plant = ((Plant) entityMap[targetPosition.getY()][targetPosition.getX()]);
+        if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Plant plant && foundTarget) {
             if (plant.isGrown() && saturation != maxSaturation) {
                 if (plant instanceof Mushroom && ((Mushroom) plant).isPoisoned()) {
-                    saturation -= plant.getFoodValue();
+                    saturation += plant.getFoodValue();
+                    health -= 20;
                     ((Mushroom) plant).setPoisoned(Math.random() < 0.2);
                 }
                 else {
@@ -48,7 +48,7 @@ public class Deer extends Herbivore{
                 if (saturation > maxSaturation) saturation = maxSaturation;
             }
         }
-        metBreedingRequirements = thirst > 32 && saturation > 32;
+        metBreedingRequirements = thirst > 30 && saturation > 30;
         foundTarget = false;
     }
     public void breed(Entity[][] entityMap, Terrain[][] terrainMap) {

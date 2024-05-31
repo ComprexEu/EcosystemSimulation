@@ -91,7 +91,7 @@ public abstract class Herbivore extends Animal {
             thirst += 10;
             if (thirst > maxThirst) thirst = maxThirst;
         }
-
+        if(metBreedingRequirements)
+            health+=5;
     }
-
 }
