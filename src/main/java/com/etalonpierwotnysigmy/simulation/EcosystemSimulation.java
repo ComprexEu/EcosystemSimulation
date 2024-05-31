@@ -32,7 +32,11 @@ public class EcosystemSimulation {
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (terrainMap[y][x] == Terrain.GRASS) {
-                    if (y < ySize / 2 && x < xSize / 2 && Math.random() < 0.2) entityMap[y][x] =
+                    if (Math.random() < 0.05)
+                        entityMap[y][x] = new Turnip(new Position(x, y));
+                    else if (Math.random() < 0.05)
+                        entityMap[y][x] = new Mushroom(new Position(x, y));
+                    else if (y < ySize / 2 && x < xSize / 2 && Math.random() < 0.2) entityMap[y][x] =
                             new Sheep(new Position(x, y)); // for testing only
                     else if (y < ySize / 2 && x > xSize / 2 && Math.random() < 0.1)
                         entityMap[y][x] = new Wolf(new Position(x, y));
@@ -40,10 +44,6 @@ public class EcosystemSimulation {
                         entityMap[y][x] = new Deer(new Position(x, y));
                     else if (y >= ySize / 2 && x < xSize / 2 && Math.random() < 0.1)
                         entityMap[y][x] = new Lynx(new Position(x, y));
-                    else if (Math.random() < 0.05)
-                        entityMap[y][x] = new Mushroom(new Position(x, y));
-                    else if (Math.random() < 0.05)
-                        entityMap[y][x] = new Turnip(new Position(x, y));
                 }
             }
         }
