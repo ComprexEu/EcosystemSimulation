@@ -21,6 +21,17 @@ public abstract class Predator extends Animal {
         maxSaturation = 50;
         maxThirst = 50;
     }
+    protected void findTargetPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
+        // znalezienie celu w zależności od potrzeb
+        targetPosition = position;
+        if (metBreedingRequirements){
+            targetPosition = findLove(entityMap);
+        }
+        else if (thirst < saturation) {
+            targetPosition = findWater(terrainMap);
+        }
+        //pozostałe warunki znajdują się w poszczególnych klasach
+    }
     public Position findNextPositionPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
         // znajdowanie następnej pozycji drapieżnika (najlepsze pole spośród 9 możliwych)
         Position potentialNewPosition = new Position(position.getX(), position.getY());

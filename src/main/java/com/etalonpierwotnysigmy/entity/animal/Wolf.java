@@ -1,6 +1,7 @@
 package com.etalonpierwotnysigmy.entity.animal;
 
 import com.etalonpierwotnysigmy.entity.Entity;
+import com.etalonpierwotnysigmy.entity.plant.Turnip;
 import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
@@ -19,21 +20,14 @@ public class Wolf extends Predator {
         this.position = position;
         rabies = 0;
     }
+    @Override
     protected void findTargetPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
-        // znalezienie celu w zależności od potrzeb
-        targetPosition = position;
-        if (metBreedingRequirements){
-            targetPosition = findLove(entityMap);
+        super.findTargetPredator(entityMap, terrainMap);
+        if(!metBreedingRequirements && saturation >= thirst && rabies >= 3){
+            targetPosition = findEntity(entityMap, Animal.class);
         }
-        else if (thirst < saturation) {
-            targetPosition = findWater(terrainMap);
-        }
-        else {
-            if(rabies>=3){
-                targetPosition = findEntity(entityMap, Animal.class);
-            }
-            else targetPosition = findEntity(entityMap, Herbivore.class);
-        }
+        else
+            targetPosition = findEntity(entityMap, Herbivore.class);
     }
     public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         findTargetPredator(entityMap, terrainMap);
