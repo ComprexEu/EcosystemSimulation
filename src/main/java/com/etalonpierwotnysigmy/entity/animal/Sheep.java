@@ -33,12 +33,30 @@ public class Sheep extends Herbivore {
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.updateStatsHerbivore(entityMap, terrainMap);
-        if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Plant && foundTarget) {
-            Plant plant = ((Plant) entityMap[targetPosition.getY()][targetPosition.getX()]);
-            if (plant.isGrown() && saturation != maxSaturation) {
-                saturation += plant.getFoodValue();
-                plant.setGrown(false);
-                plant.resetGrowthState();
+        if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Turnip turnip && foundTarget) {
+            if (turnip.isGrown() && saturation != maxSaturation) {
+                if (turnip.isBuffed()){
+                    saturation += turnip.getFoodValue();
+                    double randomNumber = Math.random();
+                    if (randomNumber < 0.3)
+                        health += 10;
+                    else if(randomNumber < 0.5)
+                        speed++;
+                    else if(randomNumber < 0.7){
+                        saturation=maxSaturation;
+                        thirst=maxThirst;
+                    }
+                    else if(randomNumber < 0.99)
+                        sightRange+=5;
+                    else
+                        saturation = 0;
+                    turnip.setBuffed(Math.random() < 0.2);
+                }
+                else {
+                    saturation += turnip.getFoodValue();
+                }
+                turnip.setGrown(false);
+                turnip.resetGrowthState();
                 if (saturation > maxSaturation) saturation = maxSaturation;
             }
         }
