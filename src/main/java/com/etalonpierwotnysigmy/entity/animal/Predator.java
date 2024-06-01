@@ -90,7 +90,8 @@ public abstract class Predator extends Animal {
             if (animal.getHealth() <= 0) {
                 saturation += maxSaturation / 2;
                 if (saturation > maxSaturation) saturation = maxSaturation;
-                health = maxHealth;
+                health += maxHealth / 2;
+                if (health > maxHealth) maxHealth = health;
             }
         }
         metBreedingRequirements = thirst > 40 && saturation > 40;
