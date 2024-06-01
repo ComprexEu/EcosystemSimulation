@@ -2,6 +2,7 @@ package com.etalonpierwotnysigmy.entity.animal;
 
 import com.etalonpierwotnysigmy.entity.Entity;
 import com.etalonpierwotnysigmy.entity.plant.Mushroom;
+import com.etalonpierwotnysigmy.entity.plant.Plant;
 import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
@@ -18,7 +19,7 @@ public class Deer extends Herbivore{
     private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetHerbivore(entityMap, terrainMap);
         if (thirst >= saturation && !findingPredator && !findingLove && !findingWater) {
-            targetPosition = findEntity(entityMap, Mushroom.class);
+            targetPosition = findEntity(entityMap, Plant.class);
             if (targetPosition != null) findingPlant = true;
         }
         if (targetPosition == null) targetPosition = position;
@@ -34,18 +35,18 @@ public class Deer extends Herbivore{
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.updateStatsHerbivore();
         if (findingPlant && foundTarget) {
-            Mushroom mushroom = (Mushroom) entityMap[targetPosition.getY()][targetPosition.getX()];
-            if (mushroom.isGrown() && saturation != maxSaturation) {
-                if (mushroom.isPoisoned()) {
-                    saturation += mushroom.getFoodValue();
+            Plant plant = (Plant) entityMap[targetPosition.getY()][targetPosition.getX()];
+            if (plant.isGrown() && saturation != maxSaturation) {
+                if (plant instanceof Mushroom && ((Mushroom) plant).isPoisoned()) {
+                    saturation += plant.getFoodValue();
                     health -= 20;
-                    mushroom.setPoisoned(Math.random() < 0.2);
+                    ((Mushroom) plant).setPoisoned(Math.random() < 0.2);
                 }
                 else {
-                    saturation += mushroom.getFoodValue();
+                    saturation += plant.getFoodValue();
                 }
-                mushroom.setGrown(false);
-                mushroom.resetGrowthState();
+                plant.setGrown(false);
+                plant.resetGrowthState();
                 if (saturation > maxSaturation) saturation = maxSaturation;
             }
         }
