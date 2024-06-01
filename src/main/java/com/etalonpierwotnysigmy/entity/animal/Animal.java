@@ -126,6 +126,10 @@ public abstract class Animal extends Entity {
         return gender;
     }
 
+    public int getSaturation() {
+        return saturation;
+    }
+
     public boolean metBreedingRequirements() {
         return metBreedingRequirements;
     }

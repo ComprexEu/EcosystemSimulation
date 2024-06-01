@@ -76,8 +76,8 @@ public abstract class Predator extends Animal {
             }
         }
         else {
-            saturation -= 2;
-            thirst -= 2;
+            saturation -= 3;
+            thirst -= 3;
         }
 
         if (findingWater && foundTarget) {
@@ -88,8 +88,9 @@ public abstract class Predator extends Animal {
             Animal animal = (Animal)entityMap[targetPosition.getY()][targetPosition.getX()];
             animal.setHealth(animal.getHealth() - damage);
             if (animal.getHealth() <= 0) {
-                saturation = maxSaturation;
-                    health = maxHealth;
+                saturation += maxSaturation / 2;
+                if (saturation > maxSaturation) saturation = maxSaturation;
+                health = maxHealth;
             }
         }
         metBreedingRequirements = thirst > 40 && saturation > 40;

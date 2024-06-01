@@ -38,11 +38,11 @@ public class EcosystemSimulation {
                         entityMap[y][x] = new Mushroom(new Position(x, y));
                     else if (y < ySize / 2 && x < xSize / 2 && Math.random() < 0.2) entityMap[y][x] =
                             new Sheep(new Position(x, y));
-                    else if (y < ySize / 2 && x > xSize / 2 && Math.random() < 0.2)
+                    else if (y < ySize / 2 && x > xSize / 2 && Math.random() < 0.1)
                         entityMap[y][x] = new Wolf(new Position(x, y));
                     else if (y >= ySize / 2 && x >= xSize / 2 && Math.random() < 0.2)
                         entityMap[y][x] = new Deer(new Position(x, y));
-                    else if (y >= ySize / 2 && x < xSize / 2 && Math.random() < 0.2)
+                    else if (y >= ySize / 2 && x < xSize / 2 && Math.random() < 0.1)
                         entityMap[y][x] = new Lynx(new Position(x, y));
                 }
             }
