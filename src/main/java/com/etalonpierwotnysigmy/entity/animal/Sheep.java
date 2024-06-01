@@ -21,7 +21,7 @@ public class Sheep extends Herbivore {
             targetPosition = findEntity(entityMap, Turnip.class);
             if (targetPosition != null) findingPlant = true;
         }
-        if (targetPosition == null) targetPosition = position;
+        if (targetPosition == null) targetPosition = new Position(terrainMap[0].length/2, terrainMap.length/2);
     }
 
     @Override

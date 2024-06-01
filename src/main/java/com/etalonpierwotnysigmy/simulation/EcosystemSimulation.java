@@ -20,7 +20,7 @@ public class EcosystemSimulation {
         Terrain[][] terrainMap = terrain.getTerrain();
         spawnEntities(terrainMap);
         Thread.sleep(2000);
-        while (true) {
+        while (true) { // później będzie w mainie
             printMap(terrainMap);
             System.out.println();
             updateEntities(terrainMap);

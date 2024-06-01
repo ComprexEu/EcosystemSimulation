@@ -20,7 +20,7 @@ public class Lynx extends Predator{
             targetPosition = findEntity(entityMap, Herbivore.class);
             if (targetPosition != null) findingAnimal = true;
         }
-        if (targetPosition == null) targetPosition = position;
+        if (targetPosition == null) targetPosition = new Position(terrainMap[0].length/2, terrainMap.length/2);
     }
 
     @Override
