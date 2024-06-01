@@ -32,7 +32,7 @@ public class Sheep extends Herbivore {
 
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
-        super.updateStatsHerbivore(entityMap, terrainMap);
+        super.updateStatsHerbivore();
         if (findingPlant && foundTarget) {
             Turnip turnip = (Turnip)entityMap[targetPosition.getY()][targetPosition.getX()];
             if (turnip.isGrown() && saturation != maxSaturation) {

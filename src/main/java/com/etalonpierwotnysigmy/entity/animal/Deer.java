@@ -32,7 +32,7 @@ public class Deer extends Herbivore{
 
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
-        super.updateStatsHerbivore(entityMap, terrainMap);
+        super.updateStatsHerbivore();
         if (findingPlant && foundTarget) {
             Mushroom mushroom = (Mushroom) entityMap[targetPosition.getY()][targetPosition.getX()];
             if (mushroom.isGrown() && saturation != maxSaturation) {

@@ -81,7 +81,7 @@ public abstract class Herbivore extends Animal {
         return newPosition;
     }
 
-    protected void updateStatsHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
+    protected void updateStatsHerbivore() {
         if (saturation <= 0 || thirst <= 0) {
             health -= 5;
             if (health <= 0){

@@ -68,7 +68,7 @@ public abstract class Predator extends Animal {
         return newPosition;
     }
 
-    protected void updateStatsPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
+    protected void updateStatsPredator(Entity[][] entityMap) {
         if (saturation <= 0 || thirst <= 0) {
             health -= 5;
             if (health <= 0){

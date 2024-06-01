@@ -22,7 +22,7 @@ public class Wolf extends Predator {
     }
     public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetPredator(entityMap, terrainMap);
-        if(thirst >= saturation && !findingLove && !findingWater && rabies >= 3){
+        if(thirst >= saturation && !findingLove && !findingWater && rabies == 3){
             targetPosition = findEntity(entityMap, Animal.class);
             if (targetPosition != null) findingAnimal = true;
         }
@@ -42,7 +42,7 @@ public class Wolf extends Predator {
 
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
-        super.updateStatsPredator(entityMap, terrainMap);
+        super.updateStatsPredator(entityMap);
         if (rabies < 3 && Math.random() < 0.1) rabies++;
     }
 
@@ -60,4 +60,7 @@ public class Wolf extends Predator {
         }
     }
 
+    public boolean hasRabies() {
+        return rabies == 3;
+    }
 }
