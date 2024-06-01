@@ -4,12 +4,16 @@ import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 
-import java.util.Random;
 
 public abstract class Predator extends Animal {
     protected int damage;
     protected Position targetPosition;
+    protected Entity targetEntity;
     protected boolean foundTarget;
+
+    protected boolean findingLove;
+    protected boolean findingWater;
+    protected boolean findingAnimal;
 
     protected abstract void findTarget(Entity[][] entityMap, Terrain[][] terrainMap);
 
@@ -23,14 +27,20 @@ public abstract class Predator extends Animal {
     }
     protected void findTargetPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
         // znalezienie celu w zależności od potrzeb
-        targetPosition = position;
+        targetEntity = null;
+        targetPosition = null;
+        findingLove = false;
+        findingWater = false;
+        findingAnimal = false;
         if (metBreedingRequirements){
             targetPosition = findLove(entityMap);
+            if (targetPosition != null) findingLove = true;
         }
-        else if (thirst < saturation) {
+        if (thirst < saturation && !findingLove) {
             targetPosition = findWater(terrainMap);
+            if (targetPosition != null) findingWater = true;
         }
-        //pozostałe warunki znajdują się w poszczególnych klasach
+        // pozostałe warunki znajdują się w klasach dla poszczególnych gatunków
     }
     public Position findNextPositionPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
         // znajdowanie następnej pozycji drapieżnika (najlepsze pole spośród 9 możliwych)
@@ -71,24 +81,24 @@ public abstract class Predator extends Animal {
             saturation -= 2;
             thirst -= 2;
         }
-        if (targetPosition == null) {
-            targetPosition = position;
-            // wyeliminowanie przypadku kiedy findNextPosition zmieniło targetPosition na potencjalnego partnera, ale on przemieścił się
-        }
-        if (terrainMap[targetPosition.getY()][targetPosition.getX()].equals(Terrain.WATER) && foundTarget) {
+
+        if (findingWater && foundTarget) {
             thirst += 10;
             if (thirst > maxThirst) thirst = maxThirst;
         }
-        else if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Animal animal && foundTarget) {
+        if (findingAnimal && foundTarget && entityMap[targetPosition.getY()][targetPosition.getX()] != null) {
+            Animal animal = (Animal)entityMap[targetPosition.getY()][targetPosition.getX()];
             animal.setHealth(animal.getHealth() - damage);
             if (animal.getHealth() <= 0) {
                 saturation = maxSaturation;
-                health = maxHealth;
+                    health = maxHealth;
             }
         }
         metBreedingRequirements = thirst > 40 && saturation > 40;
-        if(metBreedingRequirements)
-            health+=5;
+        if(metBreedingRequirements) {
+            health += 5;
+            if (health > maxHealth) maxHealth = health;
+        }
         foundTarget = false;
     }
 

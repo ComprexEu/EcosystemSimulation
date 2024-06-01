@@ -7,7 +7,12 @@ import com.etalonpierwotnysigmy.entity.Entity;
 
 public abstract class Herbivore extends Animal {
     protected Position targetPosition;
+    protected Entity targetEntity;
     protected boolean foundTarget;
+    protected boolean findingPredator;
+    protected boolean findingLove;
+    protected boolean findingWater;
+    protected boolean findingPlant;
     public Herbivore(){
         super();
         sightRange = 5;
@@ -19,16 +24,21 @@ public abstract class Herbivore extends Animal {
 
     protected void findTargetHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
         // znalezienie celu w zależności od potrzeb
+        findingLove = false;
+        findingPlant = false;
+        findingWater = false;
+        findingPredator = false;
         targetPosition = findEntity(entityMap, Predator.class);
-        if (!(entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator)) { // jeśli entity nie jest predatorem (jak jest to ucieczka)
-            if (metBreedingRequirements) {
-                targetPosition = findLove(entityMap);
-            }
-            else if (thirst < saturation) {
-                targetPosition = findWater(terrainMap);
-            }
-            // warunek z mniejszą lub równą saturacją osobno dla poszczególnych gatunków
+        if (targetPosition != null) findingPredator = true;
+        if (metBreedingRequirements && !findingPredator) {
+            targetPosition = findLove(entityMap);
+            if (targetPosition != null) findingLove = true;
         }
+        if (thirst < saturation && !findingPredator && !findingLove) {
+            targetPosition = findWater(terrainMap);
+            if (targetPosition != null) findingWater = true;
+        }
+        // następne warunki osobno dla poszczególnych gatunków
     }
 
     public Position findNextPositionHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
@@ -83,15 +93,11 @@ public abstract class Herbivore extends Animal {
             saturation -= 2;
             thirst -= 2;
         }
-        if (targetPosition == null) {
-            targetPosition = position;
-            // wyeliminowanie przypadku kiedy findNextPosition zmieniło targetPosition na potencjalnego partnera, ale on przemieścił się
-        }
-        if (terrainMap[targetPosition.getY()][targetPosition.getX()].equals(Terrain.WATER) && foundTarget) {
+        if (findingWater && foundTarget) {
             thirst += 10;
             if (thirst > maxThirst) thirst = maxThirst;
         }
-        if(metBreedingRequirements)
-            health+=5;
+        if (metBreedingRequirements)
+            health += 5;
     }
 }

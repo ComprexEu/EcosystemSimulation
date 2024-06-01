@@ -11,6 +11,10 @@ public abstract class Entity {
         return !moved;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
     public void setMoved(boolean moved) {
         this.moved = moved;
     }

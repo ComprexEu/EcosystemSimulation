@@ -1,7 +1,6 @@
 package com.etalonpierwotnysigmy.entity.animal;
 
 import com.etalonpierwotnysigmy.entity.Entity;
-import com.etalonpierwotnysigmy.entity.plant.Plant;
 import com.etalonpierwotnysigmy.entity.plant.Turnip;
 import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
@@ -18,10 +17,11 @@ public class Sheep extends Herbivore {
 
     private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetHerbivore(entityMap, terrainMap);
-        if (!(entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator) &&
-                thirst >= saturation && !metBreedingRequirements) {
+        if (thirst >= saturation && !findingPredator && !findingLove && !findingWater) {
             targetPosition = findEntity(entityMap, Turnip.class);
+            if (targetPosition != null) findingPlant = true;
         }
+        if (targetPosition == null) targetPosition = position;
     }
 
     @Override
@@ -33,21 +33,22 @@ public class Sheep extends Herbivore {
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.updateStatsHerbivore(entityMap, terrainMap);
-        if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Turnip turnip && foundTarget) {
+        if (findingPlant && foundTarget) {
+            Turnip turnip = (Turnip)entityMap[targetPosition.getY()][targetPosition.getX()];
             if (turnip.isGrown() && saturation != maxSaturation) {
                 if (turnip.isBuffed()){
                     saturation += turnip.getFoodValue();
                     double randomNumber = Math.random();
                     if (randomNumber < 0.3)
                         health += 10;
-                    else if(randomNumber < 0.5)
+                    else if (randomNumber < 0.5)
                         speed++;
-                    else if(randomNumber < 0.7){
-                        saturation=maxSaturation;
-                        thirst=maxThirst;
+                    else if (randomNumber < 0.7){
+                        saturation = maxSaturation;
+                        thirst = maxThirst;
                     }
-                    else if(randomNumber < 0.99)
-                        sightRange+=5;
+                    else if (randomNumber < 0.99)
+                        sightRange += 5;
                     else
                         saturation = 0;
                     turnip.setBuffed(Math.random() < 0.2);

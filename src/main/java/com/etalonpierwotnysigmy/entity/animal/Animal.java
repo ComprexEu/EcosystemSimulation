@@ -34,7 +34,7 @@ public abstract class Animal extends Entity {
     }
 
     protected Position findClosest(Terrain[][] terrainMap, Entity[][] entityMap, Class<?> entityType, SearchType searchType) {
-        Position closestPosition = new Position(position.getX(), position.getY()); // znajdowanie najbliższego zapotrzebowania
+        Position closestPosition = null; // znajdowanie najbliższego zapotrzebowania
         Position tempPosition = new Position(position.getX(), position.getY());
         double closestPositionDistance = sightRange;
         for (int y = position.getY() - sightRange; y < position.getY() + sightRange; y++) {
@@ -87,15 +87,15 @@ public abstract class Animal extends Entity {
 
     public boolean isBreeding(Entity[][] entityMap) {
         if (metBreedingRequirements && gender == Gender.FEMALE) {
-            Position closestPosition;
-            closestPosition = findLove(entityMap);
-            Position differenceVector = Position.subtractPositions(closestPosition, position);
-            if (Position.positionVectorLength(differenceVector) < 2 &&
-                    Position.positionVectorLength(differenceVector) > 0 &&
-                    ((Animal) entityMap[closestPosition.getY()][closestPosition.getX()]).metBreedingRequirements()) {
-                return breeding = true;
+            Position closestPosition = findLove(entityMap);
+            if (closestPosition != null) {
+                Position differenceVector = Position.subtractPositions(closestPosition, position);
+                if (Position.positionVectorLength(differenceVector) < 2 &&
+                        Position.positionVectorLength(differenceVector) > 0 &&
+                        ((Animal) entityMap[closestPosition.getY()][closestPosition.getX()]).metBreedingRequirements()) {
+                    return breeding = true;
+                }
             }
-
         }
         return breeding = false;
     }

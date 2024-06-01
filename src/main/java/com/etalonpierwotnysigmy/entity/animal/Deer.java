@@ -2,7 +2,6 @@ package com.etalonpierwotnysigmy.entity.animal;
 
 import com.etalonpierwotnysigmy.entity.Entity;
 import com.etalonpierwotnysigmy.entity.plant.Mushroom;
-import com.etalonpierwotnysigmy.entity.plant.Plant;
 import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
@@ -18,10 +17,11 @@ public class Deer extends Herbivore{
 
     private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetHerbivore(entityMap, terrainMap);
-        if (!(entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator) &&
-                thirst >= saturation && !metBreedingRequirements) {
-            targetPosition = findEntity(entityMap, Plant.class);
+        if (thirst >= saturation && !findingPredator && !findingLove && !findingWater) {
+            targetPosition = findEntity(entityMap, Mushroom.class);
+            if (targetPosition != null) findingPlant = true;
         }
+        if (targetPosition == null) targetPosition = position;
     }
 
     @Override
@@ -33,18 +33,19 @@ public class Deer extends Herbivore{
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.updateStatsHerbivore(entityMap, terrainMap);
-        if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Plant plant && foundTarget) {
-            if (plant.isGrown() && saturation != maxSaturation) {
-                if (plant instanceof Mushroom && ((Mushroom) plant).isPoisoned()) {
-                    saturation += plant.getFoodValue();
+        if (findingPlant && foundTarget) {
+            Mushroom mushroom = (Mushroom) entityMap[targetPosition.getY()][targetPosition.getX()];
+            if (mushroom.isGrown() && saturation != maxSaturation) {
+                if (mushroom.isPoisoned()) {
+                    saturation += mushroom.getFoodValue();
                     health -= 20;
-                    ((Mushroom) plant).setPoisoned(Math.random() < 0.2);
+                    mushroom.setPoisoned(Math.random() < 0.2);
                 }
                 else {
-                    saturation += plant.getFoodValue();
+                    saturation += mushroom.getFoodValue();
                 }
-                plant.setGrown(false);
-                plant.resetGrowthState();
+                mushroom.setGrown(false);
+                mushroom.resetGrowthState();
                 if (saturation > maxSaturation) saturation = maxSaturation;
             }
         }
