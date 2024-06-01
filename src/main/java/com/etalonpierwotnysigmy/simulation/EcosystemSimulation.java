@@ -49,7 +49,7 @@ public class EcosystemSimulation {
         }
     }
 
-    private void updateEntities(Terrain[][] terrainMap) {
+    private void resetMovement() {
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] != null) {
@@ -57,7 +57,10 @@ public class EcosystemSimulation {
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) { // rozmnażanie się
+    }
+
+    private void breedAnimals(Terrain[][] terrainMap) {
+        for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] instanceof Animal &&
                         entityMap[y][x].didntMove() &&
@@ -67,7 +70,10 @@ public class EcosystemSimulation {
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) { // poruszenie się roślinożerców
+    }
+
+    private void moveHerbivores(Terrain[][] terrainMap) {
+        for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] != null && entityMap[y][x] instanceof Herbivore &&
                         entityMap[y][x].didntMove() &&
@@ -77,7 +83,10 @@ public class EcosystemSimulation {
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) { // poruszenie się drapieżników
+    }
+
+    private void movePredators(Terrain[][] terrainMap) {
+        for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] != null && entityMap[y][x] instanceof Predator &&
                         entityMap[y][x].didntMove() &&
@@ -87,7 +96,10 @@ public class EcosystemSimulation {
                 }
             }
         }
-        for (int y = 0; y < ySize; y++) { // zmiana statystyk po wykonaniu ruchu
+    }
+
+    private void updateAnimalStats(Terrain[][] terrainMap) {
+        for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] != null && entityMap[y][x] instanceof Animal) {
                     ((Animal) entityMap[y][x]).updateStats(entityMap, terrainMap);
@@ -97,6 +109,9 @@ public class EcosystemSimulation {
                 }
             }
         }
+    }
+
+    private void updatePlantGrowthState() {
         for (int y = 0; y < ySize; y++) { // wyrastanie planta
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] instanceof Plant) {
@@ -104,6 +119,16 @@ public class EcosystemSimulation {
                 }
             }
         }
+    }
+
+    private void updateEntities(Terrain[][] terrainMap) {
+        resetMovement();
+        breedAnimals(terrainMap);
+        moveHerbivores(terrainMap);
+        movePredators(terrainMap);
+        // wszystkie 3 powyższe metody liczą się jako ruch
+        updateAnimalStats(terrainMap);
+        updatePlantGrowthState();
     }
     public static void clearScreen() {      // działa chyba tylko w terminalu windowsowym, potem się to wywali jak będzie gui
         System.out.print("\033[H\033[2J");
