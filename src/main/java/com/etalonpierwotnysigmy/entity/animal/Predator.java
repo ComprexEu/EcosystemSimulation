@@ -8,7 +8,6 @@ import com.etalonpierwotnysigmy.simulation.Terrain;
 public abstract class Predator extends Animal {
     protected int damage;
     protected Position targetPosition;
-    protected Entity targetEntity;
     protected boolean foundTarget;
 
     protected boolean findingLove;
@@ -27,7 +26,6 @@ public abstract class Predator extends Animal {
     }
     protected void findTargetPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
         // znalezienie celu w zależności od potrzeb
-        targetEntity = null;
         targetPosition = null;
         findingLove = false;
         findingWater = false;
@@ -42,7 +40,7 @@ public abstract class Predator extends Animal {
         }
         // pozostałe warunki znajdują się w klasach dla poszczególnych gatunków
     }
-    public Position findNextPositionPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
+    protected Position findNextPositionPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
         // znajdowanie następnej pozycji drapieżnika (najlepsze pole spośród 9 możliwych)
         Position potentialNewPosition = new Position(position.getX(), position.getY());
         Position positionDifference;
@@ -70,7 +68,7 @@ public abstract class Predator extends Animal {
         return newPosition;
     }
 
-    public void updateStatsPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
+    protected void updateStatsPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
         if (saturation <= 0 || thirst <= 0) {
             health -= 5;
             if (health <= 0){

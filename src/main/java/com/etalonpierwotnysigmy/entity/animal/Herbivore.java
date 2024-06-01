@@ -7,7 +7,6 @@ import com.etalonpierwotnysigmy.entity.Entity;
 
 public abstract class Herbivore extends Animal {
     protected Position targetPosition;
-    protected Entity targetEntity;
     protected boolean foundTarget;
     protected boolean findingPredator;
     protected boolean findingLove;
@@ -41,7 +40,7 @@ public abstract class Herbivore extends Animal {
         // następne warunki osobno dla poszczególnych gatunków
     }
 
-    public Position findNextPositionHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
+    protected Position findNextPositionHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
         // znajdowanie następnej pozycji roślinożercy (najlepsze pole spośród 9 możliwych)
         Position potentialNewPosition = new Position(position.getX(), position.getY());
         Position positionDifference;
@@ -82,7 +81,7 @@ public abstract class Herbivore extends Animal {
         return newPosition;
     }
 
-    public void updateStatsHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
+    protected void updateStatsHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
         if (saturation <= 0 || thirst <= 0) {
             health -= 5;
             if (health <= 0){

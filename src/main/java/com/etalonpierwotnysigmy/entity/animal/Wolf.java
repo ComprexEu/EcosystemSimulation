@@ -22,7 +22,7 @@ public class Wolf extends Predator {
     }
     public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetPredator(entityMap, terrainMap);
-        if(saturation >= thirst && !findingLove && !findingWater && rabies >= 3){
+        if(thirst >= saturation && !findingLove && !findingWater && rabies >= 3){
             targetPosition = findEntity(entityMap, Animal.class);
             if (targetPosition != null) findingAnimal = true;
         }
