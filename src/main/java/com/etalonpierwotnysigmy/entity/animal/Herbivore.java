@@ -14,7 +14,7 @@ public abstract class Herbivore extends Animal {
     protected boolean findingPlant;
     public Herbivore(){
         super();
-        sightRange = 5;
+        sightRange = 7;
         thirst = 30;
         saturation = 30;
         maxSaturation = 50;
