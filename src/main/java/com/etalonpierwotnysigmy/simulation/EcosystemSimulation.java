@@ -16,8 +16,9 @@ public class EcosystemSimulation {
     int iteration;
     int maxIteration;
     double deerChance,sheepChance,lynxChance,wolfChance;
+    private Terrain[][] terrainMap;
 
-    public EcosystemSimulation(int xSize, int ySize, int maxIteration, double deerChance, double sheepChance, double lynxChance, double wolfChance) throws InterruptedException, IOException {
+    public EcosystemSimulation(int xSize, int ySize, int maxIteration, double deerChance, double sheepChance, double lynxChance, double wolfChance){
         this.xSize = xSize;
         this.ySize = ySize;
         this.maxIteration = maxIteration;
@@ -27,10 +28,12 @@ public class EcosystemSimulation {
         this.wolfChance = wolfChance;
         entityMap = new Entity[ySize][xSize];
         Map terrain = new Map(xSize, ySize);
-        Terrain[][] terrainMap = terrain.getTerrain();
+        terrainMap = terrain.getTerrain();
         spawnEntities(terrainMap);
-        Thread.sleep(2000);
+    }
+    public void run() throws InterruptedException {
         iteration = 0;
+        Thread.sleep(2000);
         while (iteration != maxIteration) {
             printMap(terrainMap);
             System.out.println();
@@ -39,7 +42,6 @@ public class EcosystemSimulation {
             Thread.sleep(1000);
         }
     }
-
     private void spawnEntities(Terrain[][] terrainMap) {
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
@@ -210,7 +212,7 @@ public class EcosystemSimulation {
                     }
 
                 }
-                System.out.print(" \u001B[0m");
+                System.out.print(" \033[0m");
             }
             System.out.println();
         }
