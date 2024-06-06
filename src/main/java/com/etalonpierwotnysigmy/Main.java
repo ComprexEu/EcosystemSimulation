@@ -20,8 +20,27 @@ public class Main {
             System.out.println("Wprowadzono niepoprawne dane wejściowe, zapoznaj się z dokumentacją");
             return;
         }
-        EcosystemSimulation simulation = new EcosystemSimulation(x, y, i, deerChance, sheepChance, lynxChance, wolfChance, print, save);
-        simulation.run();
+        EcosystemSimulation simulation;
+        boolean end = false;
+        Scanner scanner = new Scanner(System.in);
+        do{
+            simulation = new EcosystemSimulation(x, y, i, deerChance, sheepChance, lynxChance, wolfChance, print, save);
+            simulation.run();
+            System.out.println("Czy chcesz powtórzyć symulację [Y/N]?");
+            while(true){
+                if(scanner.hasNextLine()){
+                    String input = scanner.nextLine();
+                    if(input.equalsIgnoreCase("y")){
+                        break;
+                    }else if(input.equalsIgnoreCase("n")){
+                        end = true;
+                    }else System.out.println(input);
+                }
+                if(end)break;
+            }
+        } while(!end);
+        scanner.close();
+        System.out.println("Zakończono symulację");
+        System.exit(0);
     }
-
 }

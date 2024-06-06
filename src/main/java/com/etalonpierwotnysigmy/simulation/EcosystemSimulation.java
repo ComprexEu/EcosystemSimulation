@@ -38,7 +38,6 @@ public class EcosystemSimulation {
     }
     public void run() throws InterruptedException, IOException {
         iteration = 1;
-        Thread.sleep(2000);
         while (iteration <= maxIteration) {
             if(print){
                 printMap(terrainMap);
@@ -143,7 +142,7 @@ public class EcosystemSimulation {
             population.put("Sheep",sheepCount);
             population.put("Lynx",lynxCount);
             population.put("Wolf",wolfCount);
-            csv.write_data(iteration,maxIteration,population);
+            csv.write_data(iteration,population);
         }
     }
 
