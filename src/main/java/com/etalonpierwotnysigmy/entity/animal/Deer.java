@@ -7,6 +7,8 @@ import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 
+import java.util.Random;
+
 public class Deer extends Herbivore{
     public Deer(Position position) {
         super();
@@ -22,7 +24,10 @@ public class Deer extends Herbivore{
             targetPosition = findEntity(entityMap, Plant.class);
             if (targetPosition != null) findingPlant = true;
         }
-        if (targetPosition == null) targetPosition = new Position(terrainMap[0].length/2, terrainMap.length/2);
+        if (targetPosition == null){
+            Random x = new Random();
+            targetPosition = new Position(x.nextInt(terrainMap[0].length),x.nextInt(terrainMap.length));
+        }
     }
 
     @Override

@@ -6,6 +6,8 @@ import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 
+import java.util.Random;
+
 public class Sheep extends Herbivore {
     public Sheep(Position position) {
         super();
@@ -21,7 +23,10 @@ public class Sheep extends Herbivore {
             targetPosition = findEntity(entityMap, Turnip.class);
             if (targetPosition != null) findingPlant = true;
         }
-        if (targetPosition == null) targetPosition = new Position(terrainMap[0].length/2, terrainMap.length/2);
+        if (targetPosition == null){
+            Random x = new Random();
+            targetPosition = new Position(x.nextInt(terrainMap[0].length),x.nextInt(terrainMap.length));
+        }
     }
 
     @Override

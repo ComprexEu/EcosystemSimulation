@@ -5,6 +5,8 @@ import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 
+import java.util.Random;
+
 public class Lynx extends Predator{
     public Lynx(Position position) {
         super();
