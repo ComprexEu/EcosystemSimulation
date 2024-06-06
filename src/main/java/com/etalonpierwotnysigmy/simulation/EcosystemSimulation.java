@@ -7,18 +7,17 @@ import com.etalonpierwotnysigmy.entity.plant.Plant;
 import com.etalonpierwotnysigmy.entity.plant.Turnip;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 
 public class EcosystemSimulation {
-    int xSize;
-    int ySize;
+    int xSize,ySize;
     Entity[][] entityMap;
-    int iteration;
-    int maxIteration;
     double deerChance,sheepChance,lynxChance,wolfChance;
-    private Terrain[][] terrainMap;
-
-    public EcosystemSimulation(int xSize, int ySize, int maxIteration, double deerChance, double sheepChance, double lynxChance, double wolfChance){
+    protected int iteration,maxIteration;
+    private final Terrain[][] terrainMap;
+    private csvGenerator csv;
+    private boolean print,save;
+    public java.util.Map<String, Integer> population;
+    public EcosystemSimulation(int xSize, int ySize, int maxIteration, double deerChance, double sheepChance, double lynxChance, double wolfChance, boolean print, boolean save) throws IOException {
         this.xSize = xSize;
         this.ySize = ySize;
         this.maxIteration = maxIteration;
@@ -30,16 +29,24 @@ public class EcosystemSimulation {
         Map terrain = new Map(xSize, ySize);
         terrainMap = terrain.getTerrain();
         spawnEntities(terrainMap);
+        this.print = print;
+        this.save = save;
+        if(save){
+            population = new java.util.HashMap<>();
+            csv = new csvGenerator("Wyniki symulacji");
+        }
     }
-    public void run() throws InterruptedException {
-        iteration = 0;
+    public void run() throws InterruptedException, IOException {
+        iteration = 1;
         Thread.sleep(2000);
-        while (iteration != maxIteration) {
-            printMap(terrainMap);
-            System.out.println();
+        while (iteration <= maxIteration) {
+            if(print){
+                printMap(terrainMap);
+                System.out.println();
+            }
             updateEntities(terrainMap);
             iteration++;
-            Thread.sleep(1000);
+            if(print)Thread.sleep(1000);
         }
     }
     private void spawnEntities(Terrain[][] terrainMap) {
@@ -112,7 +119,11 @@ public class EcosystemSimulation {
         }
     }
 
-    private void updateAnimalStats(Terrain[][] terrainMap) {
+    private void updateAnimalStats(Terrain[][] terrainMap) throws IOException {
+        int deerCount = 0;
+        int sheepCount = 0;
+        int lynxCount = 0;
+        int wolfCount = 0;
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] != null && entityMap[y][x] instanceof Animal) {
@@ -120,8 +131,19 @@ public class EcosystemSimulation {
                     if (entityMap[y][x] != null && ((Animal) entityMap[y][x]).getHealth() <= 0) {
                         entityMap[y][x] = null; // usuwanie obiektu, którego 'health' spadnie poniżej 0
                     }
+                    if(entityMap[y][x] instanceof Deer)deerCount++;
+                    if(entityMap[y][x] instanceof Sheep)sheepCount++;
+                    if(entityMap[y][x] instanceof Lynx)lynxCount++;
+                    if(entityMap[y][x] instanceof Wolf)wolfCount++;
                 }
             }
+        }
+        if(save){
+            population.put("Deer",deerCount);
+            population.put("Sheep",sheepCount);
+            population.put("Lynx",lynxCount);
+            population.put("Wolf",wolfCount);
+            csv.write_data(iteration,maxIteration,population);
         }
     }
 
@@ -135,7 +157,7 @@ public class EcosystemSimulation {
         }
     }
 
-    private void updateEntities(Terrain[][] terrainMap) {
+    private void updateEntities(Terrain[][] terrainMap) throws IOException {
         resetMovement();
         breedAnimals(terrainMap);
         moveHerbivores(terrainMap);
@@ -214,10 +236,13 @@ public class EcosystemSimulation {
                 }
                 System.out.print(" \033[0m");
             }
+            System.out.print(" \033[0m");
             System.out.println();
         }
     }
+    private void calculatePopulation(){
 
+    }
 }
 
 
