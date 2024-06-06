@@ -6,24 +6,36 @@ import com.etalonpierwotnysigmy.entity.plant.Mushroom;
 import com.etalonpierwotnysigmy.entity.plant.Plant;
 import com.etalonpierwotnysigmy.entity.plant.Turnip;
 
+import java.io.IOException;
 import java.sql.SQLOutput;
 
 public class EcosystemSimulation {
     int xSize;
     int ySize;
     Entity[][] entityMap;
-    public EcosystemSimulation(int xSize, int ySize) throws InterruptedException {
+    int iteration;
+    int maxIteration;
+    double deerChance,sheepChance,lynxChance,wolfChance;
+
+    public EcosystemSimulation(int xSize, int ySize, int maxIteration, double deerChance, double sheepChance, double lynxChance, double wolfChance) throws InterruptedException, IOException {
         this.xSize = xSize;
         this.ySize = ySize;
+        this.maxIteration = maxIteration;
+        this.deerChance = deerChance;
+        this.sheepChance = sheepChance;
+        this.lynxChance = lynxChance;
+        this.wolfChance = wolfChance;
         entityMap = new Entity[ySize][xSize];
         Map terrain = new Map(xSize, ySize);
         Terrain[][] terrainMap = terrain.getTerrain();
         spawnEntities(terrainMap);
         Thread.sleep(2000);
-        while (true) { // później będzie w mainie
+        iteration = 0;
+        while (iteration != maxIteration) {
             printMap(terrainMap);
             System.out.println();
             updateEntities(terrainMap);
+            iteration++;
             Thread.sleep(1000);
         }
     }
@@ -36,13 +48,13 @@ public class EcosystemSimulation {
                         entityMap[y][x] = new Turnip(new Position(x, y));
                     else if (Math.random() < 0.05)
                         entityMap[y][x] = new Mushroom(new Position(x, y));
-                    else if (y < ySize / 2 && x < xSize / 2 && Math.random() < 0.2) entityMap[y][x] =
+                    else if (y < ySize / 2 && x < xSize / 2 && Math.random() < sheepChance) entityMap[y][x] =
                             new Sheep(new Position(x, y));
-                    else if (y < ySize / 2 && x > xSize / 2 && Math.random() < 0.1)
+                    else if (y < ySize / 2 && x > xSize / 2 && Math.random() < wolfChance)
                         entityMap[y][x] = new Wolf(new Position(x, y));
-                    else if (y >= ySize / 2 && x >= xSize / 2 && Math.random() < 0.2)
+                    else if (y >= ySize / 2 && x >= xSize / 2 && Math.random() < deerChance)
                         entityMap[y][x] = new Deer(new Position(x, y));
-                    else if (y >= ySize / 2 && x < xSize / 2 && Math.random() < 0.1)
+                    else if (y >= ySize / 2 && x < xSize / 2 && Math.random() < lynxChance)
                         entityMap[y][x] = new Lynx(new Position(x, y));
                 }
             }
@@ -130,7 +142,7 @@ public class EcosystemSimulation {
         updateAnimalStats(terrainMap);
         updatePlantGrowthState();
     }
-    public static void clearScreen() {      // działa chyba tylko w terminalu windowsowym, potem się to wywali jak będzie gui
+    public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
