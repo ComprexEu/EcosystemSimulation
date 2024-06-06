@@ -10,6 +10,10 @@ repositories {
     mavenCentral()
 }
 
+run {
+    standardInput = System.in
+}
+
 application {
     mainClass = 'com.etalonpierwotnysigmy.Main'
 }
@@ -18,11 +22,9 @@ dependencies {
     implementation("de.articdive:jnoise-pipeline:4.1.0")
 }
 
-mainClassName = 'com.etalonpierwotnysigmy.Main'
-
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Main-Class': "${mainClassName}"
+        attributes 'Main-Class': application.mainClass
     }
     archiveBaseName = "${rootProject.name}"
     from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
