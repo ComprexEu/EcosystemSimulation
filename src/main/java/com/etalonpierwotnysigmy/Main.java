@@ -47,12 +47,11 @@ public class Main {
         } while(!end);
         scanner.close();
         System.out.println("Zakończono symulację");
-        csvGenerator generator = new csvGenerator("Średnie wyniki");
         List<List<List<String>>> dataset = new ArrayList<>();
+        csvGenerator generator = new csvGenerator("Średnie wyniki");
         for(File file : listOfFiles){
             dataset.add(generator.read_data(file));
         }
-        System.out.println(generator.calculateAverage(dataset));
         System.exit(0);
     }
 }

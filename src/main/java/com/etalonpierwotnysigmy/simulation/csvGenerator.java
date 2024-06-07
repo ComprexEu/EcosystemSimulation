@@ -1,6 +1,7 @@
 package com.etalonpierwotnysigmy.simulation;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,13 +20,15 @@ public class csvGenerator {
             count++;
         }
     }
-    void write_data(int id, java.util.Map<String, Integer> population) throws IOException {
+    void writeData(int id, java.util.Map<String, Integer> population) throws IOException {
         FileWriter fw = new FileWriter(file,true);
-        if(id==1)fw.write("iteration"+";"+"lynxes"+";"+"sheep"+";"+"wolves"+";"+"deer"+"\n"); //xd
+        if(id==1)fw.write("iteration"+";"+"lynxes"+";"+"sheep"+";"+"wolves"+";"+"deer"+"\n");
         fw.write(id+";"+population.get("Lynx")+";"+population.get("Sheep")+";"+population.get("Wolf")+";"+population.get("Deer")+"\n");
         fw.close();
     }
-
+    void writeData(List<List<Double>> data) throws IOException {
+        //todo zrobić csv
+    }
     public File getFile() {
         return file;
     }
@@ -40,49 +43,54 @@ public class csvGenerator {
         }
         return data;
     }
-    List<List<List<Double>>> read_data_from_all_files(List<List<List<String>>> dataSet) {
-        List<List<List<Double>>> averageDataSetValues = new ArrayList<>();
-        List<List<Double>> averageDataValues = new ArrayList<>();
-        List<Double> average = new ArrayList<>();
-        for (List<List<String>> data : dataSet) {
-            for (List<String> rowData : data) {
-                if(!rowData.get(0).equals("iteration")){
-                    for (String value : rowData) {
-                        average.add(Double.parseDouble(value));
+    static List<List<List<Double>>> convertStringToDouble(List<List<List<String>>> dataSet){
+        List<List<List<Double>>> doubleList = new ArrayList<>();
+        for(List<List<String>> outerList : dataSet) {
+            List<List<Double>> outerDoubleList = new ArrayList<>();
+            for(List<String> innerList : outerList) {
+                if(!innerList.get(0).equals("iteration")) {
+                    List<Double> innerDoubleList = new ArrayList<>();
+                    for (String value : innerList) {
+                        innerDoubleList.add(Double.parseDouble(value));
                     }
+                    outerDoubleList.add(innerDoubleList);
                 }
-                averageDataValues.add(average);
             }
-            averageDataSetValues.add(averageDataValues);
+            doubleList.add(outerDoubleList);
         }
-        return averageDataSetValues;
+        return doubleList;
     }
-    public List<List<String>> calculateAverage(List<List<List<String>>> dataSet){
-        List<List<List<Double>>> DoubleDataSet = read_data_from_all_files(dataSet);
-        List<List<String>> averageData = new ArrayList<>();
-        List<String> average = new ArrayList<>();
-        List<List<Double>> sumValues = new ArrayList<>();
-        List<Double> sum = new ArrayList<>();
-        for(List<List<Double>> data : DoubleDataSet){
-            for(int i=0; i<data.size(); i++){
-                for(int j=0; j<data.get(i).size(); j++){
-                    if(data.equals(DoubleDataSet.get(0)))sum.add(data.get(i).get(j));
-                    else {
-                        sum.set(j, sum.get(j)+sumValues.get(i).get(j));
-                        sumValues.set(i, sum);
-                    }
+    public static List<List<Double>> calculateAverage(List<List<List<String>>> dataSet) {
+        List<List<List<Double>>> DoubleDataSet = new ArrayList<>(convertStringToDouble(dataSet));
+        List<List<Double>> result = new ArrayList<>();
+
+        int outerSize = DoubleDataSet.get(0).size();
+        int innerSize = DoubleDataSet.get(0).get(0).size();
+
+        for (int i = 0; i < outerSize; i++) {
+            List<Double> innerResultList = new ArrayList<>();
+            for (int j = 0; j < innerSize; j++) {
+                innerResultList.add(0.0);
+            }
+            result.add(innerResultList);
+        }
+        for (List<List<Double>> dataset : DoubleDataSet) {
+            for (int i = 0; i < outerSize; i++) {
+                for (int j = 0; j < innerSize; j++) {
+                    double currentValue = dataset.get(i).get(j);
+                    double updatedValue = result.get(i).get(j) + currentValue;
+                    result.get(i).set(j, updatedValue);
                 }
             }
-            if(data.equals(DoubleDataSet.get(0)))sumValues.add(sum);
         }
-        for(List<List<Double>> data : DoubleDataSet){
-            for(List<Double> row : sumValues){
-                for(Double value : row){
-                    average.add(String.valueOf(value/DoubleDataSet.size()));
-                }
-                averageData.add(average);
+        int numDatasets = DoubleDataSet.size();
+        for (int i = 0; i < outerSize; i++) {
+            for (int j = 0; j < innerSize; j++) {
+                double sumValue = result.get(i).get(j);
+                double averageValue = sumValue / numDatasets;
+                result.get(i).set(j, averageValue);
             }
         }
-        return averageData;
+        return result;
     }
 }

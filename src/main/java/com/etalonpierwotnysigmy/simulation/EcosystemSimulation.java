@@ -145,7 +145,7 @@ public class EcosystemSimulation {
             population.put("Sheep",sheepCount);
             population.put("Lynx",lynxCount);
             population.put("Wolf",wolfCount);
-            csv.write_data(iteration,population);
+            csv.writeData(iteration,population);
         }
     }
 
