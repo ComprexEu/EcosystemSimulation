@@ -1,8 +1,12 @@
 package com.etalonpierwotnysigmy;
 
 import com.etalonpierwotnysigmy.simulation.EcosystemSimulation;
+import com.etalonpierwotnysigmy.simulation.csvGenerator;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -21,11 +25,13 @@ public class Main {
             return;
         }
         EcosystemSimulation simulation;
+        List<File> listOfFiles = new ArrayList<>();
         boolean end = false;
         Scanner scanner = new Scanner(System.in);
         do{
             simulation = new EcosystemSimulation(x, y, i, deerChance, sheepChance, lynxChance, wolfChance, print, save);
             simulation.run();
+            listOfFiles.add(simulation.file);
             System.out.println("Czy chcesz powtórzyć symulację [Y/N]?");
             while(true){
                 if(scanner.hasNextLine()){
@@ -41,6 +47,12 @@ public class Main {
         } while(!end);
         scanner.close();
         System.out.println("Zakończono symulację");
+        csvGenerator generator = new csvGenerator("Średnie wyniki");
+        List<List<List<String>>> dataset = new ArrayList<>();
+        for(File file : listOfFiles){
+            dataset.add(generator.read_data(file));
+        }
+        System.out.println(generator.calculateAverage(dataset));
         System.exit(0);
     }
 }

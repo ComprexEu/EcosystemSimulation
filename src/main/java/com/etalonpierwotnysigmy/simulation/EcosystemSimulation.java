@@ -6,6 +6,7 @@ import com.etalonpierwotnysigmy.entity.plant.Mushroom;
 import com.etalonpierwotnysigmy.entity.plant.Plant;
 import com.etalonpierwotnysigmy.entity.plant.Turnip;
 
+import java.io.File;
 import java.io.IOException;
 
 public class EcosystemSimulation {
@@ -16,6 +17,7 @@ public class EcosystemSimulation {
     private final Terrain[][] terrainMap;
     private csvGenerator csv;
     private boolean print,save;
+    public File file;
     public java.util.Map<String, Integer> population;
     public EcosystemSimulation(int xSize, int ySize, int maxIteration, double deerChance, double sheepChance, double lynxChance, double wolfChance, boolean print, boolean save) throws IOException {
         this.xSize = xSize;
@@ -34,6 +36,7 @@ public class EcosystemSimulation {
         if(save){
             population = new java.util.HashMap<>();
             csv = new csvGenerator("Wyniki symulacji");
+            file = csv.getFile();
         }
     }
     public void run() throws InterruptedException, IOException {
