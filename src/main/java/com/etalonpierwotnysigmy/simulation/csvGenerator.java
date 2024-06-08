@@ -44,7 +44,7 @@ public class csvGenerator {
                         rowString.append(";");
                     }
                 }
-                writer.write(rowString.toString());
+                writer.write(rowString.toString().replaceAll("\\.",","));
                 writer.newLine();
             }
             System.out.println("Results successfully written to " + file.getAbsolutePath());
