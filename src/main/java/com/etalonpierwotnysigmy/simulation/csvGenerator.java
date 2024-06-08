@@ -33,24 +33,28 @@ public class csvGenerator {
         fw.close();
     }
     public void writeData(List<List<Double>> data) throws IOException {
-        FileWriter writer = new FileWriter(file);
-        writer.write("iteration;lynxes;sheep;wolves;deer\n");
-        for(List<Double> row : data) {
-            StringBuilder line = new StringBuilder();
-            for(int i = 0; i < row.size(); i++) {
-                line.append(row.get(i));
-                if(i < row.size() - 1) {
-                    line.append(";");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write("iteration;lynxes;sheep;wolves;deer");
+            writer.newLine();
+            for (List<Double> row : data) {
+                StringBuilder rowString = new StringBuilder();
+                for (int i = 0; i < row.size(); i++) {
+                    rowString.append(row.get(i));
+                    if (i < row.size() - 1) {
+                        rowString.append(";");
+                    }
                 }
+                writer.write(rowString.toString());
+                writer.newLine();
             }
-            writer.write(line+"\n");
+            System.out.println("Results successfully written to " + file.getAbsolutePath());
         }
     }
 
     public File getFile() {
         return file;
     }
-    public List<List<String>> read_data(File file) throws IOException {
+    public static List<List<String>> read_data(File file) throws IOException {
         List<List<String>> data = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;

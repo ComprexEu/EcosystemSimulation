@@ -55,11 +55,11 @@ public class Main {
         scanner.close();
         if(save){
             List<List<List<String>>> dataset = new ArrayList<>();
-            csvGenerator generator = new csvGenerator("Średnie wyniki");
             for (File file : listOfFiles) {
-                dataset.add(generator.read_data(file));
+                dataset.add(csvGenerator.read_data(file));
             }
             List<List<Double>> averageData = new ArrayList<>(csvGenerator.calculateAverage(dataset));
+            csvGenerator generator = new csvGenerator("Średnie wyniki");
             generator.writeData(averageData);
         }
         System.out.println("Zakończono symulację");
