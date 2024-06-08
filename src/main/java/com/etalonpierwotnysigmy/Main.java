@@ -37,7 +37,14 @@ public class Main {
                 if(scanner.hasNextLine()){
                     String input = scanner.nextLine();
                     if(input.equalsIgnoreCase("y")){
-                        break;
+                        System.out.println("Ile chcesz wykonać powtórzeń?");
+                        int intInput = scanner.nextInt();
+                        for(int j=0;j<intInput;++j){
+                            simulation = new EcosystemSimulation(x, y, i, deerChance, sheepChance, lynxChance, wolfChance, print, save);
+                            simulation.run();
+                            listOfFiles.add(simulation.file);
+                        }
+                        end = true;
                     }else if(input.equalsIgnoreCase("n")){
                         end = true;
                     }else System.out.println(input);
@@ -46,12 +53,16 @@ public class Main {
             }
         } while(!end);
         scanner.close();
-        System.out.println("Zakończono symulację");
-        List<List<List<String>>> dataset = new ArrayList<>();
-        csvGenerator generator = new csvGenerator("Średnie wyniki");
-        for(File file : listOfFiles){
-            dataset.add(generator.read_data(file));
+        if(save){
+            List<List<List<String>>> dataset = new ArrayList<>();
+            csvGenerator generator = new csvGenerator("Średnie wyniki");
+            for (File file : listOfFiles) {
+                dataset.add(generator.read_data(file));
+            }
+            List<List<Double>> averageData = new ArrayList<>(csvGenerator.calculateAverage(dataset));
+            generator.writeData(averageData);
         }
+        System.out.println("Zakończono symulację");
         System.exit(0);
     }
 }

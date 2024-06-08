@@ -2,21 +2,27 @@ package com.etalonpierwotnysigmy.simulation;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class csvGenerator {
-    public File file;
+    protected File file;
 
     public csvGenerator(String fileName) throws IOException {
         int count = 1;
         String name = fileName+" "+count+".csv";
-        file = new File(name);
+        File directory = new File("Wyniki");
+        if (!directory.exists()) {
+            Path path = Paths.get("Wyniki");
+            Files.createDirectories(path);
+        }
+        file = new File("Wyniki"+File.separator+name);
         while(!file.createNewFile()){
             name = fileName+" "+count+".csv";
-            file = new File(name);
+            file = new File("Wyniki"+File.separator+name);
             count++;
         }
     }
@@ -26,9 +32,21 @@ public class csvGenerator {
         fw.write(id+";"+population.get("Lynx")+";"+population.get("Sheep")+";"+population.get("Wolf")+";"+population.get("Deer")+"\n");
         fw.close();
     }
-    void writeData(List<List<Double>> data) throws IOException {
-        //todo zrobić csv
+    public void writeData(List<List<Double>> data) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        writer.write("iteration;lynxes;sheep;wolves;deer\n");
+        for(List<Double> row : data) {
+            StringBuilder line = new StringBuilder();
+            for(int i = 0; i < row.size(); i++) {
+                line.append(row.get(i));
+                if(i < row.size() - 1) {
+                    line.append(";");
+                }
+            }
+            writer.write(line+"\n");
+        }
     }
+
     public File getFile() {
         return file;
     }
@@ -67,16 +85,16 @@ public class csvGenerator {
         int outerSize = DoubleDataSet.get(0).size();
         int innerSize = DoubleDataSet.get(0).get(0).size();
 
-        for (int i = 0; i < outerSize; i++) {
+        for(int i = 0; i < outerSize; i++) {
             List<Double> innerResultList = new ArrayList<>();
-            for (int j = 0; j < innerSize; j++) {
+            for(int j = 0; j < innerSize; j++) {
                 innerResultList.add(0.0);
             }
             result.add(innerResultList);
         }
-        for (List<List<Double>> dataset : DoubleDataSet) {
-            for (int i = 0; i < outerSize; i++) {
-                for (int j = 0; j < innerSize; j++) {
+        for(List<List<Double>> dataset : DoubleDataSet) {
+            for(int i = 0; i < outerSize; i++) {
+                for(int j = 0; j < innerSize; j++) {
                     double currentValue = dataset.get(i).get(j);
                     double updatedValue = result.get(i).get(j) + currentValue;
                     result.get(i).set(j, updatedValue);
@@ -84,11 +102,13 @@ public class csvGenerator {
             }
         }
         int numDatasets = DoubleDataSet.size();
-        for (int i = 0; i < outerSize; i++) {
-            for (int j = 0; j < innerSize; j++) {
-                double sumValue = result.get(i).get(j);
-                double averageValue = sumValue / numDatasets;
-                result.get(i).set(j, averageValue);
+        for(int i = 0; i < outerSize; i++) {
+            for(int j = 0; j < innerSize; j++) {
+                if(j!=0){
+                    double sumValue = result.get(i).get(j);
+                    double averageValue = sumValue / numDatasets;
+                    result.get(i).set(j, averageValue);
+                }else result.get(i).set(0, (double) i+1);
             }
         }
         return result;
