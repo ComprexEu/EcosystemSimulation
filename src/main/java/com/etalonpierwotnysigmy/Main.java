@@ -18,7 +18,7 @@ public class Main {
         double sheepChance = args.length > 4 && Double.parseDouble(args[4]) >= 0 && Double.parseDouble(args[4]) <= 1 ? Double.parseDouble(args[4]) : -1;
         double lynxChance = args.length > 5 && Double.parseDouble(args[5]) >= 0 && Double.parseDouble(args[5]) <= 1 ? Double.parseDouble(args[5]) : -1;
         double wolfChance = args.length > 6 && Double.parseDouble(args[6]) >= 0 && Double.parseDouble(args[6]) <= 1 ? Double.parseDouble(args[6]) : -1;
-        boolean print = args.length > 7 && args[7].equals("1");
+        boolean print = args.length > 7 && args[7].equals("1") && x < 70;
         boolean save = args.length > 8 && args[8].equals("1");
         if(args.length == 0||y == -1||x == -1||i == -1||deerChance == -1||sheepChance == -1||lynxChance == -1||wolfChance == -1){
             System.out.println("Wprowadzono niepoprawne dane wejściowe, zapoznaj się z dokumentacją");
