@@ -10,10 +10,10 @@ import java.util.Random;
 public class Lynx extends Predator{
     public Lynx(Position position) {
         super();
-        damage = 5;
+        damage = 15;
         health = 35;
         maxHealth = 35;
-        speed = 3;
+        speed = 4;
         this.position = position;
     }
     public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {

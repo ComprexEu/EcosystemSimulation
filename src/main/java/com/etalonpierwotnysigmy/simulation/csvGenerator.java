@@ -13,16 +13,16 @@ public class csvGenerator {
 
     public csvGenerator(String fileName) throws IOException {
         int count = 1;
-        String name = fileName+" "+count+".csv";
+        String name = fileName+count+".csv";
         File directory = new File("Wyniki");
         if (!directory.exists()) {
             Path path = Paths.get("Wyniki");
             Files.createDirectories(path);
         }
-        file = new File("Wyniki"+File.separator+name);
+        file = new File("wyniki"+File.separator+name);
         while(!file.createNewFile()){
-            name = fileName+" "+count+".csv";
-            file = new File("Wyniki"+File.separator+name);
+            name = fileName+count+".csv";
+            file = new File("wyniki"+File.separator+name);
             count++;
         }
     }

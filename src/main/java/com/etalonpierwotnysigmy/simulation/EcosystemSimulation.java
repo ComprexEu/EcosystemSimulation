@@ -35,7 +35,7 @@ public class EcosystemSimulation {
         this.save = save;
         if(save){
             population = new java.util.HashMap<>();
-            csv = new csvGenerator("Wyniki symulacji");
+            csv = new csvGenerator("wyniki");
             file = csv.getFile();
         }
     }
@@ -174,6 +174,7 @@ public class EcosystemSimulation {
     }
     public void printMap(Terrain[][] terrainMap) {
         clearScreen();
+        int currentColumn = 0;
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (entityMap[y][x] == null) {
@@ -188,9 +189,9 @@ public class EcosystemSimulation {
                 }
                 else {
                     if (entityMap[y][x] instanceof Sheep) {
-                        // https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
-                        // \033[38;2;<r>;<g>;<b>m     #Select RGB foreground color
-                        // \033[48;2;<r>;<g>;<b>m     #Select RGB background color
+                        /* https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
+                         \033[38;2;<r>;<g>;<b>m     #Select RGB foreground color
+                         \033[48;2;<r>;<g>;<b>m     #Select RGB background color */
                         System.out.print("\033[48;2;160;160;160m");
                         if(((Sheep) entityMap[y][x]).getHealth() >= 30)
                             System.out.print(" S");
@@ -234,16 +235,70 @@ public class EcosystemSimulation {
                         else
                             System.out.print("\033[38;2;255;0;0m D");
                     }
-
                 }
                 System.out.print(" \033[0m");
             }
             System.out.print(" \033[0m");
+            // legenda
+            if (currentColumn == 0) {
+                System.out.print("\033[48;2;160;160;160m");
+                System.out.print(" S");
+                System.out.print(" \033[0m");
+                System.out.print(" - Sheep");
+            }
+            if (currentColumn == 1) {
+                System.out.print("\033[48;2;170;85;0m");
+                System.out.print(" D");
+                System.out.print(" \033[0m");
+                System.out.print(" - Deer");
+            }
+            if (currentColumn == 2) {
+                System.out.print("\033[48;2;85;85;85m");
+                System.out.print(" W");
+                System.out.print(" \033[0m");
+                System.out.print(" - Wolf");
+            }
+            if (currentColumn == 3) {
+                System.out.print("\033[48;2;252;127;0m");
+                System.out.print(" L");
+                System.out.print(" \033[0m");
+                System.out.print(" - Lynx");
+            }
+            if (currentColumn == 4) {
+                System.out.print("\033[45m");
+                System.out.print(" T");
+                System.out.print(" \033[0m");
+                System.out.print(" - Turnip");
+            }
+            if (currentColumn == 5) {
+                System.out.print("\033[48;2;255;85;85m");
+                System.out.print(" M");
+                System.out.print(" \033[0m");
+                System.out.print(" - Mushroom");
+            }
+            if (currentColumn == 6) {
+                System.out.print("\033[42m");
+                System.out.print(" G");
+                System.out.print(" \033[0m");
+                System.out.print(" - Grass");
+            }
+            if (currentColumn == 7) {
+                System.out.print("\033[44m");
+                System.out.print(" W");
+                System.out.print(" \033[0m");
+                System.out.print(" - Water");
+            }
+            if (currentColumn == 8) {
+                System.out.print("\033[38;2;255;255;0m średnia ilość hp");
+                System.out.print(" \033[0m");
+            }
+            if (currentColumn == 9) {
+                System.out.print("\033[38;2;255;0;0m mała ilość hp");
+                System.out.print(" \033[0m");
+            }
+            currentColumn++;
             System.out.println();
         }
-    }
-    private void calculatePopulation(){
-
     }
 }
 

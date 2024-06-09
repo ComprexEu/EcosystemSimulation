@@ -59,7 +59,7 @@ public class Main {
                 dataset.add(csvGenerator.read_data(file));
             }
             List<List<Double>> averageData = new ArrayList<>(csvGenerator.calculateAverage(dataset));
-            csvGenerator generator = new csvGenerator("Średnie wyniki");
+            csvGenerator generator = new csvGenerator("wyniki_srednia");
             generator.writeData(averageData);
         }
         System.out.println("Zakończono symulację");

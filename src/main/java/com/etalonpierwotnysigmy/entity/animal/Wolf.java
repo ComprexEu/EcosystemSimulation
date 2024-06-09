@@ -13,10 +13,10 @@ public class Wolf extends Predator {
 
     public Wolf(Position position) {
         super();
-        damage = 10;
+        damage = 20;
         health = 50;
         maxHealth = 50;
-        speed = 2;
+        speed = 3;
         this.position = position;
         rabies = 0;
     }

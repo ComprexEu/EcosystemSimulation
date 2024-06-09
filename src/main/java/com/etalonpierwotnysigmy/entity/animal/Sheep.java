@@ -44,8 +44,10 @@ public class Sheep extends Herbivore {
                 if (turnip.isBuffed()){
                     saturation += turnip.getFoodValue();
                     double randomNumber = Math.random();
-                    if (randomNumber < 0.3)
+                    if (randomNumber < 0.3) {
                         health += 10;
+                        saturation += 10;
+                    }
                     else if (randomNumber < 0.5)
                         speed++;
                     else if (randomNumber < 0.7){
