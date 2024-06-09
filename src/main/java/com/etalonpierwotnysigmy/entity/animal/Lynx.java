@@ -13,7 +13,7 @@ public class Lynx extends Predator{
         damage = 15;
         health = 35;
         maxHealth = 35;
-        speed = 4;
+        speed = 3;
         this.position = position;
     }
     public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {

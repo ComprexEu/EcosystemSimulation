@@ -16,17 +16,17 @@ public class Wolf extends Predator {
         damage = 20;
         health = 50;
         maxHealth = 50;
-        speed = 3;
+        speed = 2;
         this.position = position;
         rabies = 0;
     }
     public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetPredator(entityMap, terrainMap);
-        if(thirst >= saturation && !findingLove && !findingWater && rabies == 3){
+        if(thirst >= saturation && !findingLove && !findingWater && rabies > 3){
             targetPosition = findEntity(entityMap, Animal.class);
             if (targetPosition != null) findingAnimal = true;
         }
-        if (saturation >= thirst && !findingLove && !findingWater && !findingAnimal){
+        if (thirst >= saturation && !findingLove && !findingWater && !findingAnimal){
             targetPosition = findEntity(entityMap, Herbivore.class);
             if (targetPosition != null) findingAnimal = true;
         }
