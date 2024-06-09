@@ -19,11 +19,13 @@ public class csvGenerator {
             Path path = Paths.get("Wyniki");
             Files.createDirectories(path);
         }
-        file = new File("wyniki"+File.separator+name);
-        while(!file.createNewFile()){
-            name = fileName+count+".csv";
-            file = new File("wyniki"+File.separator+name);
+        while (true) {
+            file = new File("Wyniki" + File.separator + name);
+            if (file.createNewFile()) {
+                break;
+            }
             count++;
+            name = fileName + count + ".csv";
         }
     }
     void writeData(int id, java.util.Map<String, Integer> population) throws IOException {
@@ -47,7 +49,7 @@ public class csvGenerator {
                 writer.write(rowString.toString().replaceAll("\\.",","));
                 writer.newLine();
             }
-            System.out.println("Results successfully written to " + file.getAbsolutePath());
+            System.out.println("Wyniki pomyślnie zapisane w: " + file.getAbsolutePath());
         }
     }
 
