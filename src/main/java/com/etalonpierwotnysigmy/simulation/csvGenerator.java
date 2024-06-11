@@ -91,6 +91,7 @@ public class csvGenerator {
         int outerSize = DoubleDataSet.get(0).size();
         int innerSize = DoubleDataSet.get(0).get(0).size();
 
+        //adds lists filled with zeros to result
         for(int i = 0; i < outerSize; i++) {
             List<Double> innerResultList = new ArrayList<>();
             for(int j = 0; j < innerSize; j++) {
@@ -98,6 +99,8 @@ public class csvGenerator {
             }
             result.add(innerResultList);
         }
+
+        //sums numbers from different datasets at the same position and updates the "results" list with the sum
         for(List<List<Double>> dataset : DoubleDataSet) {
             for(int i = 0; i < outerSize; i++) {
                 for(int j = 0; j < innerSize; j++) {
@@ -107,6 +110,8 @@ public class csvGenerator {
                 }
             }
         }
+
+        // divides every sum by number of datasets
         int numDatasets = DoubleDataSet.size();
         for(int i = 0; i < outerSize; i++) {
             for(int j = 0; j < innerSize; j++) {
