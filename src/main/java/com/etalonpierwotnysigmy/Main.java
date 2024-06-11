@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, IOException {
+        // check if provided arguments are valid
         int y = args.length > 0 && Integer.parseInt(args[0]) >= 3 ? Integer.parseInt(args[0]) : -1;
         int x = args.length > 1 && Integer.parseInt(args[1]) >= 3 ? Integer.parseInt(args[1]) : -1;
         int i = args.length > 2 && Integer.parseInt(args[2]) > 0 ? Integer.parseInt(args[2]) : -1;
@@ -28,30 +29,27 @@ public class Main {
         List<File> listOfFiles = new ArrayList<>();
         boolean end = false;
         Scanner scanner = new Scanner(System.in);
-        do{
-            simulation = new EcosystemSimulation(x, y, i, deerChance, sheepChance, lynxChance, wolfChance, print, save);
-            simulation.run();
-            listOfFiles.add(simulation.file);
-            System.out.println("Czy chcesz powtórzyć symulację [Y/N]?");
-            while(true){
-                if(scanner.hasNextLine()){
-                    String input = scanner.nextLine();
-                    if(input.equalsIgnoreCase("y")){
-                        System.out.println("Ile chcesz wykonać powtórzeń?");
-                        int intInput = scanner.nextInt();
-                        for(int j=0;j<intInput;++j){
-                            simulation = new EcosystemSimulation(x, y, i, deerChance, sheepChance, lynxChance, wolfChance, print, save);
-                            simulation.run();
-                            listOfFiles.add(simulation.file);
-                        }
-                        end = true;
-                    }else if(input.equalsIgnoreCase("n")){
-                        end = true;
-                    }else System.out.println(input);
-                }
-                if(end)break;
+        simulation = new EcosystemSimulation(x, y, i, deerChance, sheepChance, lynxChance, wolfChance, print, save);
+        simulation.run();
+        listOfFiles.add(simulation.file);
+        System.out.println("Czy chcesz powtórzyć symulację [Y/N]?");
+        do {
+            if (scanner.hasNextLine()) {
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("y")) {
+                    System.out.println("Ile chcesz wykonać powtórzeń?");
+                    int intInput = scanner.nextInt();
+                    for (int j = 0; j < intInput; ++j) {
+                        simulation = new EcosystemSimulation(x, y, i, deerChance, sheepChance, lynxChance, wolfChance, print, save);
+                        simulation.run();
+                        listOfFiles.add(simulation.file);
+                    }
+                    end = true;
+                } else if (input.equalsIgnoreCase("n")) {
+                    end = true;
+                } else System.out.println(input);
             }
-        } while(!end);
+        } while (!end);
         scanner.close();
         if(save){
             List<List<List<String>>> dataset = new ArrayList<>();

@@ -37,7 +37,7 @@ public class Lynx extends Predator{
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.updateStatsPredator(entityMap);
-        // obrona lynxa przed wścieklizną
+        // lynx's defense against rabies
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
                 if (Map.isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {

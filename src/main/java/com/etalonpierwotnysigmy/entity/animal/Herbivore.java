@@ -22,7 +22,7 @@ public abstract class Herbivore extends Animal {
     }
 
     protected void findTargetHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
-        // znalezienie celu w zależności od potrzeb
+        // finding target based on hierarchy of animal needs
         findingLove = false;
         findingPlant = false;
         findingWater = false;
@@ -37,11 +37,11 @@ public abstract class Herbivore extends Animal {
             targetPosition = findWater(terrainMap);
             if (targetPosition != null) findingWater = true;
         }
-        // następne warunki osobno dla poszczególnych gatunków
+        // next conditions separately for individual species
     }
 
     protected Position findNextPositionHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
-        // znajdowanie następnej pozycji roślinożercy (najlepsze pole spośród 9 możliwych)
+        // finding the next herbivore position (best field out of 9 possible)
         Position potentialNewPosition = new Position(position.getX(), position.getY());
         Position positionDifference;
         Position newPosition = new Position(position.getX(), position.getY());

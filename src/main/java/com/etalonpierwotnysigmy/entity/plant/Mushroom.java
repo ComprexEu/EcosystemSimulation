@@ -11,7 +11,7 @@ public class Mushroom extends Plant {
         super();
         this.position = position;
         foodValue = 20;
-        timeToRegrow = 1; // liczba iteracji symulacji, po której odrośnie
+        timeToRegrow = 1; // number of simulation iterations before it grows back
         growthState = 0;
         poisoned = Math.random() < 0.2;
     }

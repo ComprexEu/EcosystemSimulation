@@ -18,7 +18,7 @@ public class Deer extends Herbivore{
         this.position = position;
     }
 
-    private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
+    private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) { // method used to find target based on hierarchy of animal needs
         super.findTargetHerbivore(entityMap, terrainMap);
         if (thirst >= saturation && !findingPredator && !findingLove && !findingWater) {
             targetPosition = findEntity(entityMap, Plant.class);

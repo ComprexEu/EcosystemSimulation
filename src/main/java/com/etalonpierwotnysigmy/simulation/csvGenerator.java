@@ -11,7 +11,7 @@ import java.util.List;
 public class csvGenerator {
     protected File file;
 
-    public csvGenerator(String fileName) throws IOException {
+    public csvGenerator(String fileName) throws IOException { //creates directory for results if it doesn't already exist and crates .csv file inside
         int count = 1;
         String name = fileName+count+".csv";
         File directory = new File("Wyniki");

@@ -34,7 +34,7 @@ public abstract class Animal extends Entity {
     }
 
     protected Position findClosest(Terrain[][] terrainMap, Entity[][] entityMap, Class<?> entityType, SearchType searchType) {
-        Position closestPosition = null; // znajdowanie najbliższego zapotrzebowania
+        Position closestPosition = null; // finding nearest need
         Position tempPosition = new Position(position.getX(), position.getY());
         double closestPositionDistance = sightRange;
         for (int y = position.getY() - sightRange; y < position.getY() + sightRange; y++) {
@@ -73,11 +73,11 @@ public abstract class Animal extends Entity {
         }
         return closestPosition;
     }
-    protected Position findWater(Terrain[][] terrainMap) { // metoda do znajdywania najbliższej wody
+    protected Position findWater(Terrain[][] terrainMap) {
         return findClosest(terrainMap, null, null, SearchType.WATER);
     }
 
-    protected Position findEntity(Entity[][] entityMap, Class<?> entityType) { // metoda do znajdywania najbliższego wybranego przez nas entity
+    protected Position findEntity(Entity[][] entityMap, Class<?> entityType) {
         return findClosest(null, entityMap, entityType, SearchType.ENTITY);
     }
 
@@ -101,7 +101,7 @@ public abstract class Animal extends Entity {
     }
     public abstract void breed(Entity[][] entityMap, Terrain[][] terrainMap);
 
-    public void move(Entity[][] entityMap, Position nextPosition) { // logika odpowiadająca za zmianę pozycji
+    public void move(Entity[][] entityMap, Position nextPosition) { // method used to reposition entity
         entityMap[nextPosition.getY()][nextPosition.getX()] = entityMap[position.getY()][position.getX()];
         entityMap[position.getY()][position.getX()] = null;
         position = new Position(nextPosition.getX(), nextPosition.getY());
@@ -124,10 +124,6 @@ public abstract class Animal extends Entity {
 
     public Gender getGender() {
         return gender;
-    }
-
-    public int getSaturation() {
-        return saturation;
     }
 
     public boolean metBreedingRequirements() {

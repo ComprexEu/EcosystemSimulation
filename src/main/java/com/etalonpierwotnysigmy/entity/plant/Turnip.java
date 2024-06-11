@@ -8,7 +8,7 @@ public class Turnip extends Plant {
         super();
         this.position = position;
         foodValue = 40;
-        timeToRegrow = 3; // liczba iteracji symulacji, po której odrośnie
+        timeToRegrow = 3; // number of simulation iterations before it grows back
         growthState = 0;
         buffed = Math.random() < 0.1;
     }
