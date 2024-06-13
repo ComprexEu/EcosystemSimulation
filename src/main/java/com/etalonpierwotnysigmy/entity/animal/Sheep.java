@@ -19,8 +19,10 @@ public class Sheep extends Herbivore {
 
     private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetHerbivore(entityMap, terrainMap);
+
         if (thirst >= saturation && !findingPredator && !findingLove && !findingWater) {
             targetPosition = findEntity(entityMap, Turnip.class);
+
             if (targetPosition != null) findingPlant = true;
         }
         if (targetPosition == null){
@@ -38,12 +40,16 @@ public class Sheep extends Herbivore {
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.updateStatsHerbivore();
+
         if (findingPlant && foundTarget) {
             Turnip turnip = (Turnip)entityMap[targetPosition.getY()][targetPosition.getX()];
+
             if (turnip.isGrown() && saturation != maxSaturation) {
+
                 if (turnip.isBuffed()){
                     saturation += turnip.getFoodValue();
                     double randomNumber = Math.random();
+
                     if (randomNumber < 0.3) {
                         health += 10;
                         saturation += 10;
@@ -65,7 +71,9 @@ public class Sheep extends Herbivore {
                 }
                 turnip.setGrown(false);
                 turnip.resetGrowthState();
-                if (saturation > maxSaturation) saturation = maxSaturation;
+
+                if (saturation > maxSaturation)
+                    saturation = maxSaturation;
             }
         }
         metBreedingRequirements = thirst > 30 && saturation > 30;
@@ -74,8 +82,11 @@ public class Sheep extends Herbivore {
 
     public void breed(Entity[][] entityMap, Terrain[][] terrainMap) {
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
+
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
+
                 if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
+
                     if (entityMap[y][x] == null && terrainMap[y][x] == Terrain.GRASS) {
                         entityMap[y][x] = new Sheep(new Position(x, y));
                         entityMap[y][x].setMoved(true);

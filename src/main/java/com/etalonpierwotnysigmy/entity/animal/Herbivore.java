@@ -28,13 +28,16 @@ public abstract class Herbivore extends Animal {
         findingWater = false;
         findingPredator = false;
         targetPosition = findEntity(entityMap, Predator.class);
-        if (targetPosition != null) findingPredator = true;
+
+        if (targetPosition != null)findingPredator = true;
+
         if (metBreedingRequirements && !findingPredator) {
             targetPosition = findLove(entityMap);
             if (targetPosition != null) findingLove = true;
         }
         if (thirst < saturation && !findingPredator && !findingLove) {
             targetPosition = findWater(terrainMap);
+
             if (targetPosition != null) findingWater = true;
         }
         // next conditions separately for individual species
@@ -47,19 +50,28 @@ public abstract class Herbivore extends Animal {
         Position newPosition = new Position(position.getX(), position.getY());
         double closestPositionDistance = Double.MAX_VALUE;
         double furthestPositionDistance = -1;
+
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
+
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
+
                 if (Map.isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {
-                    if (terrainMap[y][x] == Terrain.GRASS &&
-                            (entityMap[y][x] == null || entityMap[y][x] == entityMap[position.getY()][position.getX()])) {
+
+                    if (
+                            terrainMap[y][x] == Terrain.GRASS &&
+                            (entityMap[y][x] == null || entityMap[y][x] == entityMap[position.getY()][position.getX()])
+                    ) {
                         potentialNewPosition.setX(x);
                         potentialNewPosition.setY(y);
                         positionDifference = Position.subtractPositions(targetPosition, potentialNewPosition);
                         double distance = Position.positionVectorLength(positionDifference);
+
                         if (entityMap[targetPosition.getY()][targetPosition.getX()] instanceof Predator) {
+
                             if (distance > furthestPositionDistance) {
                                 furthestPositionDistance = distance;
                                 newPosition = new Position(potentialNewPosition.getX(), potentialNewPosition.getY());
+
                                 if (distance < 2 && distance > 0) {
                                     foundTarget = true;
                                 }
@@ -69,6 +81,7 @@ public abstract class Herbivore extends Animal {
                             if (distance < closestPositionDistance) {
                                 closestPositionDistance = distance;
                                 newPosition = new Position(potentialNewPosition.getX(), potentialNewPosition.getY());
+
                                 if (distance < 2 && distance > 0) {
                                     foundTarget = true;
                                 }
@@ -84,9 +97,9 @@ public abstract class Herbivore extends Animal {
     protected void updateStatsHerbivore() {
         if (saturation <= 0 || thirst <= 0) {
             health -= 5;
-            if (health <= 0){
+
+            if (health <= 0)
                 return;
-            }
         }
         else {
             saturation -= 2;
@@ -94,7 +107,9 @@ public abstract class Herbivore extends Animal {
         }
         if (findingWater && foundTarget) {
             thirst += 10;
-            if (thirst > maxThirst) thirst = maxThirst;
+
+            if (thirst > maxThirst)
+                thirst = maxThirst;
         }
         if (metBreedingRequirements)
             health += 5;

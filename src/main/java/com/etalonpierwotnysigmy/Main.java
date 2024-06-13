@@ -18,37 +18,35 @@ public class Main {
             return;
         }
 
-        // change type of argument from String to int
-        int[] intArgs = new int[5];
-        intArgs[0] = Integer.parseInt(args[0]);
-        intArgs[1] = Integer.parseInt(args[1]);
-        intArgs[2] = Integer.parseInt(args[2]);
-        intArgs[3] = Integer.parseInt(args[3]);
-        intArgs[4] = Integer.parseInt(args[4]);
+        // change type of argument from String to int / double and initialize variables
+        int y = Integer.parseInt(args[0]);
+        int x = Integer.parseInt(args[1]);
+        int i = Integer.parseInt(args[2]);
+        boolean print = Integer.parseInt(args[3]) == 1;
+        boolean save = Integer.parseInt(args[4]) == 1;
 
-        // change type of argument from String to double
-        double[] doubleArgs = new double[4];
-        doubleArgs[0] = Double.parseDouble(args[5]);
-        doubleArgs[1] = Double.parseDouble(args[6]);
-        doubleArgs[2] = Double.parseDouble(args[7]);
-        doubleArgs[3] = Double.parseDouble(args[8]);
+        double deerChance = Double.parseDouble(args[5]);
+        double sheepChance = Double.parseDouble(args[6]);
+        double lynxChance = Double.parseDouble(args[7]);
+        double wolfChance = Double.parseDouble(args[8]);
 
-        // check if provided arguments are valid and initialise variables
-        // intArgs
-        int y = intArgs[0] >= 3 ? intArgs[0] : -1;
-        int x = intArgs[1] >= 3 ? intArgs[1] : -1;
-        int i = intArgs[2] > 0 ? intArgs[2] : -1;
-        boolean print = intArgs[3] == 1 && x <= 70;
-        boolean save = intArgs[4] == 1;
+        // check if provided arguments are valid
+        boolean validArgs = true;
+        if(
+                y < 3 ||                                //map can't be smaller than 3x3 tiles
+                x < 3 ||                                //^
+                i < 1 ||                                //simulation must have at least one iteration
+                (print && x > 70) ||                    //printing is only available if width of map is smaller or equal 70
+                deerChance < 0 ||deerChance > 1 ||      //spawn rates must be between 0 and 1
+                sheepChance < 0 || sheepChance > 1 ||   //^
+                lynxChance < 0 || lynxChance > 1 ||     //^
+                wolfChance < 0 || wolfChance > 1        //^
+        ){
+            validArgs = false;
+        }
 
-        // doubleArgs
-        double deerChance = doubleArgs[0] >= 0 && doubleArgs[0] <= 1 ? doubleArgs[0] : -1;
-        double sheepChance = doubleArgs[1] >= 0 && doubleArgs[1] <= 1 ? doubleArgs[1] : -1;
-        double lynxChance = doubleArgs[2] >= 0 && doubleArgs[2] <= 1 ? doubleArgs[2] : -1;
-        double wolfChance = doubleArgs[3] >= 0 && doubleArgs[3] <= 1 ? doubleArgs[3] : -1;
-
-        // end program if invalid arguments are provided
-        if(y == -1||x == -1||i == -1||deerChance == -1||sheepChance == -1||lynxChance == -1||wolfChance == -1){
+        // end program if any of the arguments is invalid
+        if(!validArgs){
             System.out.println("Wprowadzono niepoprawne dane wejściowe, zapoznaj się z dokumentacją");
             return;
         }
@@ -95,11 +93,16 @@ public class Main {
 
         // create .csv file with average results
         if(save){
+            //creates a List and adds data from created files to it
             List<List<List<String>>> dataset = new ArrayList<>();
             for (File file : listOfFiles) {
                 dataset.add(csvGenerator.read_data(file));
             }
+
+            //creates List of data and fills it with average values
             List<List<Double>> averageData = new ArrayList<>(csvGenerator.calculateAverage(dataset));
+
+            //creates .csv and writes the data
             csvGenerator generator = new csvGenerator("wyniki_srednia");
             generator.writeData(averageData);
         }

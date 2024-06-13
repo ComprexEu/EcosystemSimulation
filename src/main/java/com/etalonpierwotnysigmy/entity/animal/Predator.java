@@ -32,11 +32,13 @@ public abstract class Predator extends Animal {
         findingAnimal = false;
         if (metBreedingRequirements){
             targetPosition = findLove(entityMap);
-            if (targetPosition != null) findingLove = true;
+            if (targetPosition != null)
+                findingLove = true;
         }
         if (thirst < saturation && !findingLove) {
             targetPosition = findWater(terrainMap);
-            if (targetPosition != null) findingWater = true;
+            if (targetPosition != null)
+                findingWater = true;
         }
         // next conditions separately for individual species
     }
@@ -46,17 +48,23 @@ public abstract class Predator extends Animal {
         Position positionDifference;
         Position newPosition = new Position(position.getX(), position.getY());
         double closestPositionDistance = Double.MAX_VALUE;
+
         for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
+
             for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
+
                 if (Map.isInBounds(x, y, terrainMap[0].length, terrainMap.length)) {
+
                     if (terrainMap[y][x] == Terrain.GRASS && (entityMap[y][x] == null || entityMap[y][x] == entityMap[position.getY()][position.getX()])) {
                         potentialNewPosition.setX(x);
                         potentialNewPosition.setY(y);
                         positionDifference = Position.subtractPositions(targetPosition, potentialNewPosition);
                         double distance = Position.positionVectorLength(positionDifference);
+
                         if (distance < closestPositionDistance) {
                             closestPositionDistance = distance;
                             newPosition = new Position(potentialNewPosition.getX(), potentialNewPosition.getY());
+
                             if (distance < 2 && distance > 0) {
                                 foundTarget = true;
                             }
@@ -82,22 +90,33 @@ public abstract class Predator extends Animal {
 
         if (findingWater && foundTarget) {
             thirst += 10;
-            if (thirst > maxThirst) thirst = maxThirst;
+
+            if (thirst > maxThirst)
+                thirst = maxThirst;
         }
         if (findingAnimal && foundTarget && entityMap[targetPosition.getY()][targetPosition.getX()] != null) {
             Animal animal = (Animal)entityMap[targetPosition.getY()][targetPosition.getX()];
             animal.setHealth(animal.getHealth() - damage);
+
             if (animal.getHealth() <= 0) {
                 saturation += maxSaturation / 2;
-                if (saturation > maxSaturation) saturation = maxSaturation;
+
+                if (saturation > maxSaturation)
+                    saturation = maxSaturation;
+
                 health += maxHealth / 2;
-                if (health > maxHealth) maxHealth = health;
+
+                if (health > maxHealth)
+                    maxHealth = health;
             }
         }
         metBreedingRequirements = thirst > 40 && saturation > 40;
+
         if(metBreedingRequirements) {
             health += 5;
-            if (health > maxHealth) maxHealth = health;
+
+            if (health > maxHealth)
+                maxHealth = health;
         }
         foundTarget = false;
     }

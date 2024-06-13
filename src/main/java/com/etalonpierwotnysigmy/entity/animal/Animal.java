@@ -19,8 +19,11 @@ public abstract class Animal extends Entity {
     protected boolean breeding;
 
     public Animal(){
-        if (Math.random() < 0.5) gender = Gender.MALE;
-        else gender = Gender.FEMALE;
+        if (Math.random() < 0.5)
+            gender = Gender.MALE;
+        else
+            gender = Gender.FEMALE;
+
         metBreedingRequirements = false;
     }
     abstract Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap);
@@ -37,10 +40,17 @@ public abstract class Animal extends Entity {
         Position closestPosition = null; // finding nearest need
         Position tempPosition = new Position(position.getX(), position.getY());
         double closestPositionDistance = sightRange;
+
         for (int y = position.getY() - sightRange; y < position.getY() + sightRange; y++) {
+
             for (int x = position.getX() - sightRange; x < position.getX() + sightRange; x++) {
-                if (Map.isInBounds(x, y, terrainMap != null ? terrainMap[0].length : entityMap[0].length,
-                        terrainMap != null ? terrainMap.length : entityMap.length)) {
+
+                if(Map.isInBounds(
+                                x,
+                                y,
+                                terrainMap != null ? terrainMap[0].length : entityMap[0].length,
+                                terrainMap != null ? terrainMap.length : entityMap.length)
+                ){
                     boolean isValid = false;
 
                     switch (searchType) {
@@ -61,8 +71,11 @@ public abstract class Animal extends Entity {
                     if (isValid) {
                         tempPosition.setX(x);
                         tempPosition.setY(y);
+
                         Position positionDifference = Position.subtractPositions(position, tempPosition);
+
                         double distance = Position.positionVectorLength(positionDifference);
+
                         if (distance <= closestPositionDistance && distance > 0) {
                             closestPositionDistance = distance;
                             closestPosition = new Position(tempPosition.getX(), tempPosition.getY());
@@ -88,8 +101,10 @@ public abstract class Animal extends Entity {
     public boolean isBreeding(Entity[][] entityMap) {
         if (metBreedingRequirements && gender == Gender.FEMALE) {
             Position closestPosition = findLove(entityMap);
+
             if (closestPosition != null) {
                 Position differenceVector = Position.subtractPositions(closestPosition, position);
+
                 if (Position.positionVectorLength(differenceVector) < 2 &&
                         Position.positionVectorLength(differenceVector) > 0 &&
                         ((Animal) entityMap[closestPosition.getY()][closestPosition.getX()]).metBreedingRequirements()) {
@@ -110,6 +125,7 @@ public abstract class Animal extends Entity {
     public void updatePosition(Entity[][] entityMap, Terrain[][] terrainMap) { // poruszenie animala na następne miejsce
         for (int i = 0; i < speed; i++) {
             Position nextPosition = findNextPosition(entityMap, terrainMap);
+
             if (entityMap[nextPosition.getY()][nextPosition.getX()] == null) move(entityMap, nextPosition);
         }
     }

@@ -15,12 +15,15 @@ public class csvGenerator {
         int count = 1;
         String name = fileName+count+".csv";
         File directory = new File("Wyniki");
+
         if (!directory.exists()) {
             Path path = Paths.get("Wyniki");
             Files.createDirectories(path);
         }
+
         while (true) {
             file = new File("Wyniki" + File.separator + name);
+
             if (file.createNewFile()) {
                 break;
             }
@@ -30,22 +33,35 @@ public class csvGenerator {
     }
     void writeData(int id, java.util.Map<String, Integer> population) throws IOException {
         FileWriter fw = new FileWriter(file,true);
-        if(id==1)fw.write("iteration"+";"+"lynxes"+";"+"sheep"+";"+"wolves"+";"+"deer"+"\n");
+
+        //writes labels
+        if(id==1)
+            fw.write("iteration"+";"+"lynxes"+";"+"sheep"+";"+"wolves"+";"+"deer"+"\n");
+
+        //writes data
         fw.write(id+";"+population.get("Lynx")+";"+population.get("Sheep")+";"+population.get("Wolf")+";"+population.get("Deer")+"\n");
         fw.close();
     }
     public void writeData(List<List<Double>> data) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+
+            //write labels
             writer.write("iteration;lynxes;sheep;wolves;deer");
             writer.newLine();
+
+            //writes data
             for (List<Double> row : data) {
                 StringBuilder rowString = new StringBuilder();
+
                 for (int i = 0; i < row.size(); i++) {
                     rowString.append(row.get(i));
+
                     if (i < row.size() - 1) {
                         rowString.append(";");
                     }
                 }
+
+                //change dots with commas
                 writer.write(rowString.toString().replaceAll("\\.",","));
                 writer.newLine();
             }
@@ -59,6 +75,7 @@ public class csvGenerator {
     public static List<List<String>> read_data(File file) throws IOException {
         List<List<String>> data = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(";");
@@ -69,11 +86,15 @@ public class csvGenerator {
     }
     static List<List<List<Double>>> convertStringToDouble(List<List<List<String>>> dataSet){
         List<List<List<Double>>> doubleList = new ArrayList<>();
+
         for(List<List<String>> outerList : dataSet) {
             List<List<Double>> outerDoubleList = new ArrayList<>();
+
             for(List<String> innerList : outerList) {
+
                 if(!innerList.get(0).equals("iteration")) {
                     List<Double> innerDoubleList = new ArrayList<>();
+
                     for (String value : innerList) {
                         innerDoubleList.add(Double.parseDouble(value));
                     }
@@ -94,6 +115,7 @@ public class csvGenerator {
         //adds lists filled with zeros to result
         for(int i = 0; i < outerSize; i++) {
             List<Double> innerResultList = new ArrayList<>();
+
             for(int j = 0; j < innerSize; j++) {
                 innerResultList.add(0.0);
             }
@@ -102,7 +124,9 @@ public class csvGenerator {
 
         //sums numbers from different datasets at the same position and updates the "results" list with the sum
         for(List<List<Double>> dataset : DoubleDataSet) {
+
             for(int i = 0; i < outerSize; i++) {
+
                 for(int j = 0; j < innerSize; j++) {
                     double currentValue = dataset.get(i).get(j);
                     double updatedValue = result.get(i).get(j) + currentValue;
@@ -113,8 +137,11 @@ public class csvGenerator {
 
         // divides every sum by number of datasets
         int numDatasets = DoubleDataSet.size();
+
         for(int i = 0; i < outerSize; i++) {
+
             for(int j = 0; j < innerSize; j++) {
+
                 if(j!=0){
                     double sumValue = result.get(i).get(j);
                     double averageValue = sumValue / numDatasets;

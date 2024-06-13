@@ -19,14 +19,20 @@ public class Map {
     private void initializeTerrain(){
         Random rand = new Random();
         PerlinNoiseGenerator generator=  PerlinNoiseGenerator.newBuilder().setSeed(rand.nextInt()).setInterpolation(Interpolation.COSINE).setFadeFunction(FadeFunction.QUINTIC_POLY).build();
+
         terrain = new Terrain[ySize][xSize];
+
         double yOff = 0;
         for (int y = 0; y < ySize; y++) {
             double xOff = 0;
+
             for (int x = 0; x < xSize; x++) {
                 double v = generator.evaluateNoise(xOff,yOff);
-                if(v >= -0.2) terrain[y][x] = Terrain.GRASS;
-                else terrain[y][x] = Terrain.WATER;
+
+                if(v >= -0.2)
+                    terrain[y][x] = Terrain.GRASS;
+                else
+                    terrain[y][x] = Terrain.WATER;
                 xOff+=0.2;
             }
             yOff+=0.2;
@@ -35,14 +41,6 @@ public class Map {
 
     public static boolean isInBounds(int x, int y, int maxSizeX, int maxSizeY) {
         return x >= 0 && y >= 0 && x < maxSizeX && y < maxSizeY;
-    }
-
-    public int getxSize() {
-        return xSize;
-    }
-
-    public int getySize() {
-        return ySize;
     }
 
     public Terrain[][] getTerrain() {
