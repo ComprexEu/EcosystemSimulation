@@ -18,4 +18,19 @@ public class Turnip extends Plant {
     public void setBuffed(boolean buffed) {
         this.buffed = buffed;
     }
+
+    @Override
+    protected String getTileColor() {
+        return "\033[45m";
+    }
+
+    @Override
+    protected String getText() {
+        return " T";
+    }
+
+    @Override
+    public String getLegendRow() {
+        return getTileColor() + getText() + " \033[0m - Turnip";
+    }
 }

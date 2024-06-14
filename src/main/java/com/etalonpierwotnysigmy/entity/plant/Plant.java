@@ -33,4 +33,9 @@ public abstract class Plant extends Entity {
     public void setGrown(boolean grown) {
         isGrown = grown;
     }
+
+    @Override
+    protected String getTextColor() {
+        return "\033[38;2;188;190;196m";
+    }
 }

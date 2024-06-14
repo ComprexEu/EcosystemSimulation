@@ -21,6 +21,7 @@ public class Deer extends Herbivore{
     private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) { // method used to find target based on hierarchy of animal needs
         super.findTargetHerbivore(entityMap, terrainMap);
 
+        // finds Plant
         if (thirst >= saturation && !findingPredator && !findingLove && !findingWater) {
             targetPosition = findEntity(entityMap, Plant.class);
 
@@ -28,7 +29,7 @@ public class Deer extends Herbivore{
         }
         if (targetPosition == null){
             Random x = new Random();
-            targetPosition = new Position(x.nextInt(terrainMap[0].length),x.nextInt(terrainMap.length));
+            targetPosition = new Position(x.nextInt(terrainMap[0].length), x.nextInt(terrainMap.length));
         }
     }
 
@@ -67,5 +68,20 @@ public class Deer extends Herbivore{
     @Override
     protected Deer spawnAnimal(Position position) {
         return new Deer(position);
+    }
+
+    @Override
+    protected String getTileColor() {
+        return "\033[48;2;170;85;0m";
+    }
+
+    @Override
+    protected String getText() {
+        return " D";
+    }
+
+    @Override
+    public String getLegendRow() {
+        return getTileColor() + getText() + " \033[0m - Deer";
     }
 }

@@ -4,8 +4,24 @@ import com.etalonpierwotnysigmy.simulation.Position;
 
 public abstract class Entity {
     protected Position position;
-    protected boolean moved; // zmienna dbająca o to, aby wykonywany był tylko jeden ruch w iteracji
+    protected boolean moved;
 
+    abstract protected String getTileColor();
+
+    abstract protected String getText();
+
+    abstract protected String getTextColor();
+
+    abstract public String getLegendRow();
+
+    public void printEntity() {
+        String tileColor = getTileColor();
+        String textColor = getTextColor();
+        String text = getText();
+
+        System.out.print(tileColor + textColor + text);
+
+    }
 
     public boolean didntMove() {
         return !moved;

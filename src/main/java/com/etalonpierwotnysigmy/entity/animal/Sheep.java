@@ -20,6 +20,7 @@ public class Sheep extends Herbivore {
     private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.findTargetHerbivore(entityMap, terrainMap);
 
+        // finds Turnip
         if (thirst >= saturation && !findingPredator && !findingLove && !findingWater) {
             targetPosition = findEntity(entityMap, Turnip.class);
 
@@ -84,5 +85,21 @@ public class Sheep extends Herbivore {
     protected Sheep spawnAnimal(Position position) {
         return new Sheep(position);
     }
+
+    @Override
+    protected String getTileColor() {
+        return "\033[48;2;160;160;160m";
+    }
+
+    @Override
+    protected String getText() {
+        return " S";
+    }
+
+    @Override
+    public String getLegendRow() {
+        return getTileColor() + getText() + " \033[0m - Sheep";
+    }
+
 
 }

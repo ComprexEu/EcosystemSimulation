@@ -32,7 +32,7 @@ public class Main {
 
         // check if provided arguments are valid
         boolean validArgs = true;
-        if(
+        if (
                 y < 3 ||                                //map can't be smaller than 3x3 tiles
                 x < 3 ||                                //^
                 i < 1 ||                                //simulation must have at least one iteration
@@ -41,7 +41,7 @@ public class Main {
                 sheepChance < 0 || sheepChance > 1 ||   //^
                 lynxChance < 0 || lynxChance > 1 ||     //^
                 wolfChance < 0 || wolfChance > 1        //^
-        ){
+        ) {
             validArgs = false;
         }
 
@@ -92,7 +92,7 @@ public class Main {
         scanner.close();
 
         // create .csv file with average results
-        if(save){
+        if (save) {
             //creates a List and adds data from created files to it
             List<List<List<String>>> dataset = new ArrayList<>();
             for (File file : listOfFiles) {

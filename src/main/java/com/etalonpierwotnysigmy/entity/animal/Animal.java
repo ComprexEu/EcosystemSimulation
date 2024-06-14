@@ -147,6 +147,17 @@ public abstract class Animal extends Entity {
         }
     }
 
+    @Override
+    protected String getTextColor() {
+        if (health <= 10)
+            return "\033[38;2;255;0;0m";
+
+        else if (health <= 30)
+            return "\033[38;2;255;255;0m";
+
+        else return "\033[38;2;188;190;196m";
+    }
+
     public boolean getBreeding() {
         return breeding;
     }

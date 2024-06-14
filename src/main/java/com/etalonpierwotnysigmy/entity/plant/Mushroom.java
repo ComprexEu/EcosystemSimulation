@@ -23,4 +23,19 @@ public class Mushroom extends Plant {
     public void setPoisoned(boolean poisoned) {
         this.poisoned = poisoned;
     }
+
+    @Override
+    protected String getTileColor() {
+        return "\033[48;2;255;85;85m";
+    }
+
+    @Override
+    protected String getText() {
+        return " M";
+    }
+
+    @Override
+    public String getLegendRow() {
+        return getTileColor() + getText() + " \033[0m - Mushroom";
+    }
 }

@@ -79,4 +79,19 @@ public class Wolf extends Predator {
     protected Wolf spawnAnimal(Position position) {
         return new Wolf(position);
     }
+
+    @Override
+    protected String getTileColor() {
+        return "\033[48;2;85;85;85m";
+    }
+
+    @Override
+    protected String getText() {
+        return " W";
+    }
+
+    @Override
+    public String getLegendRow() {
+        return getTileColor() + getText() + " \033[0m - Wolf";
+    }
 }

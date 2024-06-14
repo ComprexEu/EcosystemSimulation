@@ -8,11 +8,18 @@ import com.etalonpierwotnysigmy.entity.plant.Turnip;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EcosystemSimulation {
     int xSize,ySize;
     Entity[][] entityMap;
-    double deerChance,sheepChance,lynxChance,wolfChance;
+    double deerChance, sheepChance, lynxChance, wolfChance;
+    int deerCount = 0;
+    int sheepCount = 0;
+    int lynxCount = 0;
+    int wolfCount = 0;
+    int mushroomCount = 0;
+    int turnipCount = 0;
     protected int iteration,maxIteration;
     private final Terrain[][] terrainMap;
     private csvGenerator csv;
@@ -61,11 +68,15 @@ public class EcosystemSimulation {
 
                 if (terrainMap[y][x] == Terrain.GRASS) {
 
-                    if (Math.random() < 0.05)
+                    if (Math.random() < 0.05) {
                         entityMap[y][x] = new Turnip(new Position(x, y));
+                        turnipCount++;
+                    }
 
-                    else if (Math.random() < 0.05)
+                    else if (Math.random() < 0.05) {
                         entityMap[y][x] = new Mushroom(new Position(x, y));
+                        mushroomCount++;
+                    }
 
                     else if (y < ySize / 2 && x < xSize / 2 && Math.random() < sheepChance) entityMap[y][x] =
                             new Sheep(new Position(x, y));
@@ -147,10 +158,6 @@ public class EcosystemSimulation {
     }
 
     private void updateAnimalStats(Terrain[][] terrainMap) throws IOException {
-        int deerCount = 0;
-        int sheepCount = 0;
-        int lynxCount = 0;
-        int wolfCount = 0;
 
         for (int y = 0; y < ySize; y++) {
 
@@ -163,22 +170,22 @@ public class EcosystemSimulation {
                         entityMap[y][x] = null; // kill animal
                     }
 
-                    //count animals
-                    if(entityMap[y][x] instanceof Deer)deerCount++;
-                    if(entityMap[y][x] instanceof Sheep)sheepCount++;
-                    if(entityMap[y][x] instanceof Lynx)lynxCount++;
-                    if(entityMap[y][x] instanceof Wolf)wolfCount++;
+                    // count animals
+                    if (entityMap[y][x] instanceof Deer) deerCount++;
+                    if (entityMap[y][x] instanceof Sheep) sheepCount++;
+                    if (entityMap[y][x] instanceof Lynx) lynxCount++;
+                    if (entityMap[y][x] instanceof Wolf) wolfCount++;
                 }
             }
         }
 
         //create .csv with data
         if(save){
-            population.put("Deer",deerCount);
-            population.put("Sheep",sheepCount);
-            population.put("Lynx",lynxCount);
-            population.put("Wolf",wolfCount);
-            csv.writeData(iteration,population);
+            population.put("Deer", deerCount);
+            population.put("Sheep", sheepCount);
+            population.put("Lynx", lynxCount);
+            population.put("Wolf", wolfCount);
+            csv.writeData(iteration, population);
         }
     }
 
@@ -210,150 +217,58 @@ public class EcosystemSimulation {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
+    private void printLegend(int currentRow) {
+
+        ArrayList<Entity> legendClasses = new ArrayList<>();
+        legendClasses.add(new Sheep(new Position(0, 0)));
+        legendClasses.add(new Deer(new Position(0, 0)));
+        legendClasses.add(new Wolf(new Position(0, 0)));
+        legendClasses.add(new Lynx(new Position(0, 0)));
+        legendClasses.add(new Turnip(new Position(0, 0)));
+        legendClasses.add(new Mushroom(new Position(0, 0)));
+
+        if (currentRow < 6) {
+            String legendRow = legendClasses.get(currentRow).getLegendRow();
+            System.out.print(legendRow);
+        }
+
+        if (currentRow == 6)
+            System.out.print("\033[42m G \033[0m - Grass");
+        if (currentRow == 7)
+            System.out.print("\033[44m W \033[0m - Water");
+        if (currentRow == 8)
+            System.out.print("\033[38;2;255;255;0m medium hp \033[0m");
+        if (currentRow == 9)
+            System.out.print("\033[38;2;255;0;0m low hp \033[0m");
+    }
     public void printMap(Terrain[][] terrainMap) {
         clearScreen();
-        int currentColumn = 0;
+        int currentRow = 0;
         for (int y = 0; y < ySize; y++) {
-
             for (int x = 0; x < xSize; x++) {
 
                 if (entityMap[y][x] == null) {
-
-                    if (terrainMap[y][x] == Terrain.GRASS) {
-                        System.out.print("\033[42m");
-                        System.out.print(" G");
-                    }
-                    else if (terrainMap[y][x] == Terrain.WATER) {
-                        System.out.print("\033[44m");
-                        System.out.print(" W");
-                    }
+                    if (terrainMap[y][x] == Terrain.GRASS)
+                        System.out.print("\033[42m G");
+                    else if (terrainMap[y][x] == Terrain.WATER)
+                        System.out.print("\033[44m W");
                 }
                 else {
-                    if (entityMap[y][x] instanceof Sheep) {
-                        /* https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences
-                         \033[38;2;<r>;<g>;<b>m     #Select RGB foreground color
-                         \033[48;2;<r>;<g>;<b>m     #Select RGB background color */
-                        System.out.print("\033[48;2;160;160;160m");
-
-                        if(((Sheep) entityMap[y][x]).getHealth() >= 30)
-                            System.out.print(" S");
-
-                        else if(((Sheep) entityMap[y][x]).getHealth() > 10 && ((Sheep) entityMap[y][x]).getHealth() < 30)
-                            System.out.print("\033[38;2;255;255;0m S");
-                        else
-
-                            System.out.print("\033[38;2;255;0;0m S");
-                    }
-                    else if (entityMap[y][x] instanceof Turnip) {
-                        System.out.print("\033[45m");
-                        System.out.print(" T");
-                    }
-                    else if (entityMap[y][x] instanceof Wolf) {
-                        System.out.print("\033[48;2;85;85;85m");
-
-                        if(((Wolf) entityMap[y][x]).getHealth() >= 30)
-                            System.out.print(" W");
-
-                        else if(((Wolf) entityMap[y][x]).getHealth() > 10 && ((Wolf) entityMap[y][x]).getHealth() < 30)
-                            System.out.print("\033[38;2;255;255;0m W");
-
-                        else
-                            System.out.print("\033[38;2;255;0;0m W");
-                    }
-                    else if (entityMap[y][x] instanceof Lynx) {
-                        System.out.print("\033[48;2;252;127;0m");
-
-                        if(((Lynx) entityMap[y][x]).getHealth() >= 30)
-                            System.out.print(" L");
-
-                        else if(((Lynx) entityMap[y][x]).getHealth() > 10 && ((Lynx) entityMap[y][x]).getHealth() < 30)
-                            System.out.print("\033[38;2;255;255;0m L");
-
-                        else
-                            System.out.print("\033[38;2;255;0;0m L");
-                    }
-                    else if (entityMap[y][x] instanceof Mushroom) {
-                        System.out.print("\033[48;2;255;85;85m");
-                        System.out.print(" M");
-                    }
-                    else if (entityMap[y][x] instanceof Deer) {
-                        System.out.print("\033[48;2;170;85;0m");
-
-                        if(((Deer) entityMap[y][x]).getHealth() >= 30)
-                            System.out.print(" D");
-
-                        else if(((Deer) entityMap[y][x]).getHealth() > 10 && ((Deer) entityMap[y][x]).getHealth() < 30)
-                            System.out.print("\033[38;2;255;255;0m D");
-
-                        else
-                            System.out.print("\033[38;2;255;0;0m D");
-                    }
+                    entityMap[y][x].printEntity();
                 }
                 System.out.print(" \033[0m");
             }
             System.out.print(" \033[0m");
 
             // map legend
-            if (currentColumn == 0) {
-                System.out.print("\033[48;2;160;160;160m");
-                System.out.print(" S");
-                System.out.print(" \033[0m");
-                System.out.print(" - Sheep");
-            }
-            if (currentColumn == 1) {
-                System.out.print("\033[48;2;170;85;0m");
-                System.out.print(" D");
-                System.out.print(" \033[0m");
-                System.out.print(" - Deer");
-            }
-            if (currentColumn == 2) {
-                System.out.print("\033[48;2;85;85;85m");
-                System.out.print(" W");
-                System.out.print(" \033[0m");
-                System.out.print(" - Wolf");
-            }
-            if (currentColumn == 3) {
-                System.out.print("\033[48;2;252;127;0m");
-                System.out.print(" L");
-                System.out.print(" \033[0m");
-                System.out.print(" - Lynx");
-            }
-            if (currentColumn == 4) {
-                System.out.print("\033[45m");
-                System.out.print(" T");
-                System.out.print(" \033[0m");
-                System.out.print(" - Turnip");
-            }
-            if (currentColumn == 5) {
-                System.out.print("\033[48;2;255;85;85m");
-                System.out.print(" M");
-                System.out.print(" \033[0m");
-                System.out.print(" - Mushroom");
-            }
-            if (currentColumn == 6) {
-                System.out.print("\033[42m");
-                System.out.print(" G");
-                System.out.print(" \033[0m");
-                System.out.print(" - Grass");
-            }
-            if (currentColumn == 7) {
-                System.out.print("\033[44m");
-                System.out.print(" W");
-                System.out.print(" \033[0m");
-                System.out.print(" - Water");
-            }
-            if (currentColumn == 8) {
-                System.out.print("\033[38;2;255;255;0m średnia ilość hp");
-                System.out.print(" \033[0m");
-            }
-            if (currentColumn == 9) {
-                System.out.print("\033[38;2;255;0;0m mała ilość hp");
-                System.out.print(" \033[0m");
-            }
-            currentColumn++;
+            printLegend(currentRow);
+            currentRow++;
+
             System.out.println();
         }
     }
+
 }
 
 

@@ -59,4 +59,19 @@ public class Lynx extends Predator{
     protected Lynx spawnAnimal(Position position) {
         return new Lynx(position);
     }
+
+    @Override
+    protected String getTileColor() {
+        return "\033[48;2;252;127;0m";
+    }
+
+    @Override
+    protected String getText() {
+        return " L";
+    }
+
+    @Override
+    public String getLegendRow() {
+        return getTileColor() + getText() + " \033[0m - Lynx";
+    }
 }
