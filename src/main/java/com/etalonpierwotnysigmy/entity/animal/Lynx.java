@@ -55,20 +55,8 @@ public class Lynx extends Predator{
         }
     }
 
-    public void breed(Entity[][] entityMap, Terrain[][] terrainMap) {
-        for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
-
-            for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
-
-                if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
-
-                    if (entityMap[y][x] == null && terrainMap[y][x] == Terrain.GRASS) {
-                        entityMap[y][x] = new Lynx(new Position(x, y));
-                        entityMap[y][x].setMoved(true);
-                        return;
-                    }
-                }
-            }
-        }
+    @Override
+    protected Lynx spawnAnimal(Position position) {
+        return new Lynx(position);
     }
 }

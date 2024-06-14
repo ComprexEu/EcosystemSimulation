@@ -30,6 +30,24 @@ public abstract class Animal extends Entity {
 
     public abstract void updateStats(Entity[][] entityMap, Terrain[][] terrainMap);
 
+    protected abstract Animal spawnAnimal(Position position);
+
+    public void breed(Entity[][] entityMap, Terrain[][] terrainMap) {
+        for (int y = position.getY() - 1; y <= position.getY() + 1; y++) {
+
+            for (int x = position.getX() - 1; x <= position.getX() + 1; x++) {
+
+                if (Map.isInBounds(x, y, entityMap[0].length, entityMap.length)) {
+
+                    if (entityMap[y][x] == null && terrainMap[y][x] == Terrain.GRASS) {
+                        entityMap[y][x] = spawnAnimal(new Position(x, y));
+                        entityMap[y][x].setMoved(true);
+                        return;
+                    }
+                }
+            }
+        }
+    }
     enum SearchType {
         WATER,
         ENTITY,
@@ -114,7 +132,6 @@ public abstract class Animal extends Entity {
         }
         return breeding = false;
     }
-    public abstract void breed(Entity[][] entityMap, Terrain[][] terrainMap);
 
     public void move(Entity[][] entityMap, Position nextPosition) { // method used to reposition entity
         entityMap[nextPosition.getY()][nextPosition.getX()] = entityMap[position.getY()][position.getX()];

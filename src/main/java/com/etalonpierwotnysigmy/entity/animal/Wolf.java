@@ -74,4 +74,9 @@ public class Wolf extends Predator {
     public boolean hasRabies() {
         return rabies == 3;
     }
+
+    @Override
+    protected Wolf spawnAnimal(Position position) {
+        return new Wolf(position);
+    }
 }
