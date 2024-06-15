@@ -14,16 +14,10 @@ public class EcosystemSimulation {
     int xSize,ySize;
     Entity[][] entityMap;
     double deerChance, sheepChance, lynxChance, wolfChance;
-    int deerCount = 0;
-    int sheepCount = 0;
-    int lynxCount = 0;
-    int wolfCount = 0;
-    int mushroomCount = 0;
-    int turnipCount = 0;
     protected int iteration,maxIteration;
     private final Terrain[][] terrainMap;
     private csvGenerator csv;
-    private boolean print,save;
+    private boolean print, save;
     public File file;
     public java.util.Map<String, Integer> population;
     public EcosystemSimulation(int xSize, int ySize, int maxIteration, double deerChance, double sheepChance, double lynxChance, double wolfChance, boolean print, boolean save) throws IOException {
@@ -70,12 +64,10 @@ public class EcosystemSimulation {
 
                     if (Math.random() < 0.05) {
                         entityMap[y][x] = new Turnip(new Position(x, y));
-                        turnipCount++;
                     }
 
                     else if (Math.random() < 0.05) {
                         entityMap[y][x] = new Mushroom(new Position(x, y));
-                        mushroomCount++;
                     }
 
                     else if (y < ySize / 2 && x < xSize / 2 && Math.random() < sheepChance) entityMap[y][x] =
@@ -158,6 +150,10 @@ public class EcosystemSimulation {
     }
 
     private void updateAnimalStats(Terrain[][] terrainMap) throws IOException {
+        int deerCount = 0;
+        int sheepCount = 0;
+        int lynxCount = 0;
+        int wolfCount = 0;
 
         for (int y = 0; y < ySize; y++) {
 
