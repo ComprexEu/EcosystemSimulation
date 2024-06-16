@@ -240,7 +240,6 @@ public class EcosystemSimulation {
     }
     public void printMap(Terrain[][] terrainMap) {
         clearScreen();
-        int currentRow = 0;
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
 
@@ -258,8 +257,7 @@ public class EcosystemSimulation {
             System.out.print(" \033[0m");
 
             // map legend
-            printLegend(currentRow);
-            currentRow++;
+            printLegend(y);
 
             System.out.println();
         }
