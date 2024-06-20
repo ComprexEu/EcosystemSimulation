@@ -4,6 +4,8 @@ import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 
+import java.util.Random;
+
 
 public abstract class Predator extends Animal {
     protected int damage;
@@ -13,8 +15,6 @@ public abstract class Predator extends Animal {
     protected boolean findingLove;
     protected boolean findingWater;
     protected boolean findingAnimal;
-
-    protected abstract void findTarget(Entity[][] entityMap, Terrain[][] terrainMap);
 
     public Predator() {
         super();
@@ -40,9 +40,19 @@ public abstract class Predator extends Animal {
             if (targetPosition != null)
                 findingWater = true;
         }
-        // next conditions separately for individual species
+        if (thirst >= saturation && !findingLove && !findingWater && !findingAnimal){
+            targetPosition = findEntity(entityMap, Herbivore.class);
+
+            if (targetPosition != null) findingAnimal = true;
+        }
+        if (targetPosition == null){
+            Random x = new Random();
+            targetPosition = new Position(x.nextInt(terrainMap[0].length),x.nextInt(terrainMap.length));
+        }
     }
-    protected Position findNextPositionPredator(Entity[][] entityMap, Terrain[][] terrainMap) {
+    protected Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
+        findTargetPredator(entityMap, terrainMap);
+
         // finding the next predator position (best field out of 9 possible)
         Position potentialNewPosition = new Position(position.getX(), position.getY());
         Position positionDifference;

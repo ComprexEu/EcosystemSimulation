@@ -18,27 +18,6 @@ public class Deer extends Herbivore{
         this.position = position;
     }
 
-    private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) { // method used to find target based on hierarchy of animal needs
-        super.findTargetHerbivore(entityMap, terrainMap);
-
-        // finds Plant
-        if (thirst >= saturation && !findingPredator && !findingLove && !findingWater) {
-            targetPosition = findEntity(entityMap, Plant.class);
-
-            if (targetPosition != null) findingPlant = true;
-        }
-        if (targetPosition == null){
-            Random x = new Random();
-            targetPosition = new Position(x.nextInt(terrainMap[0].length), x.nextInt(terrainMap.length));
-        }
-    }
-
-    @Override
-    public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
-        findTarget(entityMap, terrainMap);
-        return super.findNextPositionHerbivore(entityMap, terrainMap);
-    }
-
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.updateStatsHerbivore();

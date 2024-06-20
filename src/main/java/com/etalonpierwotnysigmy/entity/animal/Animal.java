@@ -141,6 +141,7 @@ public abstract class Animal extends Entity {
 
     public void updatePosition(Entity[][] entityMap, Terrain[][] terrainMap) { // poruszenie animala na następne miejsce
         for (int i = 0; i < speed; i++) {
+
             Position nextPosition = findNextPosition(entityMap, terrainMap);
 
             if (entityMap[nextPosition.getY()][nextPosition.getX()] == null) move(entityMap, nextPosition);

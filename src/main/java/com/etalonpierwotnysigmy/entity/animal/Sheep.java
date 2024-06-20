@@ -17,27 +17,6 @@ public class Sheep extends Herbivore {
         this.position = position;
     }
 
-    private void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
-        super.findTargetHerbivore(entityMap, terrainMap);
-
-        // finds Turnip
-        if (thirst >= saturation && !findingPredator && !findingLove && !findingWater) {
-            targetPosition = findEntity(entityMap, Turnip.class);
-
-            if (targetPosition != null) findingPlant = true;
-        }
-        if (targetPosition == null){
-            Random x = new Random();
-            targetPosition = new Position(x.nextInt(terrainMap[0].length),x.nextInt(terrainMap.length));
-        }
-    }
-
-    @Override
-    public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
-        findTarget(entityMap, terrainMap);
-        return super.findNextPositionHerbivore(entityMap, terrainMap);
-    }
-
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
         super.updateStatsHerbivore();

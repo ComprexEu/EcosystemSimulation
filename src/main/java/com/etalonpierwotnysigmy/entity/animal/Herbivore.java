@@ -1,9 +1,13 @@
 package com.etalonpierwotnysigmy.entity.animal;
 
+import com.etalonpierwotnysigmy.entity.plant.Plant;
+import com.etalonpierwotnysigmy.entity.plant.Turnip;
 import com.etalonpierwotnysigmy.simulation.Map;
 import com.etalonpierwotnysigmy.simulation.Position;
 import com.etalonpierwotnysigmy.simulation.Terrain;
 import com.etalonpierwotnysigmy.entity.Entity;
+
+import java.util.Random;
 
 public abstract class Herbivore extends Animal {
     protected Position targetPosition;
@@ -35,15 +39,31 @@ public abstract class Herbivore extends Animal {
             targetPosition = findLove(entityMap);
             if (targetPosition != null) findingLove = true;
         }
+
         if (thirst < saturation && !findingPredator && !findingLove) {
             targetPosition = findWater(terrainMap);
 
             if (targetPosition != null) findingWater = true;
         }
-        // next conditions separately for individual species
+
+        if (thirst >= saturation && !findingPredator && !findingLove && !findingWater) {
+            if(this instanceof Deer)
+                targetPosition = findEntity(entityMap, Plant.class);
+            else if(this instanceof Sheep)
+                targetPosition = findEntity(entityMap, Turnip.class);
+            if (targetPosition != null) findingPlant = true;
+        }
+
+        if (targetPosition == null){
+            Random x = new Random();
+            targetPosition = new Position(x.nextInt(terrainMap[0].length), x.nextInt(terrainMap.length));
+        }
     }
 
-    protected Position findNextPositionHerbivore(Entity[][] entityMap, Terrain[][] terrainMap) {
+    @Override
+    protected Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
+        findTargetHerbivore(entityMap,terrainMap);
+
         // finding the next herbivore position (best field out of 9 possible)
         Position potentialNewPosition = new Position(position.getX(), position.getY());
         Position positionDifference;

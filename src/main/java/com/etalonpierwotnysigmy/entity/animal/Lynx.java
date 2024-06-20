@@ -16,25 +16,6 @@ public class Lynx extends Predator{
         speed = 3;
         this.position = position;
     }
-    public void findTarget(Entity[][] entityMap, Terrain[][] terrainMap) {
-        super.findTargetPredator(entityMap, terrainMap);
-
-        if (thirst >= saturation && !findingLove && !findingWater){
-            targetPosition = findEntity(entityMap, Herbivore.class);
-
-            if (targetPosition != null) findingAnimal = true;
-        }
-        if (targetPosition == null){
-            Random x = new Random();
-            targetPosition = new Position(x.nextInt(terrainMap[0].length),x.nextInt(terrainMap.length));
-        }
-    }
-
-    @Override
-    public Position findNextPosition(Entity[][] entityMap, Terrain[][] terrainMap) {
-        findTarget(entityMap, terrainMap);
-        return super.findNextPositionPredator(entityMap, terrainMap);
-    }
 
     @Override
     public void updateStats(Entity[][] entityMap, Terrain[][] terrainMap) {
